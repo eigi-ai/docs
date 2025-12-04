@@ -25,28 +25,21 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
-            "pages": ["index", "quickstart", "development"]
-          },
-          {
-            "group": "Platform Features",
-            "pages": ["essentials/settings", "essentials/navigation"]
-          },
-          {
-            "group": "Guides & Tutorials",
+            "group": "Getting Started",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "index",
+              "quickstart",
+              "essentials/platform-terminology",
+              "essentials/supported-providers"
             ]
           },
           {
-            "group": "AI Development Tools",
+            "group": "Building Agents",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "essentials/prompting-guide",
+              "essentials/voice-profiles",
+              "essentials/video-avatars",
+              "essentials/web-widget"
             ]
           }
         ]

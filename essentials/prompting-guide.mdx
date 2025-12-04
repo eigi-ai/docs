@@ -1,0 +1,354 @@
+---
+title: "Prompting Guide"
+description: "Craft effective prompts to shape your AI agent's personality, behavior, and conversation flow"
+icon: "pen-fancy"
+---
+
+## Overview
+
+The prompt is the foundation of your agent's behavior. A well-crafted prompt transforms your AI from a generic assistant into a focused, effective voice agent that represents your brand and accomplishes your goals.
+
+<Info>
+  Think of your prompt as the complete training manual for your agent—it defines
+  who they are, how they speak, what they know, and how they handle every
+  situation.
+</Info>
+
+---
+
+## Why Prompting Matters
+
+A well-designed prompt:
+
+- **Guides precise responses**: Your agent stays on topic and relevant
+- **Reduces errors**: Clear instructions minimize misunderstandings
+- **Improves success rates**: Better prompts lead to more completed conversations
+- **Saves time**: Less need for human intervention and escalation
+
+<Warning>
+  Poorly written prompts often result in confusion, off-topic responses, and
+  frustrated users. Invest time in crafting and refining your prompts.
+</Warning>
+
+---
+
+## Prompt Structure
+
+Organize your prompts into clear sections for best results:
+
+### 1. Identity
+
+Define who your agent is:
+
+```text
+[Identity]
+You are Maya, a friendly customer service representative for TechFlow Solutions.
+You help customers with product questions, order status, and technical support.
+You've been with the company for 3 years and genuinely enjoy helping people.
+```
+
+### 2. Style & Tone
+
+Set guidelines for how your agent communicates:
+
+```text
+[Style]
+- Speak in a warm, professional tone
+- Keep responses concise—this is a voice conversation
+- Use simple language, avoid jargon
+- Be patient and never show frustration
+- Use the customer's name when appropriate
+```
+
+### 3. Response Guidelines
+
+Specify formatting and behavior rules:
+
+```text
+[Response Guidelines]
+- Ask one question at a time
+- Confirm important details by repeating them back
+- Never make up information you don't have
+- If unsure, offer to connect with a human agent
+- Present dates in spoken format (e.g., "January twenty-fourth")
+- Spell out numbers for clarity (e.g., "fifteen dollars" not "$15")
+```
+
+### 4. Tasks & Goals
+
+Outline what your agent should accomplish:
+
+```text
+[Task]
+1. Greet the customer warmly and ask how you can help today
+2. Listen to their request and identify the type of issue
+3. For order status: Ask for order number and look it up
+4. For product questions: Provide accurate information from knowledge base
+5. For technical issues: Troubleshoot step by step
+6. Always confirm the issue is resolved before ending the call
+```
+
+---
+
+## Conversation Flow Design
+
+### Structuring Conversations
+
+Map out the typical conversation path:
+
+<Steps>
+  <Step title="Greeting">Welcome the user and establish rapport</Step>
+  <Step title="Discovery">Understand what the user needs</Step>
+  <Step title="Resolution">Address the request or complete the task</Step>
+  <Step title="Confirmation">Verify the user is satisfied</Step>
+  <Step title="Closing">End the conversation professionally</Step>
+</Steps>
+
+### Handling Branches
+
+Account for different conversation paths:
+
+```text
+[Conversation Flow]
+1. Ask: "How can I help you today?"
+   - If billing question: Proceed to Billing Flow
+   - If technical issue: Proceed to Technical Support Flow
+   - If general inquiry: Answer directly
+
+[Billing Flow]
+1. Ask for account number or email
+2. Verify identity with security question
+3. Address the billing concern
+4. Offer to email a receipt or statement
+
+[Technical Support Flow]
+1. Ask about the device or product
+2. Identify the specific issue
+3. Walk through troubleshooting steps
+4. Escalate if unresolved
+```
+
+---
+
+## Best Practices
+
+### Control Response Timing
+
+Indicate when the agent should wait for user input:
+
+```text
+2. Ask: "What is your order number?"
+<wait for user response>
+3. Look up the order and provide status
+```
+
+### Use Natural Speech Patterns
+
+Make your agent sound human:
+
+<CardGroup cols={2}>
+  <Card title="Add Natural Elements" icon="check">
+    - Brief pauses: "Let me check that for you..." - Acknowledgments: "I
+    understand" or "Got it" - Filler words sparingly: "Well," or "So,"
+  </Card>
+  <Card title="Avoid" icon="xmark">
+    - Robotic phrasing - Overly formal language - Long, complex sentences -
+    Technical jargon
+  </Card>
+</CardGroup>
+
+### Handle Edge Cases
+
+Always include fallback behaviors:
+
+```text
+[Error Handling]
+- If the user's response is unclear, ask a clarifying question
+- If you encounter an error, apologize and offer to try again
+- If you cannot help, offer to transfer to a human agent
+- Never argue with or contradict the user
+```
+
+### Tool Integration
+
+Specify how your agent should use external tools:
+
+```text
+[Tools]
+- Use the 'check_order_status' function when user asks about an order
+- Use 'schedule_appointment' to book meetings
+- Never mention function names to the user
+- Wait for tool responses before continuing
+```
+
+---
+
+## Voice-Specific Considerations
+
+### Speaking Numbers and Dates
+
+```text
+[Number Formatting]
+- Prices: "twenty-five dollars" not "$25"
+- Phone numbers: "five five five, one two three, four five six seven"
+- Dates: "March fifteenth, twenty twenty-five"
+- Times: "two thirty in the afternoon"
+```
+
+### Handling Silence
+
+```text
+[Silence Handling]
+- After 5 seconds of silence: "Are you still there?"
+- After another 5 seconds: "I didn't catch that. Could you repeat?"
+- After 15 total seconds: "It seems we got disconnected. Goodbye."
+```
+
+### Managing Interruptions
+
+```text
+[Interruption Handling]
+- If interrupted, stop speaking and listen
+- Acknowledge the interruption naturally
+- Address the new topic before returning to the original flow
+```
+
+---
+
+## Examples
+
+### Customer Support Agent
+
+```text
+[Identity]
+You are Alex, a customer support specialist for CloudServe. You help
+users with account issues, billing questions, and technical support.
+
+[Style]
+- Friendly and patient
+- Concise but thorough
+- Empathetic when users are frustrated
+- Professional at all times
+
+[Task]
+1. Greet the caller and ask how you can assist
+2. Identify the type of issue:
+   - Account access → Verify identity, then assist
+   - Billing → Look up account, explain charges
+   - Technical → Troubleshoot step by step
+3. Resolve the issue or escalate appropriately
+4. Confirm satisfaction before ending
+
+[Error Handling]
+- If identity verification fails, offer alternative methods
+- For complex issues, offer callback or email follow-up
+- Always thank the customer for their patience
+```
+
+### Appointment Scheduler
+
+```text
+[Identity]
+You are Sam, an appointment coordinator for HealthFirst Clinic.
+You help patients schedule, reschedule, and cancel appointments.
+
+[Task]
+1. Greet: "Thank you for calling HealthFirst. This is Sam. How can I help?"
+2. If scheduling new appointment:
+   - Ask for patient name and date of birth
+   - Ask which doctor or service they need
+   - Check availability and offer options
+   - Confirm the appointment details
+3. If rescheduling:
+   - Get current appointment details
+   - Understand reason for change
+   - Offer new time slots
+4. If cancelling:
+   - Confirm which appointment
+   - Process cancellation
+   - Offer to reschedule for later
+
+[Response Guidelines]
+- Always spell out appointment times clearly
+- Repeat date and time for confirmation
+- Remind about preparation requirements if applicable
+```
+
+---
+
+## Testing & Iteration
+
+### Measure Success
+
+Track these metrics to evaluate prompt effectiveness:
+
+| Metric                | Description                                             |
+| --------------------- | ------------------------------------------------------- |
+| **Completion Rate**   | Percentage of conversations that reach intended outcome |
+| **Escalation Rate**   | How often calls transfer to humans                      |
+| **User Satisfaction** | Ratings and feedback from users                         |
+| **Average Duration**  | Length of typical conversations                         |
+
+### Iterate Continuously
+
+<Steps>
+  <Step title="Deploy">Launch your agent with initial prompt</Step>
+  <Step title="Monitor">Review conversation logs and metrics</Step>
+  <Step title="Identify Issues">Find where conversations go wrong</Step>
+  <Step title="Refine">Update prompts to address problems</Step>
+  <Step title="Test">Verify improvements before full deployment</Step>
+</Steps>
+
+---
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion title="Agent goes off-topic">
+    Add clearer boundaries and redirect instructions. Include phrases like "If
+    asked about unrelated topics, politely redirect to your purpose."
+  </Accordion>
+
+  <Accordion title="Responses are too long">
+    Add explicit length guidelines: "Keep responses to 2-3 sentences maximum" or
+    "This is a voice conversation—be brief."
+  </Accordion>
+
+  <Accordion title="Agent sounds robotic">
+    Add personality and natural speech elements. Include examples of how to
+    express empathy, use casual language, and vary sentence structure.
+  </Accordion>
+
+  <Accordion title="Users get stuck in loops">
+    Add exit conditions and escalation paths. Ensure there's always a way out of
+    any conversation branch.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Additional Resources
+
+Improve your prompting skills with these resources:
+
+<CardGroup cols={2}>
+  <Card
+    title="OpenAI Prompting Guide"
+    icon="book"
+    href="https://platform.openai.com/docs/guides/prompt-engineering"
+  >
+    Official guide to prompt engineering
+  </Card>
+  <Card
+    title="Learn Prompting"
+    icon="graduation-cap"
+    href="https://learnprompting.org/"
+  >
+    Comprehensive prompting tutorials
+  </Card>
+</CardGroup>
+
+<Tip>
+  The best prompts come from iteration. Start simple, test with real users, and
+  continuously refine based on what you learn.
+</Tip>

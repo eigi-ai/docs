@@ -1,0 +1,318 @@
+---
+title: "Web Widget"
+description: "Embed the eigi.ai widget on your website to enable voice and chat conversations with your AI agents"
+icon: "window"
+---
+
+## Overview
+
+The eigi.ai Web Widget brings your voice AI agent directly to your website. With a simple embed code, visitors can start voice conversations, chat via text, and even share their screen—all without leaving your page.
+
+<Info>
+  **See it in action!** Visit [eigi.ai](https://eigi.ai) to experience the
+  widget live, or embed it on your own website using the code below.
+</Info>
+
+---
+
+## Quick Start
+
+### Step 1: Configure Your Widget
+
+From your [eigi.ai Dashboard](https://eigi.ai), navigate to your agent and select the **Widget** tab. Customize the appearance and behavior to match your brand.
+
+### Step 2: Copy the Embed Code
+
+Once configured, copy the generated script tag:
+
+```html
+<eigi-widget agent-id="YOUR_AGENT_ID"></eigi-widget>
+<script src="https://unpkg.com/@cliniq360/eigi-widget@latest/dist/eigi-widget.js"></script>
+```
+
+### Step 3: Add to Your Website
+
+Paste the code before the closing `</body>` tag of your HTML page, or inside your site's layout file if using a framework like React, Next.js, or Vue.
+
+---
+
+## Configuration Options
+
+### Widget Placement
+
+Control where the widget appears on your page:
+
+| Position       | Description                          |
+| -------------- | ------------------------------------ |
+| `bottom-right` | Default position, lower right corner |
+| `bottom-left`  | Lower left corner                    |
+| `top-right`    | Upper right corner                   |
+| `top-left`     | Upper left corner                    |
+
+### Widget Variants
+
+Choose the widget style that fits your design:
+
+<CardGroup cols={3}>
+  <Card title="Compact" icon="minimize">
+    Minimal footprint, expands on click
+  </Card>
+  <Card title="Medium" icon="square">
+    Balanced size with visible prompt
+  </Card>
+  <Card title="Full" icon="maximize">
+    Expanded view with chat history
+  </Card>
+</CardGroup>
+
+---
+
+## Customization
+
+### Theme & Colors
+
+Personalize every aspect of the widget appearance:
+
+<AccordionGroup>
+  <Accordion title="Primary Colors" icon="palette">
+    - **Primary Color**: Main accent color for buttons and highlights -
+    **Secondary Color**: Supporting color for secondary elements - **Accent
+    Color**: Color for special emphasis and calls-to-action
+  </Accordion>
+
+  <Accordion title="Message Bubbles" icon="message">
+    - **User Message Background**: Color for messages sent by visitors - **Bot
+    Message Background**: Color for agent responses - **System Message**: Color
+    for system notifications
+  </Accordion>
+
+  <Accordion title="Typography" icon="font">
+    - **Font Family**: Choose from system fonts or custom web fonts - **Font
+    Sizes**: Adjust text sizing to match your site - **Text Colors**: Primary,
+    secondary, and muted text options
+  </Accordion>
+
+  <Accordion title="Layout" icon="layout">
+    - **Border Radius**: Control rounded corners (0-24px) - **Message Box
+    Size**: Compact, medium, or expanded - **Background Colors**: Light and dark
+    theme support
+  </Accordion>
+</AccordionGroup>
+
+### Avatar Options
+
+Configure how your agent is visually represented:
+
+| Type      | Description                                    |
+| --------- | ---------------------------------------------- |
+| **Orb**   | Animated gradient orb with customizable colors |
+| **Image** | Upload a custom avatar image or logo           |
+
+---
+
+## Features
+
+### Voice Calls
+
+Enable real-time voice conversations:
+
+<Steps>
+  <Step title="User Clicks Widget">
+    Visitor clicks the widget button to initiate a call
+  </Step>
+  <Step title="Microphone Permission">
+    Browser requests microphone access (one-time)
+  </Step>
+  <Step title="Conversation Begins">
+    Agent greets the user and the conversation flows naturally
+  </Step>
+</Steps>
+
+### Text Chat
+
+Allow visitors to type messages:
+
+```html
+<eigi-widget agent-id="YOUR_AGENT_ID" enable-chat="true"></eigi-widget>
+```
+
+Features include:
+
+- Real-time message streaming
+- Typing indicators
+- Message history within the session
+
+### Screen Sharing
+
+Enable visitors to share their screen during calls (perfect for support scenarios):
+
+- **Screen Share**: Share entire screen or specific window
+- **Camera**: Enable video for face-to-face interactions
+- Works seamlessly with voice calls
+
+### Real-Time Transcripts
+
+Display live conversation transcripts during voice calls, so users can follow along visually while speaking.
+
+---
+
+## Advanced Configuration
+
+### Passing Metadata
+
+Send custom data to your agent for personalized experiences:
+
+```html
+<eigi-widget
+  agent-id="YOUR_AGENT_ID"
+  metadata='{"user_id": "12345", "plan": "premium", "name": "John Doe"}'
+></eigi-widget>
+```
+
+Your agent receives this metadata with every interaction, enabling:
+
+- Personalized greetings
+- Access to user account information
+- Custom conversation flows based on user segments
+
+### Terms & Conditions
+
+Display terms and conditions before starting a conversation:
+
+- Enable/disable T&C requirement
+- Customize the content
+- User must accept before proceeding
+
+### Auto-Connect
+
+Configure the widget to start a call automatically when it loads:
+
+- Great for dedicated support pages
+- Immediate engagement for landing pages
+
+---
+
+## Framework Integration
+
+### React
+
+```jsx
+import "@cliniq360/eigi-widget";
+
+function SupportPage() {
+  return (
+    <div>
+      <h1>Need Help?</h1>
+      <eigi-widget agent-id="YOUR_AGENT_ID" />
+    </div>
+  );
+}
+```
+
+### Next.js
+
+```jsx
+// In your layout or page component
+import Script from "next/script";
+
+export default function Layout({ children }) {
+  return (
+    <>
+      {children}
+      <eigi-widget agent-id="YOUR_AGENT_ID" />
+      <Script
+        src="https://unpkg.com/@cliniq360/eigi-widget@latest/dist/eigi-widget.js"
+        strategy="lazyOnload"
+      />
+    </>
+  );
+}
+```
+
+### Vue
+
+```vue
+<template>
+  <div>
+    <eigi-widget agent-id="YOUR_AGENT_ID"></eigi-widget>
+  </div>
+</template>
+
+<script>
+import "@cliniq360/eigi-widget";
+export default {
+  name: "SupportWidget",
+};
+</script>
+```
+
+---
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Customer Support" icon="headset">
+    Add instant voice support to your help center. Visitors get immediate
+    assistance without waiting for emails or tickets.
+  </Card>
+  <Card title="Sales Qualification" icon="chart-line">
+    Engage website visitors in conversation to qualify leads and schedule demos
+    automatically.
+  </Card>
+  <Card title="Product Guidance" icon="compass">
+    Help users navigate your product or service with voice-guided assistance.
+  </Card>
+  <Card title="Appointment Booking" icon="calendar">
+    Let visitors book appointments directly through voice conversation on your
+    site.
+  </Card>
+</CardGroup>
+
+---
+
+## Best Practices
+
+<Tip>
+  **Placement Matters**: Position the widget where it's visible but not
+  obtrusive. Bottom-right is the most common and expected location.
+</Tip>
+
+<Tip>
+  **Brand Consistency**: Match the widget colors to your website's color scheme
+  for a seamless experience.
+</Tip>
+
+<Tip>
+  **Idle Prompts**: Configure engaging idle messages that encourage visitors to
+  interact ("Need help? Just ask!").
+</Tip>
+
+<Warning>
+  Ensure your privacy policy covers AI conversations and data collection from
+  the widget.
+</Warning>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Widget not appearing">
+    - Verify the agent ID is correct - Check browser console for errors - Ensure
+    the script is loaded after the widget element
+  </Accordion>
+
+  <Accordion title="Microphone not working">
+    - User must grant microphone permission - HTTPS is required for microphone
+    access - Check if another app is using the microphone
+  </Accordion>
+
+  <Accordion title="Styling conflicts">
+    The widget uses Shadow DOM for style isolation. If issues persist, check for
+    aggressive CSS resets on your site.
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Need Help?" icon="envelope" href="mailto:support@eigi.ai">
+  Contact our support team for assistance with widget integration
+</Card>
