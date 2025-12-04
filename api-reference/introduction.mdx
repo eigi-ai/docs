@@ -148,87 +148,6 @@ All API responses follow a consistent JSON format:
 | `429` | Too Many Requests | Rate limit exceeded |
 | `500` | Internal Server Error | Server error occurred |
 
-## SDKs and Libraries
-
-We provide official SDKs for popular programming languages:
-
-<Tabs>
-  <Tab title="Python">
-    ```python
-    pip install eigi-ai
-    ```
-
-    ```python
-    from eigi_ai import EigiClient
-
-    client = EigiClient(api_key="vk_your_api_key_here")
-
-    # Get conversation
-    conversation = client.conversations.get("conversation_id")
-
-    # Initiate outbound call
-    call = client.calls.create(
-        agent_id="agent_id",
-        mobile_number="+1234567890"
-    )
-    ```
-  </Tab>
-
-  <Tab title="Node.js">
-    ```bash
-    npm install eigi-ai
-    ```
-
-    ```javascript
-    const EigiClient = require('eigi-ai');
-
-    const client = new EigiClient({
-      apiKey: 'vk_your_api_key_here'
-    });
-
-    // Get conversation
-    const conversation = await client.conversations.get('conversation_id');
-
-    // Initiate outbound call
-    const call = await client.calls.create({
-      agentId: 'agent_id',
-      mobileNumber: '+1234567890'
-    });
-    ```
-  </Tab>
-
-  <Tab title="cURL">
-    ```bash
-    # Get conversation
-    curl -X GET "https://prod.eigi.ai/v1/public/conversations/{conversation_id}" \
-      -H "X-API-Key: vk_your_api_key_here"
-
-    # Initiate outbound call
-    curl -X POST "https://prod.eigi.ai/v1/public/calls/outbound" \
-      -H "X-API-Key: vk_your_api_key_here" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "agent_id": "agent_id",
-        "params": [{
-          "mobile_number": "+1234567890"
-        }]
-      }'
-    ```
-  </Tab>
-</Tabs>
-
-## Webhooks
-
-Configure webhooks to receive real-time notifications about conversation events:
-
-- `conversation.started` - Call initiated
-- `conversation.answered` - Call answered
-- `conversation.completed` - Call completed successfully
-- `conversation.failed` - Call failed
-- `conversation.disconnected` - Call disconnected
-
-Learn more in the [Webhook Documentation](/api-reference/endpoint/webhook).
-
 ## Need Help?
 
 <CardGroup cols={2}>
@@ -240,24 +159,10 @@ Learn more in the [Webhook Documentation](/api-reference/endpoint/webhook).
     Contact our support team
   </Card>
   <Card
-    title="GitHub"
-    icon="github"
-    href="https://github.com/your-org/agent-360/issues"
-  >
-    Report issues or request features
-  </Card>
-  <Card
     title="Dashboard"
     icon="grid"
     href="https://eigi.ai"
   >
     Manage your API keys and agents
-  </Card>
-  <Card
-    title="Interactive API Docs"
-    icon="swagger"
-    href="https://prod.eigi.ai/docs"
-  >
-    Test APIs in the browser
   </Card>
 </CardGroup>

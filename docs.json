@@ -75,11 +75,6 @@
           "icon": "grid"
         },
         {
-          "anchor": "GitHub",
-          "href": "https://github.com/your-org/agent-360",
-          "icon": "github"
-        },
-        {
           "anchor": "Support",
           "href": "mailto:support@eigi.ai",
           "icon": "envelope"
@@ -119,7 +114,6 @@
   "footer": {
     "socials": {
       "x": "https://x.com/eigi_ai",
-      "github": "https://github.com/your-org/agent-360",
       "linkedin": "https://linkedin.com/company/eigi-ai"
     }
   }
