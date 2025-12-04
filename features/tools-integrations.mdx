@@ -28,18 +28,12 @@ API Tools let your agents interact with external services during conversations:
   <Step title="Define the Endpoint">
     Specify the URL, HTTP method, and headers
   </Step>
-  <Step title="Configure Parameters">
-    Define what data the tool needs
-  </Step>
-  <Step title="Map Responses">
-    Tell the agent how to use the response
-  </Step>
+  <Step title="Configure Parameters">Define what data the tool needs</Step>
+  <Step title="Map Responses">Tell the agent how to use the response</Step>
   <Step title="Test the Tool">
     Validate it works before using in production
   </Step>
-  <Step title="Assign to Agent">
-    Add the tool to your agent's capabilities
-  </Step>
+  <Step title="Assign to Agent">Add the tool to your agent's capabilities</Step>
 </Steps>
 
 ---
@@ -48,13 +42,13 @@ API Tools let your agents interact with external services during conversations:
 
 ### Endpoint Settings
 
-| Setting | Description | Example |
-|---------|-------------|---------|
-| **Name** | Descriptive tool name | "Check Order Status" |
+| Setting         | Description                  | Example                             |
+| --------------- | ---------------------------- | ----------------------------------- |
+| **Name**        | Descriptive tool name        | "Check Order Status"                |
 | **Description** | What the tool does (for LLM) | "Looks up order status by order ID" |
-| **URL** | API endpoint | `https://api.example.com/orders` |
-| **Method** | HTTP method | GET, POST, PUT, DELETE |
-| **Headers** | Request headers | Authorization, Content-Type |
+| **URL**         | API endpoint                 | `https://api.example.com/orders`    |
+| **Method**      | HTTP method                  | GET, POST, PUT, DELETE              |
+| **Headers**     | Request headers              | Authorization, Content-Type         |
 
 ### Authentication
 
@@ -131,7 +125,7 @@ Configure how your agent uses the response:
 }
 
 // Agent says:
-"Your order ORD-12345 has shipped! The tracking number is 
+"Your order ORD-12345 has shipped! The tracking number is
 1Z999AA10123456784 and it should arrive by December 6th."
 ```
 
@@ -139,11 +133,11 @@ Configure how your agent uses the response:
 
 Define fallback behavior:
 
-| Scenario | Configuration |
-|----------|---------------|
-| **API Timeout** | "I'm having trouble looking that up. Let me try again." |
-| **Not Found** | "I couldn't find an order with that number. Can you verify it?" |
-| **Server Error** | "Our system is temporarily unavailable. Can I take a message?" |
+| Scenario         | Configuration                                                   |
+| ---------------- | --------------------------------------------------------------- |
+| **API Timeout**  | "I'm having trouble looking that up. Let me try again."         |
+| **Not Found**    | "I couldn't find an order with that number. Can you verify it?" |
+| **Server Error** | "Our system is temporarily unavailable. Can I take a message?"  |
 
 ---
 
@@ -170,10 +164,10 @@ MCP is a standard for connecting AI models to external tools and data sources:
 
 ### MCP Server Types
 
-| Type | Description | Use Case |
-|------|-------------|----------|
+| Type      | Description           | Use Case                      |
+| --------- | --------------------- | ----------------------------- |
 | **STDIO** | Standard input/output | Local tools, CLI integrations |
-| **HTTP** | REST-based servers | Remote services, cloud tools |
+| **HTTP**  | REST-based servers    | Remote services, cloud tools  |
 
 ---
 
@@ -182,21 +176,13 @@ MCP is a standard for connecting AI models to external tools and data sources:
 ### Configuration
 
 <Steps>
-  <Step title="Add Server">
-    Provide server name and connection details
-  </Step>
+  <Step title="Add Server">Provide server name and connection details</Step>
   <Step title="Configure Connection">
     Set up STDIO command or HTTP endpoint
   </Step>
-  <Step title="Test Connection">
-    Verify the server connects successfully
-  </Step>
-  <Step title="Discover Tools">
-    See what tools the server provides
-  </Step>
-  <Step title="Assign to Agent">
-    Enable the MCP server for your agent
-  </Step>
+  <Step title="Test Connection">Verify the server connects successfully</Step>
+  <Step title="Discover Tools">See what tools the server provides</Step>
+  <Step title="Assign to Agent">Enable the MCP server for your agent</Step>
 </Steps>
 
 ### Connection Settings
@@ -210,7 +196,7 @@ args: ["@your-org/db-mcp-server"]
 env:
   DATABASE_URL: "postgresql://..."
 
-# HTTP Server Example  
+# HTTP Server Example
 name: "Calendar Integration"
 type: http
 url: "https://mcp.yourservice.com"
@@ -243,11 +229,11 @@ eigi.ai optimizes MCP for voice conversations:
 
 ### Performance Metrics
 
-| Metric | Target |
-|--------|--------|
+| Metric              | Target                     |
+| ------------------- | -------------------------- |
 | **Connection Time** | < 500ms for cached servers |
-| **Tool Execution** | < 200ms overhead |
-| **Reconnection** | Automatic within 5 seconds |
+| **Tool Execution**  | < 200ms overhead           |
+| **Reconnection**    | Automatic within 5 seconds |
 
 ---
 
@@ -260,6 +246,7 @@ The LLM decides when to use tools based on conversation context:
 **Customer:** "What's the status of my order 12345?"
 
 **Agent (internally):**
+
 1. Recognizes need for order lookup
 2. Calls `check_order_status` tool with order_id="12345"
 3. Receives response with status and tracking
@@ -270,7 +257,8 @@ The LLM decides when to use tools based on conversation context:
 ### Silent Tool Calls
 
 <Info>
-Tools are called silently in the background. Customers only hear the agent's natural response—never technical details about tool execution.
+  Tools are called silently in the background. Customers only hear the agent's
+  natural response—never technical details about tool execution.
 </Info>
 
 ---
@@ -332,12 +320,12 @@ Before going live, test your tools:
 
 Track how your tools perform:
 
-| Metric | Description |
-|--------|-------------|
-| **Call Volume** | How often each tool is used |
+| Metric           | Description                    |
+| ---------------- | ------------------------------ |
+| **Call Volume**  | How often each tool is used    |
 | **Success Rate** | Percentage of successful calls |
-| **Latency** | Average response time |
-| **Errors** | Error types and frequencies |
+| **Latency**      | Average response time          |
+| **Errors**       | Error types and frequencies    |
 
 ### MCP Server Status
 
@@ -353,19 +341,22 @@ Monitor MCP server health:
 ## Best Practices
 
 <Tip>
-**Clear Descriptions**: Write tool descriptions that help the LLM understand when to use them.
+  **Clear Descriptions**: Write tool descriptions that help the LLM understand
+  when to use them.
 </Tip>
 
 <Tip>
-**Handle Errors Gracefully**: Always configure fallback responses for API failures.
+  **Handle Errors Gracefully**: Always configure fallback responses for API
+  failures.
 </Tip>
 
 <Tip>
-**Test Edge Cases**: Verify behavior with missing data, timeouts, and errors.
+  **Test Edge Cases**: Verify behavior with missing data, timeouts, and errors.
 </Tip>
 
 <Warning>
-Never expose sensitive credentials in tool configurations. Use environment variables or secure credential storage.
+  Never expose sensitive credentials in tool configurations. Use environment
+  variables or secure credential storage.
 </Warning>
 
 ---
@@ -374,22 +365,19 @@ Never expose sensitive credentials in tool configurations. Use environment varia
 
 <AccordionGroup>
   <Accordion title="Tool not being called">
-    - Check the tool description—LLM may not understand when to use it
-    - Verify the tool is assigned to the agent
-    - Test with explicit prompts mentioning the tool's function
+    - Check the tool description—LLM may not understand when to use it - Verify
+    the tool is assigned to the agent - Test with explicit prompts mentioning
+    the tool's function
   </Accordion>
-  
+
   <Accordion title="MCP server not connecting">
-    - Verify connection settings (URL, command, arguments)
-    - Check server logs for errors
-    - Ensure required environment variables are set
-    - Test the server independently first
+    - Verify connection settings (URL, command, arguments) - Check server logs
+    for errors - Ensure required environment variables are set - Test the server
+    independently first
   </Accordion>
-  
+
   <Accordion title="Slow tool responses">
-    - Optimize your API endpoints
-    - Consider caching frequently accessed data
-    - Use connection pooling for MCP servers
-    - Monitor and address timeout issues
+    - Optimize your API endpoints - Consider caching frequently accessed data -
+    Use connection pooling for MCP servers - Monitor and address timeout issues
   </Accordion>
 </AccordionGroup>

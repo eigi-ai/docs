@@ -56,13 +56,13 @@ Let AI help you create better prompts:
 
 ### Enhancement Features
 
-| Feature | Description |
-|---------|-------------|
-| **Clarity Improvements** | Rewrite ambiguous instructions for precision |
-| **Structure Optimization** | Organize prompts into clear, logical sections |
-| **Best Practice Alignment** | Apply proven prompting patterns |
-| **Voice Optimization** | Adapt for natural spoken conversation |
-| **Edge Case Handling** | Add instructions for error scenarios |
+| Feature                     | Description                                   |
+| --------------------------- | --------------------------------------------- |
+| **Clarity Improvements**    | Rewrite ambiguous instructions for precision  |
+| **Structure Optimization**  | Organize prompts into clear, logical sections |
+| **Best Practice Alignment** | Apply proven prompting patterns               |
+| **Voice Optimization**      | Adapt for natural spoken conversation         |
+| **Edge Case Handling**      | Add instructions for error scenarios          |
 
 ---
 
@@ -73,31 +73,28 @@ Let AI help you create better prompts:
 Every prompt change is tracked automatically:
 
 <Info>
-Never lose work. Every save creates a new version you can reference or restore at any time.
+  Never lose work. Every save creates a new version you can reference or restore
+  at any time.
 </Info>
 
 ### Version Features
 
 <AccordionGroup>
   <Accordion title="Automatic Versioning" icon="clock-rotate-left">
-    Every time you save a prompt, a new version is created with:
-    - Timestamp of the change
-    - Commit message describing what changed
-    - Full snapshot of the prompt content
+    Every time you save a prompt, a new version is created with: - Timestamp of
+    the change - Commit message describing what changed - Full snapshot of the
+    prompt content
   </Accordion>
-  
+
   <Accordion title="Commit Messages" icon="message">
-    Add descriptive messages to each version:
-    - "Added error handling for invalid order numbers"
-    - "Improved greeting for warmer tone"
-    - "Updated business hours information"
+    Add descriptive messages to each version: - "Added error handling for
+    invalid order numbers" - "Improved greeting for warmer tone" - "Updated
+    business hours information"
   </Accordion>
-  
+
   <Accordion title="Version Browser" icon="list">
-    Browse through all previous versions:
-    - See version timeline
-    - Preview any version
-    - Compare versions side-by-side
+    Browse through all previous versions: - See version timeline - Preview any
+    version - Compare versions side-by-side
   </Accordion>
 </AccordionGroup>
 
@@ -158,26 +155,23 @@ Revert to any previous version with one click:
   <Step title="Select Version">
     Find the version you want to restore (use diff to compare)
   </Step>
-  <Step title="Preview">
-    Review the full prompt content before restoring
-  </Step>
-  <Step title="Restore">
-    Click "Restore This Version" to revert instantly
-  </Step>
+  <Step title="Preview">Review the full prompt content before restoring</Step>
+  <Step title="Restore">Click "Restore This Version" to revert instantly</Step>
 </Steps>
 
 ### Rollback Safety
 
 <Tip>
-Rolling back creates a new version, so you never lose the current state. You can always roll forward again if needed.
+  Rolling back creates a new version, so you never lose the current state. You
+  can always roll forward again if needed.
 </Tip>
 
-| Action | Result |
-|--------|--------|
-| **Restore Version** | Creates new version with old content |
-| **Original Preserved** | Current version saved in history |
-| **Immediate Effect** | Agent uses restored prompt instantly |
-| **Audit Trail** | Rollback noted in version history |
+| Action                 | Result                               |
+| ---------------------- | ------------------------------------ |
+| **Restore Version**    | Creates new version with old content |
+| **Original Preserved** | Current version saved in history     |
+| **Immediate Effect**   | Agent uses restored prompt instantly |
+| **Audit Trail**        | Rollback noted in version history    |
 
 ---
 
@@ -230,12 +224,12 @@ Analyze the conversation and extract:
 
 Insert dynamic data that changes per conversation:
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `{{customer_name}}` | Contact's name from phonebook | "John Smith" |
-| `{{order_id}}` | Order reference number | "ORD-12345" |
-| `{{appointment_time}}` | Scheduled time | "2:30 PM" |
-| `{{custom_field}}` | Any custom contact data | Your data |
+| Variable               | Description                   | Example      |
+| ---------------------- | ----------------------------- | ------------ |
+| `{{customer_name}}`    | Contact's name from phonebook | "John Smith" |
+| `{{order_id}}`         | Order reference number        | "ORD-12345"  |
+| `{{appointment_time}}` | Scheduled time                | "2:30 PM"    |
+| `{{custom_field}}`     | Any custom contact data       | Your data    |
 
 ### Example Usage
 
@@ -276,29 +270,35 @@ Use templates for common scenarios:
 ### Prompt Structure
 
 <Tip>
-**Use Clear Sections**: Organize prompts into Identity, Style, Guidelines, Tasks, and Error Handling sections.
+  **Use Clear Sections**: Organize prompts into Identity, Style, Guidelines,
+  Tasks, and Error Handling sections.
 </Tip>
 
 <Tip>
-**Be Specific**: Vague instructions lead to inconsistent behavior. Be explicit about what you want.
+  **Be Specific**: Vague instructions lead to inconsistent behavior. Be explicit
+  about what you want.
 </Tip>
 
 <Tip>
-**Commit Often**: Save versions frequently with descriptive messages for easy tracking.
+  **Commit Often**: Save versions frequently with descriptive messages for easy
+  tracking.
 </Tip>
 
 ### Version Control
 
 <Tip>
-**Meaningful Messages**: Write commit messages that explain WHY you made changes, not just what changed.
+  **Meaningful Messages**: Write commit messages that explain WHY you made
+  changes, not just what changed.
 </Tip>
 
 <Tip>
-**Test Before Major Changes**: Create a version, test thoroughly, then make significant edits.
+  **Test Before Major Changes**: Create a version, test thoroughly, then make
+  significant edits.
 </Tip>
 
 <Warning>
-Don't make untested changes to production agents during peak hours. Use the sandbox first.
+  Don't make untested changes to production agents during peak hours. Use the
+  sandbox first.
 </Warning>
 
 ---
@@ -307,21 +307,19 @@ Don't make untested changes to production agents during peak hours. Use the sand
 
 <AccordionGroup>
   <Accordion title="Agent not following instructions">
-    - Check for conflicting instructions in the prompt
-    - Ensure instructions are explicit, not implied
-    - Try the AI enhancement feature for clarity
-    - Review the diff to see recent changes that might have caused issues
+    - Check for conflicting instructions in the prompt - Ensure instructions are
+    explicit, not implied - Try the AI enhancement feature for clarity - Review
+    the diff to see recent changes that might have caused issues
   </Accordion>
-  
+
   <Accordion title="Lost a good version">
-    - Open version history and browse past versions
-    - Use the diff viewer to find the version with the content you need
-    - Restore that version or copy specific sections
+    - Open version history and browse past versions - Use the diff viewer to
+    find the version with the content you need - Restore that version or copy
+    specific sections
   </Accordion>
-  
+
   <Accordion title="Prompt too long">
-    - Focus on essential instructions only
-    - Move detailed knowledge to the Assets/Knowledge Base
-    - Use concise language while maintaining clarity
+    - Focus on essential instructions only - Move detailed knowledge to the
+    Assets/Knowledge Base - Use concise language while maintaining clarity
   </Accordion>
 </AccordionGroup>

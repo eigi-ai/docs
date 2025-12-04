@@ -54,15 +54,15 @@ Create a custom schema that tells the AI exactly what information to pull from c
 
 ### Example Schema
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `customer_sentiment` | Choice | positive, neutral, negative |
-| `issue_category` | Text | Type of issue discussed |
-| `resolution_status` | Boolean | Was the issue resolved? |
-| `satisfaction_score` | Number | 1-10 rating if provided |
-| `follow_up_needed` | Boolean | Does customer need follow-up? |
-| `key_topics` | Text | Main topics discussed |
-| `action_items` | Text | Next steps identified |
+| Field                | Type    | Description                   |
+| -------------------- | ------- | ----------------------------- |
+| `customer_sentiment` | Choice  | positive, neutral, negative   |
+| `issue_category`     | Text    | Type of issue discussed       |
+| `resolution_status`  | Boolean | Was the issue resolved?       |
+| `satisfaction_score` | Number  | 1-10 rating if provided       |
+| `follow_up_needed`   | Boolean | Does customer need follow-up? |
+| `key_topics`         | Text    | Main topics discussed         |
+| `action_items`       | Text    | Next steps identified         |
 
 ---
 
@@ -75,20 +75,20 @@ Write specific instructions for how calls should be analyzed:
 ```text
 Analyze this customer service conversation and extract:
 
-1. Customer Sentiment: Determine if the customer's overall sentiment 
+1. Customer Sentiment: Determine if the customer's overall sentiment
    was positive, neutral, or negative based on their tone and words.
 
-2. Issue Category: Identify the main reason for the call 
+2. Issue Category: Identify the main reason for the call
    (billing, technical, general inquiry, complaint, etc.)
 
-3. Resolution: Did the agent successfully resolve the customer's issue? 
+3. Resolution: Did the agent successfully resolve the customer's issue?
    Answer true or false.
 
-4. Satisfaction Score: If the customer expressed satisfaction or 
-   gave a rating, capture it on a 1-10 scale. Otherwise, estimate 
+4. Satisfaction Score: If the customer expressed satisfaction or
+   gave a rating, capture it on a 1-10 scale. Otherwise, estimate
    based on the conversation tone.
 
-5. Follow-up Needed: Based on the conversation, does this customer 
+5. Follow-up Needed: Based on the conversation, does this customer
    need any follow-up action? Answer true or false.
 
 6. Summary: Provide a 2-3 sentence summary of the call.
@@ -104,21 +104,19 @@ Enable recording for compliance, training, or quality assurance:
 
 <AccordionGroup>
   <Accordion title="Recording Settings" icon="circle-dot">
-    - **Enable/Disable**: Toggle recording per agent
-    - **Automatic Start**: Recording begins when call connects
-    - **Secure Storage**: Encrypted storage with access controls
+    - **Enable/Disable**: Toggle recording per agent - **Automatic Start**:
+    Recording begins when call connects - **Secure Storage**: Encrypted storage
+    with access controls
   </Accordion>
-  
+
   <Accordion title="Playback" icon="play">
-    - Review recordings directly in the dashboard
-    - Synchronized with conversation transcript
-    - Adjustable playback speed
+    - Review recordings directly in the dashboard - Synchronized with
+    conversation transcript - Adjustable playback speed
   </Accordion>
-  
+
   <Accordion title="Retention" icon="clock">
-    - Configurable retention periods
-    - Automatic cleanup of old recordings
-    - Export before deletion if needed
+    - Configurable retention periods - Automatic cleanup of old recordings -
+    Export before deletion if needed
   </Accordion>
 </AccordionGroup>
 
@@ -135,7 +133,7 @@ When using video avatars, additional analysis capabilities are available:
 - **Interaction Quality**: Assess video call quality and experience
 
 <Info>
-Video analysis is available for agents using HeyGen or Tavus video avatars.
+  Video analysis is available for agents using HeyGen or Tavus video avatars.
 </Info>
 
 ---
@@ -147,6 +145,7 @@ Video analysis is available for agents using HeyGen or Tavus video avatars.
 The AI extracts structured data from natural conversations:
 
 **Example Conversation:**
+
 ```
 Agent: "May I have your email address for the confirmation?"
 Customer: "Sure, it's john.smith@email.com"
@@ -155,6 +154,7 @@ Customer: "How about next Tuesday at 2pm?"
 ```
 
 **Extracted Data:**
+
 ```json
 {
   "email": "john.smith@email.com",
@@ -175,29 +175,25 @@ Access analysis data for each conversation:
   <Step title="Open Call History">
     Navigate to Call History in the dashboard
   </Step>
-  <Step title="Select Conversation">
-    Click on any completed conversation
-  </Step>
+  <Step title="Select Conversation">Click on any completed conversation</Step>
   <Step title="View Analysis">
     See the Analysis tab with all extracted data
   </Step>
-  <Step title="Export">
-    Download data in JSON or CSV format
-  </Step>
+  <Step title="Export">Download data in JSON or CSV format</Step>
 </Steps>
 
 ### Data Fields
 
 Each analyzed call includes:
 
-| Field | Content |
-|-------|---------|
-| **Transcript** | Full conversation text |
-| **Summary** | AI-generated call summary |
-| **Duration** | Call length |
-| **Outcome** | Success/failure/transfer |
+| Field             | Content                        |
+| ----------------- | ------------------------------ |
+| **Transcript**    | Full conversation text         |
+| **Summary**       | AI-generated call summary      |
+| **Duration**      | Call length                    |
+| **Outcome**       | Success/failure/transfer       |
 | **Custom Fields** | All schema-defined extractions |
-| **Timestamps** | Start, end, key moments |
+| **Timestamps**    | Start, end, key moments        |
 
 ---
 
@@ -224,12 +220,12 @@ Trigger notifications based on analysis results:
 
 ### Example Triggers
 
-| Trigger | Condition | Action |
-|---------|-----------|--------|
-| Hot Lead | `lead_score > 80` | Email sales team |
-| Negative Sentiment | `sentiment = negative` | Alert support manager |
-| Escalation Needed | `escalation_requested = true` | Notify supervisor |
-| High Value | `deal_value > 10000` | Alert account executive |
+| Trigger            | Condition                     | Action                  |
+| ------------------ | ----------------------------- | ----------------------- |
+| Hot Lead           | `lead_score > 80`             | Email sales team        |
+| Negative Sentiment | `sentiment = negative`        | Alert support manager   |
+| Escalation Needed  | `escalation_requested = true` | Notify supervisor       |
+| High Value         | `deal_value > 10000`          | Alert account executive |
 
 ---
 
@@ -264,19 +260,23 @@ Trigger notifications based on analysis results:
 ## Best Practices
 
 <Tip>
-**Start Simple**: Begin with a few key fields and expand as you learn what's valuable.
+  **Start Simple**: Begin with a few key fields and expand as you learn what's
+  valuable.
 </Tip>
 
 <Tip>
-**Be Specific**: Clear, specific schema fields yield more accurate extractions.
+  **Be Specific**: Clear, specific schema fields yield more accurate
+  extractions.
 </Tip>
 
 <Tip>
-**Test Your Schema**: Run analysis on test calls to verify fields extract correctly.
+  **Test Your Schema**: Run analysis on test calls to verify fields extract
+  correctly.
 </Tip>
 
 <Warning>
-Ensure your analysis practices comply with privacy regulations and disclose recording where required.
+  Ensure your analysis practices comply with privacy regulations and disclose
+  recording where required.
 </Warning>
 
 ---
@@ -285,19 +285,17 @@ Ensure your analysis practices comply with privacy regulations and disclose reco
 
 <AccordionGroup>
   <Accordion title="Analysis not running">
-    - Verify "Call Analysis Enabled" is toggled on
-    - Check that you have an analysis prompt configured
-    - Ensure the call completed successfully
+    - Verify "Call Analysis Enabled" is toggled on - Check that you have an
+    analysis prompt configured - Ensure the call completed successfully
   </Accordion>
-  
+
   <Accordion title="Fields extracting incorrectly">
-    - Review your analysis prompt for clarity
-    - Make field definitions more specific
-    - Test with sample conversations
+    - Review your analysis prompt for clarity - Make field definitions more
+    specific - Test with sample conversations
   </Accordion>
-  
+
   <Accordion title="Missing data">
-    - Some fields may be empty if data wasn't discussed
-    - Add "N/A" or default value instructions to your prompt
+    - Some fields may be empty if data wasn't discussed - Add "N/A" or default
+    value instructions to your prompt
   </Accordion>
 </AccordionGroup>

@@ -38,8 +38,8 @@ Bring your voice AI agents directly to your website visitors. The eigi.ai widget
 Add the widget to any website with a single script tag:
 
 ```html
-<script 
-  src="https://unpkg.com/@cliniq360/eigi-widget@latest/dist/eigi-widget.js" 
+<script
+  src="https://unpkg.com/@cliniq360/eigi-widget@latest/dist/eigi-widget.js"
   data-agent-id="your-agent-id"
   async
 ></script>
@@ -50,18 +50,12 @@ That's it! The widget appears automatically and is ready to use.
 ### Getting Your Agent ID
 
 <Steps>
-  <Step title="Create an Agent">
-    Set up your voice agent in the platform
-  </Step>
+  <Step title="Create an Agent">Set up your voice agent in the platform</Step>
   <Step title="Go to Widget Settings">
     Navigate to the widget configuration section
   </Step>
-  <Step title="Copy Agent ID">
-    Copy the unique agent ID for embedding
-  </Step>
-  <Step title="Add to Website">
-    Paste the script tag into your HTML
-  </Step>
+  <Step title="Copy Agent ID">Copy the unique agent ID for embedding</Step>
+  <Step title="Add to Website">Paste the script tag into your HTML</Step>
 </Steps>
 
 ---
@@ -70,12 +64,12 @@ That's it! The widget appears automatically and is ready to use.
 
 ### Basic Options
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| `data-agent-id` | Your agent's unique ID | Required |
-| `data-position` | Widget position on page | `bottom-right` |
-| `data-theme` | Light or dark theme | `light` |
-| `data-language` | Widget interface language | `en` |
+| Option          | Description               | Default        |
+| --------------- | ------------------------- | -------------- |
+| `data-agent-id` | Your agent's unique ID    | Required       |
+| `data-position` | Widget position on page   | `bottom-right` |
+| `data-theme`    | Light or dark theme       | `light`        |
+| `data-language` | Widget interface language | `en`           |
 
 ### Position Options
 
@@ -109,12 +103,12 @@ When a visitor clicks the widget:
 
 ### Voice Features
 
-| Feature | Description |
-|---------|-------------|
-| **Echo Cancellation** | Clear audio without feedback |
-| **Noise Suppression** | Background noise filtered out |
-| **Auto Gain Control** | Consistent volume levels |
-| **Interruption Handling** | Natural conversational flow |
+| Feature                   | Description                   |
+| ------------------------- | ----------------------------- |
+| **Echo Cancellation**     | Clear audio without feedback  |
+| **Noise Suppression**     | Background noise filtered out |
+| **Auto Gain Control**     | Consistent volume levels      |
+| **Interruption Handling** | Natural conversational flow   |
 
 ---
 
@@ -128,24 +122,18 @@ Enable video avatars for face-to-face interactions:
   <Step title="Configure Video Agent">
     Set up your agent with a video avatar
   </Step>
-  <Step title="Enable Video Widget">
-    Turn on video mode in widget settings
-  </Step>
-  <Step title="Choose Avatar">
-    Select from HeyGen or Tavus avatars
-  </Step>
-  <Step title="Test Experience">
-    Preview the video interaction
-  </Step>
+  <Step title="Enable Video Widget">Turn on video mode in widget settings</Step>
+  <Step title="Choose Avatar">Select from HeyGen or Tavus avatars</Step>
+  <Step title="Test Experience">Preview the video interaction</Step>
 </Steps>
 
 ### Video Options
 
-| Option | Description |
-|--------|-------------|
-| **Avatar Only** | Visitor sees avatar, no camera needed |
-| **Two-Way Video** | Both avatar and visitor camera |
-| **Avatar + Screen Share** | Avatar with visitor screen sharing |
+| Option                    | Description                           |
+| ------------------------- | ------------------------------------- |
+| **Avatar Only**           | Visitor sees avatar, no camera needed |
+| **Two-Way Video**         | Both avatar and visitor camera        |
+| **Avatar + Screen Share** | Avatar with visitor screen sharing    |
 
 ---
 
@@ -178,7 +166,8 @@ Let visitors share their screen for better support:
 4. Both continue the voice conversation
 
 <Info>
-Screen sharing is opt-in. Visitors control what they share and can stop sharing at any time.
+  Screen sharing is opt-in. Visitors control what they share and can stop
+  sharing at any time.
 </Info>
 
 ---
@@ -189,12 +178,12 @@ Screen sharing is opt-in. Visitors control what they share and can stop sharing 
 
 Enable visitor cameras for more personal interactions:
 
-| Use Case | Benefit |
-|----------|---------|
+| Use Case                  | Benefit                              |
+| ------------------------- | ------------------------------------ |
 | **Identity Verification** | Visual confirmation during processes |
-| **Document Review** | Visitor shows documents to agent |
-| **Product Issues** | Customer shows physical products |
-| **Sign Language** | Accessibility support |
+| **Document Review**       | Visitor shows documents to agent     |
+| **Product Issues**        | Customer shows physical products     |
+| **Sign Language**         | Accessibility support                |
 
 ### Privacy Controls
 
@@ -211,19 +200,19 @@ Enable visitor cameras for more personal interactions:
 
 Match the widget to your brand:
 
-| Customization | Options |
-|---------------|---------|
-| **Button Color** | Any hex color |
-| **Button Icon** | Custom icon or default |
-| **Button Size** | Small, medium, large |
-| **Button Text** | Custom label |
-| **Theme** | Light, dark, or custom |
+| Customization    | Options                |
+| ---------------- | ---------------------- |
+| **Button Color** | Any hex color          |
+| **Button Icon**  | Custom icon or default |
+| **Button Size**  | Small, medium, large   |
+| **Button Text**  | Custom label           |
+| **Theme**        | Light, dark, or custom |
 
 ### Custom Branding
 
 ```html
-<script 
-  src="https://unpkg.com/@cliniq360/eigi-widget@latest/dist/eigi-widget.js" 
+<script
+  src="https://unpkg.com/@cliniq360/eigi-widget@latest/dist/eigi-widget.js"
   data-agent-id="your-agent-id"
   data-button-color="#4F46E5"
   data-button-text="Talk to us"
@@ -252,6 +241,7 @@ Provide alternatives when voice isn't suitable:
 ### Automatic Fallback
 
 The widget can automatically offer chat when:
+
 - Microphone access is denied
 - Poor audio quality detected
 - User prefers typing
@@ -264,12 +254,12 @@ The widget can automatically offer chat when:
 
 Start conversations proactively:
 
-| Trigger | Use Case |
-|---------|----------|
-| **Time on Page** | Open widget after 30 seconds |
-| **Scroll Depth** | Engage when user scrolls to pricing |
-| **Exit Intent** | Catch users about to leave |
-| **Page Visit** | Specific pages trigger specific agents |
+| Trigger          | Use Case                               |
+| ---------------- | -------------------------------------- |
+| **Time on Page** | Open widget after 30 seconds           |
+| **Scroll Depth** | Engage when user scrolls to pricing    |
+| **Exit Intent**  | Catch users about to leave             |
+| **Page Visit**   | Specific pages trigger specific agents |
 
 ### Programmatic Control
 
@@ -286,8 +276,8 @@ EigiWidget.close();
 EigiWidget.open({ message: "Hi, I need help with pricing" });
 
 // Listen for events
-EigiWidget.on('call.started', () => {
-  console.log('Call started');
+EigiWidget.on("call.started", () => {
+  console.log("Call started");
 });
 ```
 
@@ -299,24 +289,24 @@ EigiWidget.on('call.started', () => {
 
 Monitor widget performance:
 
-| Metric | Description |
-|--------|-------------|
-| **Widget Opens** | How often visitors open the widget |
-| **Calls Started** | Conversations initiated |
-| **Avg. Duration** | How long conversations last |
-| **Conversion Rate** | Leads captured from widget |
-| **Bounce Rate** | Widget opened but no call started |
+| Metric              | Description                        |
+| ------------------- | ---------------------------------- |
+| **Widget Opens**    | How often visitors open the widget |
+| **Calls Started**   | Conversations initiated            |
+| **Avg. Duration**   | How long conversations last        |
+| **Conversion Rate** | Leads captured from widget         |
+| **Bounce Rate**     | Widget opened but no call started  |
 
 ### Conversion Tracking
 
 Connect widget events to your analytics:
 
 ```javascript
-EigiWidget.on('call.completed', (data) => {
+EigiWidget.on("call.completed", (data) => {
   // Send to Google Analytics
-  gtag('event', 'voice_call_completed', {
+  gtag("event", "voice_call_completed", {
     duration: data.duration,
-    outcome: data.outcome
+    outcome: data.outcome,
   });
 });
 ```
@@ -350,11 +340,11 @@ EigiWidget.on('call.completed', (data) => {
 
 Support visitors in their language:
 
-| Setting | Description |
-|---------|-------------|
-| **Widget UI** | Button text, loading messages in visitor's language |
-| **Agent Language** | AI responds in the same language |
-| **Auto-Detection** | Detect browser language automatically |
+| Setting            | Description                                         |
+| ------------------ | --------------------------------------------------- |
+| **Widget UI**      | Button text, loading messages in visitor's language |
+| **Agent Language** | AI responds in the same language                    |
+| **Auto-Detection** | Detect browser language automatically               |
 
 ---
 
@@ -376,19 +366,22 @@ Track which variations convert better and iterate.
 ## Best Practices
 
 <Tip>
-**Prominent Placement**: Position the widget where it's visible but not intrusive.
+  **Prominent Placement**: Position the widget where it's visible but not
+  intrusive.
 </Tip>
 
 <Tip>
-**Match Your Brand**: Use colors and messaging consistent with your website.
+  **Match Your Brand**: Use colors and messaging consistent with your website.
 </Tip>
 
 <Tip>
-**Set Expectations**: Use button text that tells visitors what will happen ("Talk to AI Assistant").
+  **Set Expectations**: Use button text that tells visitors what will happen
+  ("Talk to AI Assistant").
 </Tip>
 
 <Warning>
-Test the widget experience thoroughly on different browsers and devices before going live.
+  Test the widget experience thoroughly on different browsers and devices before
+  going live.
 </Warning>
 
 ---
@@ -397,30 +390,24 @@ Test the widget experience thoroughly on different browsers and devices before g
 
 <AccordionGroup>
   <Accordion title="Widget not appearing">
-    - Verify the script tag is in your HTML
-    - Check that the agent ID is correct
-    - Confirm no JavaScript errors in console
-    - Ensure the agent is active and published
+    - Verify the script tag is in your HTML - Check that the agent ID is correct
+    - Confirm no JavaScript errors in console - Ensure the agent is active and
+    published
   </Accordion>
-  
+
   <Accordion title="No audio / microphone issues">
-    - Check browser has microphone permission
-    - Verify HTTPS (required for microphone access)
-    - Test microphone with other apps
-    - Try a different browser
+    - Check browser has microphone permission - Verify HTTPS (required for
+    microphone access) - Test microphone with other apps - Try a different
+    browser
   </Accordion>
-  
+
   <Accordion title="Video not working">
-    - Confirm video avatar is configured
-    - Check camera permissions in browser
-    - Ensure sufficient bandwidth
-    - Verify agent supports video mode
+    - Confirm video avatar is configured - Check camera permissions in browser -
+    Ensure sufficient bandwidth - Verify agent supports video mode
   </Accordion>
-  
+
   <Accordion title="Poor audio quality">
-    - Check internet connection stability
-    - Close other apps using audio
-    - Use headphones to prevent echo
-    - Try a wired connection instead of WiFi
+    - Check internet connection stability - Close other apps using audio - Use
+    headphones to prevent echo - Try a wired connection instead of WiFi
   </Accordion>
 </AccordionGroup>
