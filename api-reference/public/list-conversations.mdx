@@ -1,7 +1,7 @@
 ---
-title: 'List Conversations'
-api: 'GET /v1/public/conversations'
-description: 'Retrieve a paginated list of conversations with comprehensive filtering options'
+title: "List Conversations"
+api: "GET /v1/public/conversations"
+description: "Retrieve a paginated list of conversations with comprehensive filtering options"
 ---
 
 ## Overview
@@ -49,7 +49,8 @@ This endpoint returns a paginated list of conversations based on the API key own
 </ParamField>
 
 <ParamField query="conversation_status" type="string">
-  Filter by conversation status. Options: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`, `FAILED`
+  Filter by conversation status. Options: `IN_PROGRESS`, `COMPLETED`,
+  `DISCONNECTED`, `FAILED`
 </ParamField>
 
 ### Date & Time Filters
@@ -57,35 +58,40 @@ This endpoint returns a paginated list of conversations based on the API key own
 <ParamField query="from_date" type="datetime">
   Filter conversations created on or after this date (ISO 8601 format)
 
-  Example: `2025-12-01T00:00:00Z`
+Example: `2025-12-01T00:00:00Z`
+
 </ParamField>
 
 <ParamField query="to_date" type="datetime">
   Filter conversations created on or before this date (ISO 8601 format)
 
-  Example: `2025-12-31T23:59:59Z`
+Example: `2025-12-31T23:59:59Z`
+
 </ParamField>
 
 <ParamField query="from_time" type="string">
   Filter by time of day - start time (HH:MM format, 24-hour)
 
-  Example: `09:00`
+Example: `09:00`
+
 </ParamField>
 
 <ParamField query="to_time" type="string">
   Filter by time of day - end time (HH:MM format, 24-hour)
 
-  Example: `17:00`
+Example: `17:00`
+
 </ParamField>
 
 <ParamField query="timezone_offset" type="integer" default="330">
   Timezone offset in minutes from UTC for time filtering
 
-  Examples:
-  - IST: `330` (UTC+5:30)
-  - EST: `-300` (UTC-5:00)
-  - PST: `-480` (UTC-8:00)
-</ParamField>
+Examples:
+
+- IST: `330` (UTC+5:30)
+- EST: `-300` (UTC-5:00)
+- PST: `-480` (UTC-8:00)
+  </ParamField>
 
 ## Response
 
@@ -94,31 +100,27 @@ This endpoint returns a paginated list of conversations based on the API key own
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  Human-readable message describing the result (e.g., "Retrieved 5 conversations")
+  Human-readable message describing the result (e.g., "Retrieved 5
+  conversations")
 </ResponseField>
 
 <ResponseField name="data" type="array">
-  Array of conversation objects matching the filter criteria. Each conversation contains:
-  - `agent_id`: ID of the agent
-  - `conversation_id`: Unique UUID for the conversation
-  - `conversation_type`: `DAILY`, `TELEPHONY`, `WHATSAPP`, or `CHAT`
-  - `conversation_analysis`: AI analysis results (null if not analyzed)
-  - `conversation_status`: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`, or `FAILED`
-  - `notes`: Additional notes
-  - `conversation_transcript`: Array of messages with role, content, timestamp
-  - `created_by`: User ID who created the conversation
-  - `conversation_metadata`: Type-specific metadata
-  - `created_at`: Creation timestamp
-  - `updated_at`: Last update timestamp
-  - `id`: Internal document ID
+  Array of conversation objects matching the filter criteria. Each conversation
+  contains: - `agent_id`: ID of the agent - `conversation_id`: Unique UUID for
+  the conversation - `conversation_type`: `DAILY`, `TELEPHONY`, `WHATSAPP`, or
+  `CHAT` - `conversation_analysis`: AI analysis results (null if not analyzed) -
+  `conversation_status`: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`, or `FAILED`
+  - `notes`: Additional notes - `conversation_transcript`: Array of messages
+  with role, content, timestamp - `created_by`: User ID who created the
+  conversation - `conversation_metadata`: Type-specific metadata - `created_at`:
+  Creation timestamp - `updated_at`: Last update timestamp - `id`: Internal
+  document ID
 </ResponseField>
 
 <ResponseField name="pagination" type="object">
-  Pagination information containing:
-  - `total`: Total number of conversations matching filters
-  - `page`: Current page number
-  - `page_size`: Number of items per page
-  - `total_pages`: Total number of pages available
+  Pagination information containing: - `total`: Total number of conversations
+  matching filters - `page`: Current page number - `page_size`: Number of items
+  per page - `total_pages`: Total number of pages available
 </ResponseField>
 
 <RequestExample>
@@ -152,18 +154,18 @@ print(f"Total: {data['pagination']['total']}")
 ```
 
 ```javascript Node.js
-const axios = require('axios');
+const axios = require("axios");
 
 const response = await axios.get(
-  'https://prod.eigi.ai/v1/public/conversations',
+  "https://prod.eigi.ai/v1/public/conversations",
   {
     headers: {
-      'X-API-Key': 'vk_your_api_key_here'
+      "X-API-Key": "vk_your_api_key_here",
     },
     params: {
       page: 1,
-      page_size: 5
-    }
+      page_size: 5,
+    },
   }
 );
 
@@ -211,9 +213,7 @@ console.log(response.data);
       "agent_id": "68ea2517dbb84c09bae1ba0a",
       "conversation_id": "35d33a43-176c-405c-92bf-db972035df28",
       "conversation_type": "TELEPHONY",
-      "conversation_analysis": [
-        { "is_good": true }
-      ],
+      "conversation_analysis": [{ "is_good": true }],
       "conversation_status": "COMPLETED",
       "notes": "Re-analysis completed successfully",
       "conversation_transcript": null,
@@ -261,11 +261,11 @@ console.log(response.data);
 
 ## Status Codes
 
-| Status Code | Description |
-|-------------|-------------|
-| 200 | Successfully retrieved conversations |
-| 401 | Missing, invalid, inactive, or expired API key |
-| 500 | Internal server error |
+| Status Code | Description                                    |
+| ----------- | ---------------------------------------------- |
+| 200         | Successfully retrieved conversations           |
+| 401         | Missing, invalid, inactive, or expired API key |
+| 500         | Internal server error                          |
 
 ## Use Cases
 
@@ -274,17 +274,23 @@ console.log(response.data);
     Retrieve all conversations for a date range to build analytics dashboards showing call volumes, success rates, and trends.
   </Accordion>
 
-  <Accordion title="Campaign Reporting">
-    Filter by agent and date range to analyze the performance of specific campaigns or outreach efforts.
-  </Accordion>
+{" "}
+<Accordion title="Campaign Reporting">
+  Filter by agent and date range to analyze the performance of specific
+  campaigns or outreach efforts.
+</Accordion>
 
-  <Accordion title="Business Hours Analysis">
-    Use time filters to analyze conversations during specific business hours and optimize agent availability.
-  </Accordion>
+{" "}
+<Accordion title="Business Hours Analysis">
+  Use time filters to analyze conversations during specific business hours and
+  optimize agent availability.
+</Accordion>
 
-  <Accordion title="Status Monitoring">
-    Filter by status to monitor failed calls, track in-progress conversations, or review completed interactions.
-  </Accordion>
+{" "}
+<Accordion title="Status Monitoring">
+  Filter by status to monitor failed calls, track in-progress conversations, or
+  review completed interactions.
+</Accordion>
 
   <Accordion title="Export for CRM">
     Paginate through all conversations to export data for integration with CRM systems or data warehouses.
@@ -299,14 +305,17 @@ console.log(response.data);
 ```bash
 ?agent_id=68ea2517dbb84c09bae1ba0a&conversation_status=COMPLETED&from_date=2025-12-01
 ```
+
 </Tip>
 
 <Tip>
-**Time Zone Handling**: The `timezone_offset` parameter helps filter conversations by local time. For IST (India), use 330 minutes (UTC+5:30).
+  **Time Zone Handling**: The `timezone_offset` parameter helps filter
+  conversations by local time. For IST (India), use 330 minutes (UTC+5:30).
 </Tip>
 
 <Tip>
-**Pagination Best Practices**: Start with a smaller `page_size` (10-20) for faster responses. Use `has_next` to determine if more pages are available.
+  **Pagination Best Practices**: Start with a smaller `page_size` (10-20) for
+  faster responses. Use `has_next` to determine if more pages are available.
 </Tip>
 
 ## Notes

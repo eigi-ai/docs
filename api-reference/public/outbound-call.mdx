@@ -1,7 +1,7 @@
 ---
-title: 'Initiate Outbound Call'
-api: 'POST /v1/public/calls/outbound'
-description: 'Initiate one or more outbound calls to phone numbers using AI voice agents'
+title: "Initiate Outbound Call"
+api: "POST /v1/public/calls/outbound"
+description: "Initiate one or more outbound calls to phone numbers using AI voice agents"
 ---
 
 ## Overview
@@ -19,21 +19,24 @@ This endpoint creates conversations and initiates outbound calls via telephony p
 <ParamField body="agent_id" type="string" required>
   The ID of the AI agent to use for the call. The agent must be owned by the API key holder and properly configured with LLM, TTS, and STT providers.
 
-  Example: `68ea2517dbb84c09bae1ba0a`
+Example: `68ea2517dbb84c09bae1ba0a`
+
 </ParamField>
 
 <ParamField body="params" type="array" required>
   Array of call parameter objects. Each object represents one outbound call to initiate.
 
-  **Array Item Structure:**
-  - `mobile_number` (string, required): Phone number to call in E.164 format (e.g., `+919876543210`)
-  - `metadata` (object, optional): Custom metadata to attach to the conversation
-</ParamField>
+**Array Item Structure:**
+
+- `mobile_number` (string, required): Phone number to call in E.164 format (e.g., `+919876543210`)
+- `metadata` (object, optional): Custom metadata to attach to the conversation
+  </ParamField>
 
 <ParamField body="telephony_provider" type="string" default="PLIVO">
   Telephony provider to use for the call. Options: `PLIVO` or `TWILIO`
 
-  Defaults to `PLIVO` if not specified.
+Defaults to `PLIVO` if not specified.
+
 </ParamField>
 
 ## Response
@@ -43,11 +46,15 @@ This endpoint creates conversations and initiates outbound calls via telephony p
 </ResponseField>
 
 <ResponseField name="message" type="string">
-  Human-readable message describing the result: `Outbound calls initiated successfully`
+  Human-readable message describing the result: `Outbound calls initiated
+  successfully`
 </ResponseField>
 
 <Note>
-  The API initiates calls asynchronously. Use webhooks or poll the [Get Conversation](/api-reference/public/get-conversation) endpoint with the conversation ID to track call status and retrieve transcripts after completion.
+  The API initiates calls asynchronously. Use webhooks or poll the [Get
+  Conversation](/api-reference/public/get-conversation) endpoint with the
+  conversation ID to track call status and retrieve transcripts after
+  completion.
 </Note>
 
 <RequestExample>
@@ -102,25 +109,25 @@ print(response.json())
 ```
 
 ```javascript Node.js
-const axios = require('axios');
+const axios = require("axios");
 
 const response = await axios.post(
-  'https://prod.eigi.ai/v1/public/calls/outbound',
+  "https://prod.eigi.ai/v1/public/calls/outbound",
   {
-    agent_id: '68ea2517dbb84c09bae1ba0a',
+    agent_id: "68ea2517dbb84c09bae1ba0a",
     params: [
       {
-        mobile_number: '+919876543210',
-        metadata: { customer_name: 'John Doe' }
-      }
+        mobile_number: "+919876543210",
+        metadata: { customer_name: "John Doe" },
+      },
     ],
-    telephony_provider: 'PLIVO'
+    telephony_provider: "PLIVO",
   },
   {
     headers: {
-      'X-API-Key': 'vk_your_api_key_here',
-      'Content-Type': 'application/json'
-    }
+      "X-API-Key": "vk_your_api_key_here",
+      "Content-Type": "application/json",
+    },
   }
 );
 
@@ -198,14 +205,14 @@ console.log(response.data);
 
 ## Status Codes
 
-| Status Code | Description |
-|-------------|-------------|
-| 200 | Calls initiated (check individual result status) |
-| 400 | Missing parameters or agent not configured |
-| 401 | Missing, invalid, inactive, or expired API key |
-| 403 | User not authorized for agent or quota exceeded |
-| 404 | User or agent not found |
-| 500 | Internal server error |
+| Status Code | Description                                      |
+| ----------- | ------------------------------------------------ |
+| 200         | Calls initiated (check individual result status) |
+| 400         | Missing parameters or agent not configured       |
+| 401         | Missing, invalid, inactive, or expired API key   |
+| 403         | User not authorized for agent or quota exceeded  |
+| 404         | User or agent not found                          |
+| 500         | Internal server error                            |
 
 ## Phone Number Format
 
@@ -216,11 +223,9 @@ Phone numbers must be in **E.164 format**:
 - Example: `+919876543210` (India), `+14155551234` (US)
 
 <Warning>
-**Invalid formats** will result in failed calls:
-- ❌ `9876543210` (missing country code)
-- ❌ `+91 98765 43210` (contains spaces)
-- ❌ `+91-9876543210` (contains dashes)
-- ✅ `+919876543210` (correct format)
+  **Invalid formats** will result in failed calls: - ❌ `9876543210` (missing
+  country code) - ❌ `+91 98765 43210` (contains spaces) - ❌ `+91-9876543210`
+  (contains dashes) - ✅ `+919876543210` (correct format)
 </Warning>
 
 ## Use Cases
@@ -230,21 +235,29 @@ Phone numbers must be in **E.164 format**:
     Initiate bulk calls to customers for product updates, surveys, or promotional campaigns. Track results using conversation IDs.
   </Accordion>
 
-  <Accordion title="Appointment Reminders">
-    Automatically call customers to remind them of upcoming appointments, reducing no-shows and improving scheduling efficiency.
-  </Accordion>
+{" "}
+<Accordion title="Appointment Reminders">
+  Automatically call customers to remind them of upcoming appointments, reducing
+  no-shows and improving scheduling efficiency.
+</Accordion>
 
-  <Accordion title="Lead Qualification">
-    Call leads from your CRM to qualify them and schedule meetings with sales teams. Pass customer data via metadata for personalized conversations.
-  </Accordion>
+{" "}
+<Accordion title="Lead Qualification">
+  Call leads from your CRM to qualify them and schedule meetings with sales
+  teams. Pass customer data via metadata for personalized conversations.
+</Accordion>
 
-  <Accordion title="Payment Reminders">
-    Initiate calls to customers with pending payments, providing personalized reminders and payment options.
-  </Accordion>
+{" "}
+<Accordion title="Payment Reminders">
+  Initiate calls to customers with pending payments, providing personalized
+  reminders and payment options.
+</Accordion>
 
-  <Accordion title="Customer Satisfaction Surveys">
-    Call customers after service interactions to gather feedback and measure satisfaction using AI-powered surveys.
-  </Accordion>
+{" "}
+<Accordion title="Customer Satisfaction Surveys">
+  Call customers after service interactions to gather feedback and measure
+  satisfaction using AI-powered surveys.
+</Accordion>
 
   <Accordion title="Emergency Notifications">
     Quickly notify customers of urgent issues, service disruptions, or critical updates through automated voice calls.
@@ -264,18 +277,23 @@ Phone numbers must be in **E.164 format**:
   "appointment_date": "2025-12-15"
 }
 ```
+
 </Tip>
 
 <Tip>
-**Batch Processing**: For bulk calls, process in batches of 50-100 numbers to manage rate limits and monitor results effectively.
+  **Batch Processing**: For bulk calls, process in batches of 50-100 numbers to
+  manage rate limits and monitor results effectively.
 </Tip>
 
 <Tip>
-**Error Handling**: Always check individual `status` in the results array, as some calls may succeed while others fail.
+  **Error Handling**: Always check individual `status` in the results array, as
+  some calls may succeed while others fail.
 </Tip>
 
 <Tip>
-**Track Conversation IDs**: Store the returned `conversation_id` for each call to later retrieve transcripts and analysis using the [Get Conversation](/api-reference/public/get-conversation) endpoint.
+  **Track Conversation IDs**: Store the returned `conversation_id` for each call
+  to later retrieve transcripts and analysis using the [Get
+  Conversation](/api-reference/public/get-conversation) endpoint.
 </Tip>
 
 ## Webhooks for Call Events
