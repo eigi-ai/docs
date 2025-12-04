@@ -1,0 +1,315 @@
+---
+title: "Call Management"
+description: "Handle inbound calls, run outbound campaigns, and schedule automated call workflows"
+icon: "phone-volume"
+---
+
+## Overview
+
+eigi.ai provides comprehensive call management capabilities—from receiving inbound customer calls to running large-scale outbound campaigns and scheduling automated follow-ups.
+
+---
+
+## Outbound Calls
+
+### Single Calls
+
+Make individual calls directly from the dashboard:
+
+<Steps>
+  <Step title="Select Agent">
+    Choose the agent you want to use for the call
+  </Step>
+  <Step title="Enter Number">
+    Input the phone number to call (with country code)
+  </Step>
+  <Step title="Add Context">
+    Optionally provide variables like customer name
+  </Step>
+  <Step title="Initiate Call">
+    Click "Call" to start the conversation
+  </Step>
+</Steps>
+
+### Bulk Campaigns
+
+Run automated calling campaigns at scale:
+
+<CardGroup cols={2}>
+  <Card title="CSV Upload" icon="file-csv">
+    Import contact lists with phone numbers and custom data
+  </Card>
+  <Card title="Phonebook Selection" icon="address-book">
+    Choose contacts from your existing phonebook
+  </Card>
+  <Card title="Progress Tracking" icon="chart-simple">
+    Monitor campaign progress in real-time
+  </Card>
+  <Card title="Result Export" icon="download">
+    Export results with outcomes and analysis
+  </Card>
+</CardGroup>
+
+### Campaign Settings
+
+| Setting | Description |
+|---------|-------------|
+| **Concurrency** | How many simultaneous calls to make |
+| **Retry Logic** | Rules for retrying unanswered calls |
+| **Time Windows** | Hours during which calls can be placed |
+| **Throttling** | Pace calls to match your capacity |
+
+---
+
+## Inbound Calls
+
+### Phone Number Assignment
+
+Receive calls on dedicated phone numbers:
+
+<AccordionGroup>
+  <Accordion title="Number Provisioning" icon="phone-plus">
+    Purchase phone numbers directly through eigi.ai:
+    - Local numbers in 190+ countries
+    - Toll-free numbers
+    - Short codes (where available)
+  </Accordion>
+  
+  <Accordion title="Number Assignment" icon="link">
+    Assign numbers to specific agents:
+    - One number per agent for simple routing
+    - Multiple numbers to one agent
+    - IVR routing (coming soon)
+  </Accordion>
+  
+  <Accordion title="Caller ID" icon="id-card">
+    Configure outbound caller ID display:
+    - Use assigned number
+    - Custom caller ID (where permitted)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Scheduled Calls
+
+### One-Time Scheduling
+
+Schedule calls for specific times:
+
+<Steps>
+  <Step title="Select Contact">
+    Choose who to call from phonebook or enter number
+  </Step>
+  <Step title="Pick Date & Time">
+    Select when the call should be placed
+  </Step>
+  <Step title="Set Time Zone">
+    Specify the recipient's time zone
+  </Step>
+  <Step title="Confirm">
+    Schedule is created and call will trigger automatically
+  </Step>
+</Steps>
+
+### Recurring Schedules
+
+Set up automated recurring calls:
+
+| Frequency | Example Use Case |
+|-----------|------------------|
+| **Daily** | Morning check-ins, daily reminders |
+| **Weekly** | Weekly follow-ups, status calls |
+| **Monthly** | Monthly reviews, billing reminders |
+| **Custom** | Every 3 days, specific weekdays |
+
+### Smart Features
+
+<CardGroup cols={2}>
+  <Card title="Time Zone Aware" icon="globe">
+    Schedule in recipient's local time—never call at 3 AM
+  </Card>
+  <Card title="Smart Retry" icon="rotate">
+    Automatically retry if call isn't answered
+  </Card>
+  <Card title="Business Hours" icon="clock">
+    Respect business hours and skip holidays
+  </Card>
+  <Card title="Conflict Detection" icon="triangle-exclamation">
+    Warn about scheduling conflicts or overload
+  </Card>
+</CardGroup>
+
+---
+
+## Call History
+
+### Complete Records
+
+Every call is logged with full details:
+
+<AccordionGroup>
+  <Accordion title="Call Details" icon="circle-info">
+    - Phone number and contact name
+    - Call duration and timestamps
+    - Agent used
+    - Call direction (inbound/outbound)
+    - Outcome status
+  </Accordion>
+  
+  <Accordion title="Transcript" icon="file-lines">
+    - Full conversation transcript
+    - Speaker identification
+    - Timestamps for each message
+    - Searchable content
+  </Accordion>
+  
+  <Accordion title="Recording" icon="circle-dot">
+    - Audio playback (if recording enabled)
+    - Synchronized with transcript
+    - Download option
+  </Accordion>
+  
+  <Accordion title="Analysis" icon="chart-pie">
+    - Extracted data fields
+    - Sentiment analysis
+    - Summary
+    - Custom schema results
+  </Accordion>
+</AccordionGroup>
+
+### Search & Filter
+
+Find specific calls quickly:
+
+| Filter | Options |
+|--------|---------|
+| **Date Range** | Today, last 7 days, custom range |
+| **Agent** | Filter by specific agent |
+| **Direction** | Inbound, outbound, or all |
+| **Outcome** | Completed, failed, no answer |
+| **Duration** | Minimum/maximum length |
+
+---
+
+## Call Outcomes
+
+### Status Tracking
+
+Every call is tagged with an outcome:
+
+| Status | Description |
+|--------|-------------|
+| **Completed** | Call connected and conversation occurred |
+| **No Answer** | Recipient didn't pick up |
+| **Busy** | Line was busy |
+| **Failed** | Technical failure |
+| **Voicemail** | Left or encountered voicemail |
+| **Transferred** | Call was transferred to human |
+
+### Outcome Actions
+
+Configure automatic actions based on outcomes:
+
+- **No Answer**: Schedule retry in 2 hours
+- **Completed + Interested**: Add to sales follow-up list
+- **Failed**: Alert technical team
+
+---
+
+## Real-Time Monitoring
+
+### Live Dashboard
+
+Watch calls as they happen:
+
+<CardGroup cols={2}>
+  <Card title="Active Calls" icon="phone">
+    See all currently active conversations
+  </Card>
+  <Card title="Live Transcript" icon="closed-captioning">
+    Read conversation in real-time
+  </Card>
+  <Card title="Queue Status" icon="list-ol">
+    Monitor pending and queued calls
+  </Card>
+  <Card title="Health Metrics" icon="heart-pulse">
+    Track success rates and performance
+  </Card>
+</CardGroup>
+
+---
+
+## API Integration
+
+### Programmatic Control
+
+Trigger calls from your applications:
+
+```bash
+# Initiate an outbound call via API
+curl -X POST https://prod.eigi.ai/v1/calls/outbound \
+  -H "X-API-Key: your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agent_id": "your_agent_id",
+    "phone_number": "+14155551234",
+    "variables": {
+      "customer_name": "John Smith",
+      "order_id": "ORD-12345"
+    }
+  }'
+```
+
+### Webhook Notifications
+
+Receive real-time updates:
+
+- Call started
+- Call answered
+- Call ended
+- Analysis completed
+
+---
+
+## Best Practices
+
+<Tip>
+**Respect Time Zones**: Always schedule calls during appropriate hours for the recipient.
+</Tip>
+
+<Tip>
+**Monitor Campaigns**: Watch bulk campaigns closely, especially when starting out.
+</Tip>
+
+<Tip>
+**Use Variables**: Personalize calls with contact data for better engagement.
+</Tip>
+
+<Warning>
+Ensure compliance with local calling regulations (TCPA, DNC lists, etc.) before running outbound campaigns.
+</Warning>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Calls not connecting">
+    - Verify phone number format includes country code
+    - Check agent has a phone number assigned
+    - Ensure telephony provider is configured
+  </Accordion>
+  
+  <Accordion title="Scheduled call didn't trigger">
+    - Verify the schedule is active (not paused)
+    - Check time zone settings
+    - Review call logs for any errors
+  </Accordion>
+  
+  <Accordion title="Poor call quality">
+    - Check your agent's voice provider settings
+    - Ensure stable network connection
+    - Review STT/TTS provider status
+  </Accordion>
+</AccordionGroup>

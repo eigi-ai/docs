@@ -1,0 +1,296 @@
+---
+title: "Phonebook"
+description: "Manage contacts, import lists, and personalize conversations with customer data"
+icon: "address-book"
+---
+
+## Overview
+
+The Phonebook is your central hub for managing contacts. Import customer lists, organize contacts by agent, and use contact data to personalize every conversation.
+
+---
+
+## Managing Contacts
+
+### Adding Contacts
+
+<CardGroup cols={2}>
+  <Card title="Manual Entry" icon="user-plus">
+    Add individual contacts with all their details
+  </Card>
+  <Card title="CSV Import" icon="file-csv">
+    Bulk upload thousands of contacts at once
+  </Card>
+  <Card title="API Integration" icon="plug">
+    Sync contacts from your CRM or database
+  </Card>
+  <Card title="Form Capture" icon="rectangle-list">
+    Collect contacts from web forms
+  </Card>
+</CardGroup>
+
+### Contact Fields
+
+Each contact can include:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Phone Number** | Required | Primary contact number with country code |
+| **Name** | Optional | Contact's full name |
+| **Email** | Optional | Email address |
+| **Company** | Optional | Organization name |
+| **Notes** | Optional | Free-form notes |
+| **Custom Fields** | Optional | Any additional data you need |
+
+---
+
+## CSV Import
+
+### Upload Format
+
+Import contacts using a CSV file:
+
+```csv
+phone_number,name,email,company,custom_field_1,custom_field_2
++14155551234,John Smith,john@example.com,Acme Inc,Premium,2024-01-15
++14155555678,Jane Doe,jane@example.com,TechCorp,Standard,2024-02-20
+```
+
+### Import Process
+
+<Steps>
+  <Step title="Prepare CSV">
+    Format your data with phone numbers and any custom fields
+  </Step>
+  <Step title="Select Agent">
+    Choose which agent these contacts are for
+  </Step>
+  <Step title="Upload File">
+    Drop your CSV file or click to browse
+  </Step>
+  <Step title="Map Fields">
+    Match CSV columns to contact fields
+  </Step>
+  <Step title="Review & Import">
+    Preview data and confirm the import
+  </Step>
+</Steps>
+
+### Import Options
+
+| Option | Description |
+|--------|-------------|
+| **Skip Duplicates** | Don't import numbers that already exist |
+| **Update Existing** | Overwrite existing contacts with new data |
+| **Add to Existing** | Merge new fields with existing contacts |
+
+---
+
+## Contact Organization
+
+### By Agent
+
+Contacts are organized per agent:
+
+- Each agent has its own contact list
+- Same contact can exist in multiple agent phonebooks
+- Agent-specific custom fields
+
+### Tags & Segments
+
+Organize contacts for targeted campaigns:
+
+<AccordionGroup>
+  <Accordion title="Tags" icon="tags">
+    Apply labels to contacts:
+    - "Hot Lead"
+    - "Follow-up Required"
+    - "VIP Customer"
+    - Custom tags you define
+  </Accordion>
+  
+  <Accordion title="Segments" icon="filter">
+    Create dynamic groups based on criteria:
+    - All contacts with specific tag
+    - Contacts from certain date range
+    - Contacts with specific custom field values
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Dynamic Variables
+
+### Personalizing Conversations
+
+Use contact data in your agent's prompts and conversations:
+
+```text
+[Task]
+1. Greet the customer: "Hi {{name}}, this is your call from TechCorp."
+2. Reference their company: "I'm reaching out about {{company}}'s account."
+3. Mention their status: "As a {{custom_field_1}} member, you have access to..."
+```
+
+### Available Variables
+
+Any contact field becomes a usable variable:
+
+| Contact Field | Variable | Example Value |
+|---------------|----------|---------------|
+| name | `{{name}}` | "John Smith" |
+| email | `{{email}}` | "john@example.com" |
+| company | `{{company}}` | "Acme Inc" |
+| custom_field_1 | `{{custom_field_1}}` | "Premium" |
+
+---
+
+## Contact Management
+
+### Editing Contacts
+
+Update contact information:
+
+- Edit individual fields
+- Bulk update via CSV re-import
+- Update through API
+
+### Deleting Contacts
+
+Remove contacts when needed:
+
+<CardGroup cols={2}>
+  <Card title="Single Delete" icon="trash">
+    Remove one contact at a time
+  </Card>
+  <Card title="Bulk Delete" icon="trash-can">
+    Select and delete multiple contacts
+  </Card>
+  <Card title="Delete by Document" icon="file-xmark">
+    Remove all contacts from a specific import
+  </Card>
+  <Card title="Clear All" icon="broom">
+    Remove all contacts for an agent
+  </Card>
+</CardGroup>
+
+---
+
+## Call History Per Contact
+
+### Interaction Tracking
+
+View complete call history for each contact:
+
+- All calls made to/from this contact
+- Call outcomes and durations
+- Transcripts and recordings
+- Analysis results
+
+### Contact Timeline
+
+See a chronological view of all interactions:
+
+```
+📞 Dec 4, 2025 - Outbound call, 5:32 duration, Completed
+   Summary: Discussed renewal options, interested in premium plan
+   
+📞 Nov 28, 2025 - Outbound call, 2:15 duration, Completed
+   Summary: Initial contact, requested more information
+   
+📞 Nov 21, 2025 - Outbound call, 0:45 duration, No Answer
+```
+
+---
+
+## Do Not Call (DNC)
+
+### Compliance Management
+
+Maintain DNC lists for compliance:
+
+| Feature | Description |
+|---------|-------------|
+| **DNC Flag** | Mark contacts as do-not-call |
+| **Auto-Skip** | Campaigns automatically skip DNC contacts |
+| **DNC Import** | Bulk import DNC numbers |
+| **Audit Trail** | Track when/why contacts were added to DNC |
+
+---
+
+## Export
+
+### Download Contact Data
+
+Export your phonebook data:
+
+- **CSV Export**: Download all contacts with all fields
+- **Filtered Export**: Export only contacts matching criteria
+- **With History**: Include call history and analysis data
+
+---
+
+## API Access
+
+### Programmatic Management
+
+Manage contacts through the API:
+
+```bash
+# Add a contact
+curl -X POST https://prod.eigi.ai/v1/contacts \
+  -H "X-API-Key: your_api_key" \
+  -d '{
+    "agent_id": "agent_123",
+    "phone_number": "+14155551234",
+    "name": "John Smith",
+    "custom_fields": {
+      "plan": "Premium",
+      "signup_date": "2024-01-15"
+    }
+  }'
+```
+
+---
+
+## Best Practices
+
+<Tip>
+**Validate Phone Numbers**: Ensure all numbers include country codes and are properly formatted.
+</Tip>
+
+<Tip>
+**Use Meaningful Custom Fields**: Name fields clearly so they're easy to use in prompts.
+</Tip>
+
+<Tip>
+**Keep Data Fresh**: Regularly update contact information and remove outdated entries.
+</Tip>
+
+<Warning>
+Always obtain proper consent before adding contacts and respect opt-out requests immediately.
+</Warning>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Import failing">
+    - Check CSV format (UTF-8 encoding)
+    - Verify phone numbers include country codes
+    - Look for special characters that might cause issues
+  </Accordion>
+  
+  <Accordion title="Variables not working">
+    - Ensure field names match exactly (case-sensitive)
+    - Check that the contact has data in that field
+    - Verify the variable syntax: `{{field_name}}`
+  </Accordion>
+  
+  <Accordion title="Duplicate contacts">
+    - Use "Skip Duplicates" on import
+    - Search and merge duplicates manually
+    - Use phone number as unique identifier
+  </Accordion>
+</AccordionGroup>

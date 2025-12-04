@@ -1,0 +1,383 @@
+---
+title: "Notifications"
+description: "Receive real-time alerts and automated actions after calls complete"
+icon: "bell"
+---
+
+## Overview
+
+Stay informed about what happens in your voice AI system. eigi.ai notifications ensure the right people get the right information at the right time.
+
+---
+
+## Notification Types
+
+### Post-Call Notifications
+
+Receive updates after every call completes:
+
+<CardGroup cols={2}>
+  <Card title="Call Summary" icon="file-lines">
+    AI-generated summary of the conversation
+  </Card>
+  <Card title="Extracted Data" icon="database">
+    Structured information extracted from the call
+  </Card>
+  <Card title="Lead Alerts" icon="star">
+    Immediate notification for qualified leads
+  </Card>
+  <Card title="Escalation Alerts" icon="triangle-exclamation">
+    Urgent issues requiring human attention
+  </Card>
+</CardGroup>
+
+---
+
+## Notification Channels
+
+### Where to Receive Notifications
+
+| Channel | Use Case | Content |
+|---------|----------|---------|
+| **Email** | Detailed reports | Full summary, transcript, extracted data |
+| **Webhook** | System integration | JSON payload for your backend |
+| **Slack** | Team alerts | Quick summaries and action items |
+| **SMS** | Urgent alerts | Critical notifications |
+
+---
+
+## Email Notifications
+
+### Configuration
+
+Set up email notifications for your team:
+
+<Steps>
+  <Step title="Add Recipients">
+    Specify email addresses for notifications
+  </Step>
+  <Step title="Choose Events">
+    Select which events trigger emails
+  </Step>
+  <Step title="Customize Content">
+    Define what information to include
+  </Step>
+  <Step title="Set Frequency">
+    Real-time or digest summaries
+  </Step>
+</Steps>
+
+### Email Content
+
+<AccordionGroup>
+  <Accordion title="Call Summary Email" icon="envelope">
+    Includes:
+    - Call duration and outcome
+    - AI-generated summary
+    - Key points discussed
+    - Next action items
+    - Link to full transcript
+  </Accordion>
+  
+  <Accordion title="Lead Notification Email" icon="star">
+    Includes:
+    - Lead information extracted
+    - Interest level assessment
+    - Contact details captured
+    - Best time to follow up
+    - Urgency indicator
+  </Accordion>
+  
+  <Accordion title="Daily Digest Email" icon="calendar-day">
+    Includes:
+    - Total calls handled
+    - Key metrics and trends
+    - Notable conversations
+    - Pending follow-ups
+    - Performance insights
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Webhook Notifications
+
+### Real-Time Integration
+
+Send data to your systems automatically:
+
+```json
+{
+  "event": "call.completed",
+  "timestamp": "2025-12-05T10:30:00Z",
+  "call": {
+    "id": "call_abc123",
+    "duration": 245,
+    "outcome": "success",
+    "agent_name": "Sarah"
+  },
+  "analysis": {
+    "summary": "Customer inquired about product pricing...",
+    "sentiment": "positive",
+    "intent": "purchase_inquiry"
+  },
+  "extracted_data": {
+    "email": "customer@example.com",
+    "product_interest": "Enterprise Plan",
+    "budget_range": "$5000-$10000"
+  }
+}
+```
+
+### Webhook Configuration
+
+| Setting | Description |
+|---------|-------------|
+| **URL** | Your endpoint to receive notifications |
+| **Events** | Which events trigger the webhook |
+| **Headers** | Authentication and custom headers |
+| **Retry Policy** | Retry failed deliveries |
+
+### Security
+
+<CardGroup cols={2}>
+  <Card title="Signature Verification" icon="shield-check">
+    Verify webhook authenticity with HMAC signatures
+  </Card>
+  <Card title="HTTPS Required" icon="lock">
+    All webhooks sent over secure connections
+  </Card>
+</CardGroup>
+
+---
+
+## Slack Integration
+
+### Team Notifications
+
+Keep your team updated in Slack:
+
+<Steps>
+  <Step title="Connect Slack">
+    Authorize eigi.ai to send messages
+  </Step>
+  <Step title="Choose Channel">
+    Select where notifications appear
+  </Step>
+  <Step title="Configure Alerts">
+    Set up which events to notify
+  </Step>
+</Steps>
+
+### Notification Format
+
+```
+🔔 New Call Completed
+
+Agent: Sarah (Sales)
+Duration: 4 min 5 sec
+Outcome: ✅ Lead Captured
+
+📝 Summary:
+Prospect interested in Enterprise plan. 
+Budget approved for Q1. Requested demo call.
+
+📊 Extracted:
+• Company: Acme Corp
+• Contact: John Smith
+• Email: john@acme.com
+• Interest: High
+
+[View Full Recording] [Schedule Follow-up]
+```
+
+---
+
+## Notification Triggers
+
+### When to Send Notifications
+
+Configure notifications based on events:
+
+| Trigger | Description | Recommended Channel |
+|---------|-------------|---------------------|
+| **Call Completed** | Every call that finishes | Webhook |
+| **Lead Captured** | High-quality lead identified | Slack, Email |
+| **Escalation Needed** | Issue requires human help | Slack, SMS |
+| **Appointment Booked** | Meeting scheduled successfully | Email, Webhook |
+| **Payment Failed** | Transaction unsuccessful | Webhook |
+| **Negative Sentiment** | Unhappy customer detected | Slack |
+
+---
+
+## Conditional Notifications
+
+### Smart Filtering
+
+Only notify when conditions are met:
+
+<AccordionGroup>
+  <Accordion title="High-Value Leads Only" icon="star">
+    ```
+    IF lead_score > 80
+    AND product_interest = "Enterprise"
+    THEN send_slack_alert to #sales-leads
+    ```
+  </Accordion>
+  
+  <Accordion title="Urgent Issues Only" icon="exclamation">
+    ```
+    IF sentiment = "negative"
+    AND escalation_requested = true
+    THEN send_email to support_manager@company.com
+    ```
+  </Accordion>
+  
+  <Accordion title="Business Hours Only" icon="clock">
+    ```
+    IF current_time BETWEEN 9:00 AND 18:00
+    THEN send_slack_alert
+    ELSE queue_for_digest
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Digest Notifications
+
+### Scheduled Summaries
+
+Instead of real-time alerts, receive periodic summaries:
+
+| Frequency | Content |
+|-----------|---------|
+| **Daily** | All calls from the day, trends, highlights |
+| **Weekly** | Performance summary, top conversations |
+| **Monthly** | Comprehensive analytics report |
+
+### Digest Configuration
+
+<Steps>
+  <Step title="Choose Frequency">
+    Daily, weekly, or monthly digests
+  </Step>
+  <Step title="Set Delivery Time">
+    When to receive the digest
+  </Step>
+  <Step title="Select Content">
+    What to include in the summary
+  </Step>
+  <Step title="Add Recipients">
+    Who receives the digest
+  </Step>
+</Steps>
+
+---
+
+## Notification Templates
+
+### Customizing Messages
+
+Create templates for consistent formatting:
+
+```
+Subject: New Lead from {{agent_name}} - {{lead_name}}
+
+Hi Team,
+
+A new lead was captured today:
+
+Name: {{lead_name}}
+Company: {{lead_company}}
+Interest: {{product_interest}}
+Score: {{lead_score}}/100
+
+Summary: {{call_summary}}
+
+Best,
+eigi.ai Notifications
+```
+
+### Available Variables
+
+| Variable | Description |
+|----------|-------------|
+| `{{call_id}}` | Unique call identifier |
+| `{{agent_name}}` | Agent that handled the call |
+| `{{caller_number}}` | Phone number of caller |
+| `{{duration}}` | Call duration in seconds |
+| `{{summary}}` | AI-generated summary |
+| `{{extracted.*}}` | Any extracted field |
+
+---
+
+## Notification Management
+
+### Viewing History
+
+Track all sent notifications:
+
+- Filter by date, type, channel
+- See delivery status
+- View notification content
+- Retry failed deliveries
+
+### Rate Limiting
+
+<Info>
+Notifications are rate-limited to prevent spam. High-volume events are automatically batched.
+</Info>
+
+| Channel | Rate Limit |
+|---------|------------|
+| **Email** | 100/hour per recipient |
+| **Webhook** | 1000/hour per endpoint |
+| **Slack** | 60/minute per channel |
+| **SMS** | 10/hour per number |
+
+---
+
+## Best Practices
+
+<Tip>
+**Don't Over-Notify**: Configure filters to avoid alert fatigue. Focus on actionable events.
+</Tip>
+
+<Tip>
+**Use Appropriate Channels**: Urgent issues → SMS/Slack. Detailed reports → Email. System integration → Webhooks.
+</Tip>
+
+<Tip>
+**Test Your Webhooks**: Verify your endpoints handle payloads correctly before going live.
+</Tip>
+
+<Warning>
+Ensure notification recipients have appropriate access to the information being shared.
+</Warning>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Not receiving notifications">
+    - Check spam/junk folders for emails
+    - Verify email addresses are correct
+    - Confirm notification triggers are configured
+    - Check webhook endpoint is reachable
+  </Accordion>
+  
+  <Accordion title="Webhook failures">
+    - Verify endpoint URL is correct and HTTPS
+    - Check your server logs for errors
+    - Ensure endpoint returns 2xx response quickly
+    - Verify authentication headers are correct
+  </Accordion>
+  
+  <Accordion title="Too many notifications">
+    - Add condition filters to reduce volume
+    - Switch to digest mode for non-urgent events
+    - Adjust trigger thresholds (e.g., higher lead score)
+  </Accordion>
+</AccordionGroup>

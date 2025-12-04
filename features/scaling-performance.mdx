@@ -1,0 +1,378 @@
+---
+title: "Scaling & Performance"
+description: "Handle high volumes with enterprise-grade reliability"
+icon: "chart-mixed"
+---
+
+## Overview
+
+eigi.ai is built for enterprise scale. Whether you're handling hundreds or thousands of concurrent calls, the platform delivers consistent performance and reliability.
+
+---
+
+## Capacity & Scale
+
+### Handle Any Volume
+
+<CardGroup cols={2}>
+  <Card title="Concurrent Calls" icon="phone-volume">
+    Handle thousands of simultaneous conversations
+  </Card>
+  <Card title="Auto-Scaling" icon="arrows-up-down">
+    Capacity automatically adjusts to demand
+  </Card>
+  <Card title="Global Infrastructure" icon="globe">
+    Low latency from anywhere in the world
+  </Card>
+  <Card title="No Code Changes" icon="code">
+    Scale without modifying your setup
+  </Card>
+</CardGroup>
+
+---
+
+## Concurrency Management
+
+### How Concurrency Works
+
+| Metric | Description |
+|--------|-------------|
+| **Concurrent Calls** | Number of active calls at the same time |
+| **Peak Capacity** | Maximum concurrent calls your plan supports |
+| **Queue Management** | How overflow calls are handled |
+| **Burst Handling** | Temporary capacity for traffic spikes |
+
+### Concurrency Tiers
+
+| Tier | Concurrent Calls | Use Case |
+|------|------------------|----------|
+| **Starter** | Up to 10 | Small businesses, testing |
+| **Growth** | Up to 50 | Growing operations |
+| **Business** | Up to 200 | Medium enterprises |
+| **Enterprise** | Unlimited | Large-scale deployments |
+
+---
+
+## Queue Management
+
+### When Capacity is Full
+
+Configure how to handle calls when at capacity:
+
+<CardGroup cols={2}>
+  <Card title="Hold & Wait" icon="hourglass">
+    Caller waits with music/message until agent available
+  </Card>
+  <Card title="Callback Queue" icon="phone-arrow-down-left">
+    Collect number and call back automatically
+  </Card>
+  <Card title="Voicemail" icon="voicemail">
+    Record message for later follow-up
+  </Card>
+  <Card title="Overflow Routing" icon="route">
+    Route to backup agent or human team
+  </Card>
+</CardGroup>
+
+### Queue Settings
+
+| Setting | Description |
+|---------|-------------|
+| **Max Wait Time** | How long callers wait before alternative |
+| **Position Announcements** | Tell callers their queue position |
+| **Estimated Wait** | Provide estimated wait time |
+| **Music/Message** | What plays while waiting |
+
+---
+
+## Performance Optimization
+
+### Real-Time Processing
+
+Voice AI requires fast processing. eigi.ai is optimized for:
+
+| Component | Optimization |
+|-----------|--------------|
+| **Speech Recognition** | Stream processing for instant transcription |
+| **LLM Processing** | Optimized inference with low latency |
+| **Voice Synthesis** | Word-by-word streaming for natural flow |
+| **Tool Execution** | Parallel processing when possible |
+
+### Latency Targets
+
+| Metric | Target |
+|--------|--------|
+| **First Response** | < 800ms after user stops speaking |
+| **Turn-Taking** | Natural conversation pace |
+| **Tool Calls** | < 200ms overhead |
+| **Audio Quality** | HD voice with < 50ms jitter |
+
+---
+
+## Reliability
+
+### Uptime & Availability
+
+<CardGroup cols={3}>
+  <Card title="99.9% Uptime" icon="check-circle">
+    Enterprise SLA available
+  </Card>
+  <Card title="Redundancy" icon="clone">
+    No single point of failure
+  </Card>
+  <Card title="Auto Recovery" icon="rotate">
+    Automatic failover
+  </Card>
+</CardGroup>
+
+### What Happens During Outages
+
+| Scenario | Handling |
+|----------|----------|
+| **Provider Outage** | Automatic failover to backup |
+| **Partial Degradation** | Non-critical features disabled |
+| **Maintenance** | Zero-downtime deployments |
+| **Network Issues** | Automatic reconnection |
+
+---
+
+## Provider Redundancy
+
+### Multi-Provider Fallback
+
+Configure backups for critical services:
+
+<AccordionGroup>
+  <Accordion title="LLM Fallback" icon="brain">
+    If primary LLM is slow or unavailable:
+    - Primary: GPT-4o
+    - Fallback 1: Claude 3.5 Sonnet
+    - Fallback 2: Gemini 2.0 Flash
+  </Accordion>
+  
+  <Accordion title="TTS Fallback" icon="volume-high">
+    If voice synthesis fails:
+    - Primary: ElevenLabs
+    - Fallback: Cartesia
+    - Emergency: OpenAI TTS
+  </Accordion>
+  
+  <Accordion title="STT Fallback" icon="microphone">
+    If speech recognition fails:
+    - Primary: Deepgram
+    - Fallback: Azure Speech
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Load Balancing
+
+### Traffic Distribution
+
+Calls are intelligently distributed:
+
+| Strategy | Description |
+|----------|-------------|
+| **Geographic** | Route to nearest server |
+| **Load-Based** | Route to least busy server |
+| **Provider Health** | Avoid degraded providers |
+| **Cost Optimization** | Balance performance and cost |
+
+---
+
+## Monitoring
+
+### Real-Time Dashboards
+
+Monitor your system health:
+
+<CardGroup cols={2}>
+  <Card title="Active Calls" icon="phone">
+    Current concurrent calls and capacity
+  </Card>
+  <Card title="Queue Status" icon="list">
+    Callers waiting and wait times
+  </Card>
+  <Card title="Provider Status" icon="server">
+    Health of all connected services
+  </Card>
+  <Card title="Error Rates" icon="triangle-exclamation">
+    Track and alert on issues
+  </Card>
+</CardGroup>
+
+### Key Metrics
+
+| Metric | Description | Alert Threshold |
+|--------|-------------|-----------------|
+| **Concurrency %** | Current vs. max capacity | > 80% |
+| **Avg. Latency** | Response time | > 1000ms |
+| **Error Rate** | Failed calls | > 1% |
+| **Queue Length** | Callers waiting | > 10 |
+
+---
+
+## Analytics at Scale
+
+### Handling Large Data Volumes
+
+<CardGroup cols={2}>
+  <Card title="Real-Time Analytics" icon="gauge-high">
+    Live metrics even during high volume
+  </Card>
+  <Card title="Historical Data" icon="clock-rotate-left">
+    Access all historical call data
+  </Card>
+  <Card title="Data Retention" icon="database">
+    Configurable retention policies
+  </Card>
+  <Card title="Export & Backup" icon="download">
+    Export data for external analysis
+  </Card>
+</CardGroup>
+
+---
+
+## Multi-Agent Scaling
+
+### Managing Multiple Agents
+
+Scale across many agents:
+
+| Feature | Description |
+|---------|-------------|
+| **Shared Resources** | Pool capacity across agents |
+| **Agent Prioritization** | Allocate more capacity to critical agents |
+| **Load Spreading** | Distribute traffic across agents |
+| **Independent Scaling** | Scale specific agents as needed |
+
+---
+
+## Enterprise Features
+
+### Advanced Capabilities
+
+<CardGroup cols={2}>
+  <Card title="Dedicated Infrastructure" icon="server">
+    Isolated resources for your organization
+  </Card>
+  <Card title="Custom SLAs" icon="file-contract">
+    Tailored uptime and support agreements
+  </Card>
+  <Card title="Priority Support" icon="headset">
+    Direct access to engineering team
+  </Card>
+  <Card title="Compliance" icon="shield-check">
+    HIPAA, SOC2, GDPR compliance options
+  </Card>
+</CardGroup>
+
+---
+
+## Cost Optimization
+
+### Scale Efficiently
+
+<AccordionGroup>
+  <Accordion title="Right-Size Your Plan" icon="sliders">
+    Choose concurrency limits that match your actual usage patterns.
+  </Accordion>
+  
+  <Accordion title="Optimize Call Duration" icon="clock">
+    Well-designed prompts lead to shorter, more efficient calls.
+  </Accordion>
+  
+  <Accordion title="Use Appropriate Providers" icon="gauge">
+    Match provider capabilities to task complexity.
+  </Accordion>
+  
+  <Accordion title="Monitor and Adjust" icon="chart-line">
+    Regularly review usage patterns and optimize.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Traffic Patterns
+
+### Handling Variable Load
+
+Configure for your traffic patterns:
+
+| Pattern | Strategy |
+|---------|----------|
+| **Steady** | Consistent capacity allocation |
+| **Peak Hours** | Scale up during busy times |
+| **Campaign Bursts** | Reserve capacity for campaigns |
+| **Seasonal** | Adjust for seasonal variations |
+
+---
+
+## Testing at Scale
+
+### Load Testing
+
+Before launching high-volume campaigns:
+
+<Steps>
+  <Step title="Baseline Test">
+    Measure performance at current volume
+  </Step>
+  <Step title="Gradual Increase">
+    Slowly increase load to find limits
+  </Step>
+  <Step title="Stress Test">
+    Test beyond expected maximum
+  </Step>
+  <Step title="Failure Testing">
+    Verify graceful degradation
+  </Step>
+</Steps>
+
+---
+
+## Best Practices
+
+<Tip>
+**Plan for Peak**: Size your capacity for peak demand, not average.
+</Tip>
+
+<Tip>
+**Configure Fallbacks**: Always have backup providers configured.
+</Tip>
+
+<Tip>
+**Monitor Proactively**: Set up alerts before hitting capacity limits.
+</Tip>
+
+<Warning>
+Test your scaling configuration before running large campaigns. Start small and scale up gradually.
+</Warning>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Calls being queued unexpectedly">
+    - Check current concurrency vs. limit
+    - Review call duration (longer calls use capacity longer)
+    - Consider upgrading your plan
+    - Optimize agent prompts for efficiency
+  </Accordion>
+  
+  <Accordion title="High latency during peak times">
+    - Verify you're not hitting capacity limits
+    - Check provider status for degradation
+    - Review if specific tools are causing delays
+    - Consider geographic distribution
+  </Accordion>
+  
+  <Accordion title="Inconsistent call quality">
+    - Check network connectivity
+    - Verify provider health status
+    - Review audio settings
+    - Test with different providers
+  </Accordion>
+</AccordionGroup>

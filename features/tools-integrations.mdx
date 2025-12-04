@@ -1,0 +1,395 @@
+---
+title: "Tools & Integrations"
+description: "Connect your agents to external APIs, MCP servers, and business systems"
+icon: "plug"
+---
+
+## Overview
+
+eigi.ai agents become powerful when connected to your existing systems. Use Dynamic API Tools for REST integrations and MCP (Model Context Protocol) for advanced AI tool connections.
+
+---
+
+## Dynamic API Tools
+
+### What Are API Tools?
+
+API Tools let your agents interact with external services during conversations:
+
+- Check order status in your database
+- Book appointments in your calendar
+- Look up customer information in your CRM
+- Process payments through payment gateways
+- Send emails or SMS notifications
+
+### Creating an API Tool
+
+<Steps>
+  <Step title="Define the Endpoint">
+    Specify the URL, HTTP method, and headers
+  </Step>
+  <Step title="Configure Parameters">
+    Define what data the tool needs
+  </Step>
+  <Step title="Map Responses">
+    Tell the agent how to use the response
+  </Step>
+  <Step title="Test the Tool">
+    Validate it works before using in production
+  </Step>
+  <Step title="Assign to Agent">
+    Add the tool to your agent's capabilities
+  </Step>
+</Steps>
+
+---
+
+## API Tool Configuration
+
+### Endpoint Settings
+
+| Setting | Description | Example |
+|---------|-------------|---------|
+| **Name** | Descriptive tool name | "Check Order Status" |
+| **Description** | What the tool does (for LLM) | "Looks up order status by order ID" |
+| **URL** | API endpoint | `https://api.example.com/orders` |
+| **Method** | HTTP method | GET, POST, PUT, DELETE |
+| **Headers** | Request headers | Authorization, Content-Type |
+
+### Authentication
+
+Support for multiple auth methods:
+
+<CardGroup cols={2}>
+  <Card title="API Key" icon="key">
+    Pass API key in header or query parameter
+  </Card>
+  <Card title="Bearer Token" icon="shield">
+    JWT or OAuth bearer tokens
+  </Card>
+  <Card title="Basic Auth" icon="lock">
+    Username and password authentication
+  </Card>
+  <Card title="Custom Headers" icon="code">
+    Any custom authentication headers
+  </Card>
+</CardGroup>
+
+---
+
+## Parameter Types
+
+### How Data Gets to Your API
+
+<AccordionGroup>
+  <Accordion title="Static Values" icon="lock">
+    Fixed values that don't change:
+    ```json
+    {
+      "source": "voice_agent",
+      "version": "1.0"
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="LLM Parameters" icon="brain">
+    Values extracted from conversation by AI:
+    - "Get the order ID the customer mentioned"
+    - "Extract the appointment date and time"
+    - "Capture the email address provided"
+  </Accordion>
+  
+  <Accordion title="User Input" icon="keyboard">
+    Direct input from the caller:
+    - DTMF digits entered
+    - Specific prompted responses
+  </Accordion>
+  
+  <Accordion title="Contact Variables" icon="user">
+    Data from the phonebook contact:
+    - `{{customer_id}}`
+    - `{{account_number}}`
+    - `{{email}}`
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Response Handling
+
+### Processing API Responses
+
+Configure how your agent uses the response:
+
+```json
+// API Response
+{
+  "order_id": "ORD-12345",
+  "status": "shipped",
+  "tracking_number": "1Z999AA10123456784",
+  "estimated_delivery": "2025-12-06"
+}
+
+// Agent says:
+"Your order ORD-12345 has shipped! The tracking number is 
+1Z999AA10123456784 and it should arrive by December 6th."
+```
+
+### Error Handling
+
+Define fallback behavior:
+
+| Scenario | Configuration |
+|----------|---------------|
+| **API Timeout** | "I'm having trouble looking that up. Let me try again." |
+| **Not Found** | "I couldn't find an order with that number. Can you verify it?" |
+| **Server Error** | "Our system is temporarily unavailable. Can I take a message?" |
+
+---
+
+## MCP (Model Context Protocol)
+
+### What is MCP?
+
+MCP is a standard for connecting AI models to external tools and data sources:
+
+<CardGroup cols={2}>
+  <Card title="Tool Discovery" icon="magnifying-glass">
+    MCP servers automatically expose available tools to your agent
+  </Card>
+  <Card title="Rich Capabilities" icon="wand-sparkles">
+    Access databases, file systems, specialized AI tools, and more
+  </Card>
+  <Card title="Standardized" icon="certificate">
+    Works with any MCP-compatible server
+  </Card>
+  <Card title="Real-Time" icon="bolt">
+    Persistent connections for fast tool execution
+  </Card>
+</CardGroup>
+
+### MCP Server Types
+
+| Type | Description | Use Case |
+|------|-------------|----------|
+| **STDIO** | Standard input/output | Local tools, CLI integrations |
+| **HTTP** | REST-based servers | Remote services, cloud tools |
+
+---
+
+## Adding MCP Servers
+
+### Configuration
+
+<Steps>
+  <Step title="Add Server">
+    Provide server name and connection details
+  </Step>
+  <Step title="Configure Connection">
+    Set up STDIO command or HTTP endpoint
+  </Step>
+  <Step title="Test Connection">
+    Verify the server connects successfully
+  </Step>
+  <Step title="Discover Tools">
+    See what tools the server provides
+  </Step>
+  <Step title="Assign to Agent">
+    Enable the MCP server for your agent
+  </Step>
+</Steps>
+
+### Connection Settings
+
+```yaml
+# STDIO Server Example
+name: "Database Tools"
+type: stdio
+command: "npx"
+args: ["@your-org/db-mcp-server"]
+env:
+  DATABASE_URL: "postgresql://..."
+
+# HTTP Server Example  
+name: "Calendar Integration"
+type: http
+url: "https://mcp.yourservice.com"
+headers:
+  Authorization: "Bearer your_token"
+```
+
+---
+
+## MCP Performance
+
+### Optimized Initialization
+
+eigi.ai optimizes MCP for voice conversations:
+
+<CardGroup cols={2}>
+  <Card title="Connection Pooling" icon="diagram-project">
+    Reuse connections across calls to reduce latency
+  </Card>
+  <Card title="Smart Caching" icon="database">
+    Cache tool definitions and reduce startup time
+  </Card>
+  <Card title="Lazy Loading" icon="clock">
+    Initialize servers only when needed
+  </Card>
+  <Card title="Health Monitoring" icon="heart-pulse">
+    Automatic reconnection if servers disconnect
+  </Card>
+</CardGroup>
+
+### Performance Metrics
+
+| Metric | Target |
+|--------|--------|
+| **Connection Time** | < 500ms for cached servers |
+| **Tool Execution** | < 200ms overhead |
+| **Reconnection** | Automatic within 5 seconds |
+
+---
+
+## Tool Usage in Conversations
+
+### How Agents Use Tools
+
+The LLM decides when to use tools based on conversation context:
+
+**Customer:** "What's the status of my order 12345?"
+
+**Agent (internally):**
+1. Recognizes need for order lookup
+2. Calls `check_order_status` tool with order_id="12345"
+3. Receives response with status and tracking
+4. Formulates natural response
+
+**Agent (to customer):** "I found your order! It shipped yesterday and should arrive by Friday. Would you like the tracking number?"
+
+### Silent Tool Calls
+
+<Info>
+Tools are called silently in the background. Customers only hear the agent's natural response—never technical details about tool execution.
+</Info>
+
+---
+
+## Multiple Tools
+
+### Combining Capabilities
+
+Agents can use multiple tools in a single conversation:
+
+```
+1. Check customer identity (CRM lookup)
+2. Verify account status (Billing API)
+3. Check order history (Orders API)
+4. Book follow-up appointment (Calendar tool)
+5. Send confirmation email (Email tool)
+```
+
+### Tool Chaining
+
+Tools can be called sequentially based on conversation flow:
+
+```
+Customer asks about upgrading →
+  → Check current plan (API) →
+  → Get available upgrades (API) →
+  → Apply upgrade if confirmed (API) →
+  → Send confirmation (Email)
+```
+
+---
+
+## Testing Tools
+
+### Validation
+
+Before going live, test your tools:
+
+<CardGroup cols={2}>
+  <Card title="Direct Testing" icon="flask">
+    Test API calls with sample data
+  </Card>
+  <Card title="Mock Responses" icon="clone">
+    Simulate responses for edge cases
+  </Card>
+  <Card title="Conversation Testing" icon="comments">
+    Full conversation tests with real tool calls
+  </Card>
+  <Card title="Error Simulation" icon="bug">
+    Test error handling and fallbacks
+  </Card>
+</CardGroup>
+
+---
+
+## Monitoring
+
+### Tool Performance
+
+Track how your tools perform:
+
+| Metric | Description |
+|--------|-------------|
+| **Call Volume** | How often each tool is used |
+| **Success Rate** | Percentage of successful calls |
+| **Latency** | Average response time |
+| **Errors** | Error types and frequencies |
+
+### MCP Server Status
+
+Monitor MCP server health:
+
+- Connection status (connected/disconnected)
+- Last activity timestamp
+- Error logs
+- Tool availability
+
+---
+
+## Best Practices
+
+<Tip>
+**Clear Descriptions**: Write tool descriptions that help the LLM understand when to use them.
+</Tip>
+
+<Tip>
+**Handle Errors Gracefully**: Always configure fallback responses for API failures.
+</Tip>
+
+<Tip>
+**Test Edge Cases**: Verify behavior with missing data, timeouts, and errors.
+</Tip>
+
+<Warning>
+Never expose sensitive credentials in tool configurations. Use environment variables or secure credential storage.
+</Warning>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Tool not being called">
+    - Check the tool description—LLM may not understand when to use it
+    - Verify the tool is assigned to the agent
+    - Test with explicit prompts mentioning the tool's function
+  </Accordion>
+  
+  <Accordion title="MCP server not connecting">
+    - Verify connection settings (URL, command, arguments)
+    - Check server logs for errors
+    - Ensure required environment variables are set
+    - Test the server independently first
+  </Accordion>
+  
+  <Accordion title="Slow tool responses">
+    - Optimize your API endpoints
+    - Consider caching frequently accessed data
+    - Use connection pooling for MCP servers
+    - Monitor and address timeout issues
+  </Accordion>
+</AccordionGroup>

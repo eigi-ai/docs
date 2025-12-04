@@ -1,0 +1,327 @@
+---
+title: "Prompt Management"
+description: "Create, enhance, version, and manage prompts with full history tracking and rollback capabilities"
+icon: "pen-fancy"
+---
+
+## Overview
+
+Prompts are the foundation of your agent's behavior. eigi.ai provides powerful prompt management tools including AI enhancement, version control, diff viewing, and instant rollback—giving you complete control over your agent's evolution.
+
+---
+
+## Prompt Editor
+
+### Rich Editing Experience
+
+Create and refine prompts with our advanced editor:
+
+<CardGroup cols={2}>
+  <Card title="Syntax Highlighting" icon="code">
+    Clear visual formatting for prompt sections and variables
+  </Card>
+  <Card title="Variable Insertion" icon="brackets-curly">
+    Easily insert dynamic variables like customer name, order ID, etc.
+  </Card>
+  <Card title="Section Templates" icon="rectangle-list">
+    Pre-built sections for Identity, Style, Tasks, and Error Handling
+  </Card>
+  <Card title="Character Count" icon="calculator">
+    Track prompt length to optimize for your LLM provider
+  </Card>
+</CardGroup>
+
+---
+
+## AI Prompt Enhancement
+
+### Intelligent Optimization
+
+Let AI help you create better prompts:
+
+<Steps>
+  <Step title="Write Your Draft">
+    Create your initial prompt with your requirements
+  </Step>
+  <Step title="Request Enhancement">
+    Click "Enhance with AI" to analyze and improve your prompt
+  </Step>
+  <Step title="Review Suggestions">
+    See specific improvements for clarity, structure, and effectiveness
+  </Step>
+  <Step title="Apply Changes">
+    Accept all suggestions or cherry-pick specific improvements
+  </Step>
+</Steps>
+
+### Enhancement Features
+
+| Feature | Description |
+|---------|-------------|
+| **Clarity Improvements** | Rewrite ambiguous instructions for precision |
+| **Structure Optimization** | Organize prompts into clear, logical sections |
+| **Best Practice Alignment** | Apply proven prompting patterns |
+| **Voice Optimization** | Adapt for natural spoken conversation |
+| **Edge Case Handling** | Add instructions for error scenarios |
+
+---
+
+## Version Control
+
+### Complete History
+
+Every prompt change is tracked automatically:
+
+<Info>
+Never lose work. Every save creates a new version you can reference or restore at any time.
+</Info>
+
+### Version Features
+
+<AccordionGroup>
+  <Accordion title="Automatic Versioning" icon="clock-rotate-left">
+    Every time you save a prompt, a new version is created with:
+    - Timestamp of the change
+    - Commit message describing what changed
+    - Full snapshot of the prompt content
+  </Accordion>
+  
+  <Accordion title="Commit Messages" icon="message">
+    Add descriptive messages to each version:
+    - "Added error handling for invalid order numbers"
+    - "Improved greeting for warmer tone"
+    - "Updated business hours information"
+  </Accordion>
+  
+  <Accordion title="Version Browser" icon="list">
+    Browse through all previous versions:
+    - See version timeline
+    - Preview any version
+    - Compare versions side-by-side
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Diff Viewer
+
+### Compare Changes
+
+See exactly what changed between any two versions:
+
+```diff
+[Identity]
+- You are a helpful customer service agent.
++ You are Sarah, a friendly and knowledgeable customer service specialist at TechCorp.
+
+[Style]
+- Be professional.
++ Maintain a warm, professional tone. Use the customer's name when appropriate.
++ Keep responses concise—this is a voice conversation.
+
+[Task]
+  1. Greet the customer
+- 2. Ask how you can help
++ 2. Ask how you can help today
++ 3. If the issue cannot be resolved, offer to connect with a supervisor
+```
+
+### Diff Features
+
+<CardGroup cols={2}>
+  <Card title="Line-by-Line Comparison" icon="arrows-left-right">
+    See additions, deletions, and modifications highlighted clearly
+  </Card>
+  <Card title="Side-by-Side View" icon="table-columns">
+    View old and new versions next to each other
+  </Card>
+  <Card title="Inline Changes" icon="highlighter">
+    Highlight specific word changes within lines
+  </Card>
+  <Card title="Change Summary" icon="list-check">
+    Quick overview of total additions, deletions, and modifications
+  </Card>
+</CardGroup>
+
+---
+
+## Rollback
+
+### Instant Restoration
+
+Revert to any previous version with one click:
+
+<Steps>
+  <Step title="Open Version History">
+    Access the version browser from your prompt editor
+  </Step>
+  <Step title="Select Version">
+    Find the version you want to restore (use diff to compare)
+  </Step>
+  <Step title="Preview">
+    Review the full prompt content before restoring
+  </Step>
+  <Step title="Restore">
+    Click "Restore This Version" to revert instantly
+  </Step>
+</Steps>
+
+### Rollback Safety
+
+<Tip>
+Rolling back creates a new version, so you never lose the current state. You can always roll forward again if needed.
+</Tip>
+
+| Action | Result |
+|--------|--------|
+| **Restore Version** | Creates new version with old content |
+| **Original Preserved** | Current version saved in history |
+| **Immediate Effect** | Agent uses restored prompt instantly |
+| **Audit Trail** | Rollback noted in version history |
+
+---
+
+## Prompt Types
+
+### System Prompt
+
+The main instructions that define your agent's behavior:
+
+```text
+[Identity]
+You are Maya, a customer support specialist for CloudTech Solutions...
+
+[Style]
+- Warm and professional tone
+- Concise responses suitable for voice
+- Patient and empathetic...
+
+[Tasks]
+1. Greet the customer
+2. Identify their issue
+3. Resolve or escalate...
+```
+
+### First Message
+
+The opening message your agent speaks when a call begins:
+
+```text
+Hi! Thanks for calling CloudTech Solutions. This is Maya. How can I help you today?
+```
+
+### Analysis Prompt
+
+Instructions for post-call analysis (see [Call Analysis](/features/call-analysis)):
+
+```text
+Analyze the conversation and extract:
+- Customer sentiment (positive/neutral/negative)
+- Issue category
+- Resolution status
+- Follow-up needed (yes/no)
+```
+
+---
+
+## Dynamic Variables
+
+### Using Variables in Prompts
+
+Insert dynamic data that changes per conversation:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `{{customer_name}}` | Contact's name from phonebook | "John Smith" |
+| `{{order_id}}` | Order reference number | "ORD-12345" |
+| `{{appointment_time}}` | Scheduled time | "2:30 PM" |
+| `{{custom_field}}` | Any custom contact data | Your data |
+
+### Example Usage
+
+```text
+[Task]
+1. Greet {{customer_name}} by name
+2. Reference their order {{order_id}}
+3. Confirm their appointment for {{appointment_time}}
+```
+
+---
+
+## Prompt Templates
+
+### Starting Points
+
+Use templates for common scenarios:
+
+<CardGroup cols={2}>
+  <Card title="Customer Support" icon="headset">
+    Troubleshooting, FAQ handling, escalation paths
+  </Card>
+  <Card title="Sales Qualification" icon="filter">
+    Lead scoring questions, objection handling
+  </Card>
+  <Card title="Appointment Booking" icon="calendar-check">
+    Availability checking, confirmation, rescheduling
+  </Card>
+  <Card title="Survey Collection" icon="clipboard-list">
+    Question flow, rating scales, feedback capture
+  </Card>
+</CardGroup>
+
+---
+
+## Best Practices
+
+### Prompt Structure
+
+<Tip>
+**Use Clear Sections**: Organize prompts into Identity, Style, Guidelines, Tasks, and Error Handling sections.
+</Tip>
+
+<Tip>
+**Be Specific**: Vague instructions lead to inconsistent behavior. Be explicit about what you want.
+</Tip>
+
+<Tip>
+**Commit Often**: Save versions frequently with descriptive messages for easy tracking.
+</Tip>
+
+### Version Control
+
+<Tip>
+**Meaningful Messages**: Write commit messages that explain WHY you made changes, not just what changed.
+</Tip>
+
+<Tip>
+**Test Before Major Changes**: Create a version, test thoroughly, then make significant edits.
+</Tip>
+
+<Warning>
+Don't make untested changes to production agents during peak hours. Use the sandbox first.
+</Warning>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Agent not following instructions">
+    - Check for conflicting instructions in the prompt
+    - Ensure instructions are explicit, not implied
+    - Try the AI enhancement feature for clarity
+    - Review the diff to see recent changes that might have caused issues
+  </Accordion>
+  
+  <Accordion title="Lost a good version">
+    - Open version history and browse past versions
+    - Use the diff viewer to find the version with the content you need
+    - Restore that version or copy specific sections
+  </Accordion>
+  
+  <Accordion title="Prompt too long">
+    - Focus on essential instructions only
+    - Move detailed knowledge to the Assets/Knowledge Base
+    - Use concise language while maintaining clarity
+  </Accordion>
+</AccordionGroup>

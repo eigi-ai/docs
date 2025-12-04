@@ -34,7 +34,21 @@
             ]
           },
           {
-            "group": "Building Agents",
+            "group": "Platform Features",
+            "pages": [
+              "features/agent-builder",
+              "features/prompt-management",
+              "features/call-management",
+              "features/call-analysis",
+              "features/phonebook",
+              "features/tools-integrations",
+              "features/widget-chat",
+              "features/notifications",
+              "features/scaling-performance"
+            ]
+          },
+          {
+            "group": "Configuration",
             "pages": [
               "essentials/prompting-guide",
               "essentials/voice-profiles",

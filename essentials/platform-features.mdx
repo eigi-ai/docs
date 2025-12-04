@@ -1,0 +1,371 @@
+---
+title: "Platform Features"
+description: "Explore the complete feature set of eigi.ai — from intelligent agent creation to enterprise-grade scaling"
+icon: "stars"
+---
+
+## Overview
+
+eigi.ai provides a comprehensive suite of features designed to help you build, deploy, and scale intelligent voice agents. Every feature is accessible through our no-code dashboard—no programming required.
+
+---
+
+## Agent Creation
+
+### AI-Powered Agent Builder
+
+Create sophisticated voice agents in minutes, not months:
+
+<CardGroup cols={2}>
+  <Card title="No-Code Configuration" icon="wand-magic-sparkles">
+    Build complete agents through an intuitive visual interface. Select providers, configure prompts, and deploy—all without writing code.
+  </Card>
+  <Card title="Template Library" icon="copy">
+    Start from pre-built templates for common use cases: customer support, sales, scheduling, surveys, and more.
+  </Card>
+  <Card title="AI-Assisted Setup" icon="robot">
+    Let AI help you create agents by describing what you need. Our system generates optimal configurations automatically.
+  </Card>
+  <Card title="Modular Architecture" icon="puzzle-piece">
+    Mix and match LLM, voice, and speech providers to create the perfect combination for your use case.
+  </Card>
+</CardGroup>
+
+### Prompt Enhancement
+
+Optimize your agent's performance with intelligent prompt tools:
+
+- **AI Prompt Enhancement**: Automatically improve your prompts for better conversation flow
+- **Prompt Versioning**: Track changes and roll back to previous versions
+- **Testing Sandbox**: Test prompts in a safe environment before deployment
+- **Best Practice Suggestions**: Get recommendations based on proven patterns
+
+---
+
+## Call Analysis & Intelligence
+
+### Post-Call Analysis
+
+Gain deep insights from every conversation:
+
+<AccordionGroup>
+  <Accordion title="Automated Summarization" icon="file-lines">
+    Every call is automatically summarized with key points, action items, and outcomes extracted. Save hours of manual review.
+  </Accordion>
+  
+  <Accordion title="Custom Analysis Schema" icon="table">
+    Define exactly what information to extract from calls:
+    - Customer sentiment and satisfaction
+    - Lead qualification scores
+    - Appointment details
+    - Product interests
+    - Custom fields specific to your business
+  </Accordion>
+  
+  <Accordion title="Structured Data Extraction" icon="database">
+    Extract structured data from unstructured conversations:
+    - Names, emails, phone numbers
+    - Dates and times
+    - Order numbers and account IDs
+    - Any custom data points you define
+  </Accordion>
+  
+  <Accordion title="Video Analysis" icon="video">
+    For video-enabled agents, analyze visual cues and engagement in addition to audio.
+  </Accordion>
+</AccordionGroup>
+
+### Call Recording
+
+Capture and review every interaction:
+
+- **Automatic Recording**: Enable recording for compliance, training, or quality assurance
+- **Secure Storage**: Recordings stored securely with encryption at rest
+- **Easy Playback**: Review recordings directly in the dashboard
+- **Transcript Sync**: Recordings synced with full conversation transcripts
+
+---
+
+## Notification System
+
+### Real-Time Alerts
+
+Stay informed about important conversation events:
+
+<CardGroup cols={2}>
+  <Card title="Email Notifications" icon="envelope">
+    Receive email alerts when specific conditions are met during calls
+  </Card>
+  <Card title="Trigger-Based Alerts" icon="bell">
+    Set up notifications based on analysis results—e.g., alert sales when a hot lead is identified
+  </Card>
+  <Card title="Custom Channels" icon="share-nodes">
+    Integrate with your preferred notification channels
+  </Card>
+  <Card title="Escalation Rules" icon="arrow-up">
+    Automatically escalate issues based on sentiment or keywords
+  </Card>
+</CardGroup>
+
+### Notification Triggers
+
+Configure alerts based on:
+- Analysis field values (e.g., "lead_score > 80")
+- Call outcomes (completed, failed, transferred)
+- Sentiment thresholds
+- Custom business rules
+
+---
+
+## Contact Management
+
+### Phonebook
+
+Organize and manage your contacts efficiently:
+
+<Steps>
+  <Step title="Import Contacts">
+    Upload contacts via CSV or add them manually. Include custom fields like name, company, notes, and more.
+  </Step>
+  <Step title="Organize by Agent">
+    Assign contacts to specific agents for targeted campaigns
+  </Step>
+  <Step title="Dynamic Variables">
+    Use contact data as variables in your agent prompts for personalized conversations
+  </Step>
+  <Step title="Track History">
+    View complete call history for each contact
+  </Step>
+</Steps>
+
+### Contact Features
+
+| Feature | Description |
+|---------|-------------|
+| **Bulk Upload** | Import thousands of contacts via CSV |
+| **Custom Fields** | Add any data fields relevant to your business |
+| **Tags & Segments** | Organize contacts into groups for targeted outreach |
+| **Call History** | Complete interaction history per contact |
+| **Do Not Call** | Manage DNC lists and compliance |
+
+---
+
+## Call Management
+
+### Outbound Calls
+
+Initiate calls at scale:
+
+<CardGroup cols={2}>
+  <Card title="Single Calls" icon="phone">
+    Make individual outbound calls directly from the dashboard
+  </Card>
+  <Card title="Bulk Campaigns" icon="users">
+    Upload contact lists and run automated calling campaigns
+  </Card>
+  <Card title="Click-to-Call" icon="mouse-pointer">
+    Trigger calls from your CRM or other applications via API
+  </Card>
+  <Card title="Call Throttling" icon="gauge">
+    Control call pace to match your capacity
+  </Card>
+</CardGroup>
+
+### Scheduled Calls
+
+Automate your outreach with precision:
+
+- **One-Time Scheduling**: Schedule calls for specific dates and times
+- **Recurring Calls**: Set up daily, weekly, or custom recurring call schedules
+- **Time Zone Support**: Schedule calls in the recipient's local time
+- **Smart Retry**: Automatically retry failed calls with configurable rules
+
+### Call History
+
+Complete visibility into all conversations:
+
+- Full transcripts for every call
+- Call duration, timestamps, and outcomes
+- Analysis results and extracted data
+- Recording playback (when enabled)
+- Export capabilities for reporting
+
+---
+
+## Tools & Integrations
+
+### API Tools
+
+Connect your agents to any external system:
+
+<AccordionGroup>
+  <Accordion title="Dynamic API Tools" icon="plug">
+    Build custom integrations without code:
+    - Define API endpoints (GET, POST, PUT, DELETE)
+    - Configure authentication (API keys, headers, OAuth)
+    - Map parameters from conversation context
+    - Test and validate before deployment
+  </Accordion>
+  
+  <Accordion title="Parameter Types" icon="sliders">
+    Flexible parameter configuration:
+    - **Static Values**: Fixed values for every call
+    - **LLM Parameters**: Let the AI extract values from conversation
+    - **User Input**: Values provided by the caller
+    - **Context Variables**: Data from contact records or session
+  </Accordion>
+  
+  <Accordion title="Response Handling" icon="code">
+    Process API responses intelligently:
+    - Parse JSON responses automatically
+    - Extract specific fields for agent use
+    - Handle errors gracefully
+    - Chain multiple API calls
+  </Accordion>
+</AccordionGroup>
+
+### MCP (Model Context Protocol)
+
+Connect specialized AI tools and services:
+
+<CardGroup cols={2}>
+  <Card title="Tool Discovery" icon="magnifying-glass">
+    MCP servers automatically expose their available tools to your agents
+  </Card>
+  <Card title="Optimized Initialization" icon="bolt">
+    Fast connection times with intelligent caching and connection pooling
+  </Card>
+  <Card title="Multiple Servers" icon="server">
+    Connect to multiple MCP servers simultaneously for expanded capabilities
+  </Card>
+  <Card title="Status Monitoring" icon="chart-line">
+    Monitor connection health and performance in real-time
+  </Card>
+</CardGroup>
+
+---
+
+## Web Widget & Chat
+
+### Embeddable Widget
+
+Add voice AI to any website:
+
+- **Voice Conversations**: Real-time voice calls directly in the browser
+- **Text Chat**: Full chat functionality with streaming responses
+- **Screen Sharing**: Allow users to share their screen for support scenarios
+- **Camera Support**: Enable video for face-to-face interactions
+
+### Widget Features
+
+| Feature | Description |
+|---------|-------------|
+| **Custom Branding** | Match colors, fonts, and styling to your brand |
+| **Multiple Placements** | Position anywhere on your page |
+| **Auto-Connect** | Optionally start conversations automatically |
+| **Terms & Conditions** | Built-in T&C acceptance flow |
+| **Real-Time Transcripts** | Display live transcription during calls |
+| **Shadow DOM** | Complete style isolation—no CSS conflicts |
+
+---
+
+## Scaling & Performance
+
+### Enterprise-Grade Infrastructure
+
+Built to handle serious volume:
+
+<CardGroup cols={3}>
+  <Card title="1000+ Concurrent Calls" icon="phone-volume">
+    Scale to thousands of simultaneous voice conversations
+  </Card>
+  <Card title="Low Latency" icon="bolt">
+    Sub-second response times for natural conversation flow
+  </Card>
+  <Card title="High Availability" icon="server">
+    Redundant infrastructure with automatic failover
+  </Card>
+</CardGroup>
+
+### Performance Features
+
+- **Audio Caching**: Cached audio processing for faster responses
+- **Connection Pooling**: Optimized connections to AI providers
+- **Load Balancing**: Intelligent distribution across infrastructure
+- **Auto-Scaling**: Automatically scale resources based on demand
+
+### Reliability
+
+| Metric | Target |
+|--------|--------|
+| **Uptime** | 99.9% availability |
+| **Latency** | < 500ms response time |
+| **Concurrent Calls** | 1000+ simultaneous conversations |
+| **Data Retention** | Configurable per your requirements |
+
+---
+
+## Analytics & Monitoring
+
+### Real-Time Dashboard
+
+Monitor your agents in real-time:
+
+- **Live Call View**: See active conversations as they happen
+- **Performance Metrics**: Track success rates, durations, and outcomes
+- **Provider Health**: Monitor AI provider status and latency
+- **Cost Tracking**: Real-time usage and cost visibility
+
+### Conversation Analytics
+
+Deep insights into agent performance:
+
+- Call volume and trends over time
+- Average call duration and handling time
+- Success and completion rates
+- Sentiment analysis trends
+- Tool usage patterns
+
+---
+
+## Security & Compliance
+
+### Enterprise Security
+
+<CardGroup cols={2}>
+  <Card title="Encryption" icon="lock">
+    End-to-end encryption for all data in transit and at rest
+  </Card>
+  <Card title="Access Control" icon="user-lock">
+    Role-based permissions with granular controls
+  </Card>
+  <Card title="Audit Logs" icon="list-check">
+    Complete audit trail of all platform actions
+  </Card>
+  <Card title="Data Privacy" icon="shield">
+    GDPR and privacy-compliant data handling
+  </Card>
+</CardGroup>
+
+### Compliance Features
+
+- JWT-based authentication with secure sessions
+- API rate limiting and abuse protection
+- Encrypted credential storage
+- Configurable data retention policies
+- Export and deletion capabilities
+
+---
+
+## Coming Soon
+
+<Note>
+We're constantly adding new features. Here's what's on our roadmap:
+</Note>
+
+- **Sentiment Analysis Scoring**: Real-time sentiment tracking during calls
+- **A/B Testing**: Test prompt variations to optimize performance
+- **Multi-Language Expansion**: 10+ additional language support
+- **CRM Integrations**: Native Salesforce, HubSpot, and Zoho connectors
+- **AI Agent Marketplace**: Share and discover agent templates
+- **Mobile Apps**: iOS and Android management apps
