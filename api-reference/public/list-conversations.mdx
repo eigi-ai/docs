@@ -89,60 +89,42 @@ This endpoint returns a paginated list of conversations based on the API key own
 
 ## Response
 
-<ResponseField name="conversations" type="array">
-  Array of conversation objects matching the filter criteria
+<ResponseField name="status" type="string">
+  Status of the request: `success` or `error`
 </ResponseField>
 
-<ResponseField name="total" type="integer">
-  Total number of conversations matching the filters
+<ResponseField name="message" type="string">
+  Human-readable message describing the result (e.g., "Retrieved 5 conversations")
 </ResponseField>
 
-<ResponseField name="page" type="integer">
-  Current page number
+<ResponseField name="data" type="array">
+  Array of conversation objects matching the filter criteria. Each conversation contains:
+  - `agent_id`: ID of the agent
+  - `conversation_id`: Unique UUID for the conversation
+  - `conversation_type`: `DAILY`, `TELEPHONY`, `WHATSAPP`, or `CHAT`
+  - `conversation_analysis`: AI analysis results (null if not analyzed)
+  - `conversation_status`: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`, or `FAILED`
+  - `notes`: Additional notes
+  - `conversation_transcript`: Array of messages with role, content, timestamp
+  - `created_by`: User ID who created the conversation
+  - `conversation_metadata`: Type-specific metadata
+  - `created_at`: Creation timestamp
+  - `updated_at`: Last update timestamp
+  - `id`: Internal document ID
 </ResponseField>
 
-<ResponseField name="page_size" type="integer">
-  Number of items per page
+<ResponseField name="pagination" type="object">
+  Pagination information containing:
+  - `total`: Total number of conversations matching filters
+  - `page`: Current page number
+  - `page_size`: Number of items per page
+  - `total_pages`: Total number of pages available
 </ResponseField>
 
-<ResponseField name="total_pages" type="integer">
-  Total number of pages available
-</ResponseField>
+<RequestExample>
 
-<ResponseField name="has_next" type="boolean">
-  Whether there are more pages available
-</ResponseField>
-
-<ResponseField name="has_previous" type="boolean">
-  Whether there are previous pages available
-</ResponseField>
-
-## Example Requests
-
-<CodeGroup>
-
-```bash Basic Pagination
-curl -X GET "https://prod.eigi.ai/v1/public/conversations?page=1&page_size=10" \
-  -H "X-API-Key: vk_your_api_key_here"
-```
-
-```bash Filter by Status
-curl -X GET "https://prod.eigi.ai/v1/public/conversations?conversation_status=COMPLETED&page=1&page_size=20" \
-  -H "X-API-Key: vk_your_api_key_here"
-```
-
-```bash Filter by Date Range
-curl -X GET "https://prod.eigi.ai/v1/public/conversations?from_date=2025-12-01T00:00:00Z&to_date=2025-12-31T23:59:59Z" \
-  -H "X-API-Key: vk_your_api_key_here"
-```
-
-```bash Filter by Agent and Type
-curl -X GET "https://prod.eigi.ai/v1/public/conversations?agent_id=68ea2517dbb84c09bae1ba0a&conversation_type=TELEPHONY" \
-  -H "X-API-Key: vk_your_api_key_here"
-```
-
-```bash Filter by Time of Day
-curl -X GET "https://prod.eigi.ai/v1/public/conversations?from_time=09:00&to_time=17:00&timezone_offset=330" \
+```bash cURL
+curl -X GET "https://prod.eigi.ai/v1/public/conversations?page=1&page_size=5" \
   -H "X-API-Key: vk_your_api_key_here"
 ```
 
@@ -155,10 +137,8 @@ headers = {
 
 params = {
     "page": 1,
-    "page_size": 20,
-    "conversation_status": "COMPLETED",
-    "from_date": "2025-12-01T00:00:00Z",
-    "to_date": "2025-12-31T23:59:59Z"
+    "page_size": 5,
+    "conversation_status": "COMPLETED"
 }
 
 response = requests.get(
@@ -168,9 +148,7 @@ response = requests.get(
 )
 
 data = response.json()
-print(f"Total conversations: {data['total']}")
-for conversation in data['conversations']:
-    print(f"- {conversation['conversation_id']}: {conversation['conversation_status']}")
+print(f"Total: {data['pagination']['total']}")
 ```
 
 ```javascript Node.js
@@ -184,87 +162,102 @@ const response = await axios.get(
     },
     params: {
       page: 1,
-      page_size: 20,
-      conversation_status: 'COMPLETED',
-      from_date: '2025-12-01T00:00:00Z',
-      to_date: '2025-12-31T23:59:59Z'
+      page_size: 5
     }
   }
 );
 
-const { conversations, total, page, total_pages } = response.data;
-console.log(`Page ${page} of ${total_pages} (${total} total)`);
-conversations.forEach(conv => {
-  console.log(`- ${conv.conversation_id}: ${conv.conversation_status}`);
-});
+console.log(response.data);
 ```
 
-</CodeGroup>
-
-## Example Response
-
-```json
-{
-  "conversations": [
-    {
-      "conversation_id": "35d33a43-176c-405c-92bf-db972035df28",
-      "agent_id": "68ea2517dbb84c09bae1ba0a",
-      "agent_name": "Customer Support Agent",
-      "conversation_type": "TELEPHONY",
-      "conversation_status": "COMPLETED",
-      "calling_type": "OUTBOUND",
-      "mobile_number": "+919876543210",
-      "duration": 245.8,
-      "created_at": "2025-12-04T10:30:00Z",
-      "updated_at": "2025-12-04T10:34:05Z",
-      "metadata": {
-        "customer_name": "John Doe",
-        "campaign": "Q4_Outreach"
-      }
-    },
-    {
-      "conversation_id": "42e44b54-287d-516d-a3cg-ea083146eg39",
-      "agent_id": "68ea2517dbb84c09bae1ba0a",
-      "agent_name": "Customer Support Agent",
-      "conversation_type": "TELEPHONY",
-      "conversation_status": "COMPLETED",
-      "calling_type": "INBOUND",
-      "mobile_number": "+919123456789",
-      "duration": 182.3,
-      "created_at": "2025-12-04T11:15:00Z",
-      "updated_at": "2025-12-04T11:18:02Z",
-      "metadata": {
-        "customer_name": "Jane Smith",
-        "campaign": "Support_Callback"
-      }
-    }
-  ],
-  "total": 47,
-  "page": 1,
-  "page_size": 10,
-  "total_pages": 5,
-  "has_next": true,
-  "has_previous": false
-}
-```
-
-## Error Responses
+</RequestExample>
 
 <ResponseExample>
 
-```json 401 Unauthorized
+```json 200 - Success
+{
+  "status": "success",
+  "message": "Retrieved 5 conversations",
+  "data": [
+    {
+      "agent_id": "68ea2517dbb84c09bae1ba0a",
+      "conversation_id": "a28e7071-508e-4d45-8887-085531aafaba",
+      "conversation_type": "CHAT",
+      "conversation_analysis": null,
+      "conversation_status": "IN_PROGRESS",
+      "notes": null,
+      "conversation_transcript": [
+        {
+          "role": "user",
+          "content": "hi",
+          "timestamp": "2025-12-03T14:14:23.735228+00:00"
+        },
+        {
+          "role": "assistant",
+          "content": "Hi there! How can I help you today?",
+          "timestamp": "2025-12-03T14:14:23.738544+00:00"
+        }
+      ],
+      "created_by": null,
+      "conversation_metadata": {
+        "last_activity": "2025-12-03T14:15:20.985321+00:00",
+        "session_status": "active"
+      },
+      "created_at": "2025-12-03T14:14:22.719000",
+      "updated_at": "2025-12-03T14:15:20.985000",
+      "id": "69316c7d6519e8d49433e40b"
+    },
+    {
+      "agent_id": "68ea2517dbb84c09bae1ba0a",
+      "conversation_id": "35d33a43-176c-405c-92bf-db972035df28",
+      "conversation_type": "TELEPHONY",
+      "conversation_analysis": [
+        { "is_good": true }
+      ],
+      "conversation_status": "COMPLETED",
+      "notes": "Re-analysis completed successfully",
+      "conversation_transcript": null,
+      "created_by": "68ea1dc3a8f78b1cbdfed6f5",
+      "conversation_metadata": {
+        "dynamic_variables": {
+          "agent_id": "68ea2517dbb84c09bae1ba0a"
+        },
+        "to_mobile_number": "+919156685436",
+        "from_mobile_number": "918035315228",
+        "calling_type": "OUTBOUND",
+        "telephony_provider": "PLIVO",
+        "conversation_recording_url": "https://aps1.media.plivo.com/v1/Account/.../Recording/xxx.mp3",
+        "conversation_duration": 14
+      },
+      "created_at": "2025-11-29T10:20:31.364000",
+      "updated_at": "2025-11-29T13:56:06.618000",
+      "id": "69316c7d6519e8d49433e40f"
+    }
+  ],
+  "pagination": {
+    "total": 53,
+    "page": 1,
+    "page_size": 5,
+    "total_pages": 11
+  }
+}
+```
+
+```json 401 - Unauthorized
 {
   "detail": "Invalid API key"
 }
 ```
 
-```json 500 Internal Server Error
+```json 500 - Internal Server Error
 {
   "detail": "Internal Server Error: [error details]"
 }
 ```
 
 </ResponseExample>
+
+## Error Responses
 
 ## Status Codes
 

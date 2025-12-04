@@ -14,10 +14,6 @@ This endpoint creates conversations and initiates outbound calls via telephony p
   Your eigi.ai API key. Must be prefixed with `vk_`.
 </ParamField>
 
-<ParamField header="Content-Type" type="string" required>
-  Must be set to `application/json`
-</ParamField>
-
 ## Request Body
 
 <ParamField body="agent_id" type="string" required>
@@ -42,47 +38,21 @@ This endpoint creates conversations and initiates outbound calls via telephony p
 
 ## Response
 
-<ResponseField name="results" type="array">
-  Array of result objects, one for each call initiated
+<ResponseField name="status" type="string">
+  Status of the request: `success`
 </ResponseField>
 
-<ResponseField name="results[].conversation_id" type="string">
-  Unique identifier for the created conversation
+<ResponseField name="message" type="string">
+  Human-readable message describing the result: `Outbound calls initiated successfully`
 </ResponseField>
 
-<ResponseField name="results[].mobile_number" type="string">
-  Phone number that was called
-</ResponseField>
+<Note>
+  The API initiates calls asynchronously. Use webhooks or poll the [Get Conversation](/api-reference/public/get-conversation) endpoint with the conversation ID to track call status and retrieve transcripts after completion.
+</Note>
 
-<ResponseField name="results[].status" type="string">
-  Status of the call initiation: `success` or `failed`
-</ResponseField>
+<RequestExample>
 
-<ResponseField name="results[].message" type="string">
-  Status message or error description
-</ResponseField>
-
-<ResponseField name="results[].call_id" type="string">
-  Telephony provider's call ID (Plivo/Twilio call UUID)
-</ResponseField>
-
-<ResponseField name="total_calls" type="integer">
-  Total number of calls initiated
-</ResponseField>
-
-<ResponseField name="successful_calls" type="integer">
-  Number of calls successfully initiated
-</ResponseField>
-
-<ResponseField name="failed_calls" type="integer">
-  Number of calls that failed to initiate
-</ResponseField>
-
-## Example Requests
-
-<CodeGroup>
-
-```bash Single Call
+```bash cURL
 curl -X POST "https://prod.eigi.ai/v1/public/calls/outbound" \
   -H "X-API-Key: vk_your_api_key_here" \
   -H "Content-Type: application/json" \
@@ -93,8 +63,7 @@ curl -X POST "https://prod.eigi.ai/v1/public/calls/outbound" \
         "mobile_number": "+919876543210",
         "metadata": {
           "customer_name": "John Doe",
-          "customer_id": "CUST-12345",
-          "campaign": "Q4_Outreach"
+          "customer_id": "CUST-12345"
         }
       }
     ],
@@ -102,30 +71,7 @@ curl -X POST "https://prod.eigi.ai/v1/public/calls/outbound" \
   }'
 ```
 
-```bash Multiple Calls
-curl -X POST "https://prod.eigi.ai/v1/public/calls/outbound" \
-  -H "X-API-Key: vk_your_api_key_here" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "agent_id": "68ea2517dbb84c09bae1ba0a",
-    "params": [
-      {
-        "mobile_number": "+919876543210",
-        "metadata": {"customer_name": "John Doe"}
-      },
-      {
-        "mobile_number": "+918765432109",
-        "metadata": {"customer_name": "Jane Smith"}
-      },
-      {
-        "mobile_number": "+917654321098",
-        "metadata": {"customer_name": "Bob Johnson"}
-      }
-    ]
-  }'
-```
-
-```python Python - Single Call
+```python Python
 import requests
 
 headers = {
@@ -139,9 +85,7 @@ payload = {
         {
             "mobile_number": "+919876543210",
             "metadata": {
-                "customer_name": "John Doe",
-                "customer_id": "CUST-12345",
-                "campaign": "Q4_Outreach"
+                "customer_name": "John Doe"
             }
         }
     ],
@@ -154,193 +98,103 @@ response = requests.post(
     json=payload
 )
 
-result = response.json()
-print(f"Call initiated: {result['results'][0]['conversation_id']}")
-```
-
-```python Python - Bulk Calls
-import requests
-import csv
-
-headers = {
-    "X-API-Key": "vk_your_api_key_here",
-    "Content-Type": "application/json"
-}
-
-# Read phone numbers from CSV
-params = []
-with open('contacts.csv', 'r') as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        params.append({
-            "mobile_number": row['phone'],
-            "metadata": {
-                "customer_name": row['name'],
-                "customer_id": row['id']
-            }
-        })
-
-payload = {
-    "agent_id": "68ea2517dbb84c09bae1ba0a",
-    "params": params
-}
-
-response = requests.post(
-    "https://prod.eigi.ai/v1/public/calls/outbound",
-    headers=headers,
-    json=payload
-)
-
-result = response.json()
-print(f"Initiated {result['successful_calls']} calls successfully")
-print(f"Failed: {result['failed_calls']}")
+print(response.json())
 ```
 
 ```javascript Node.js
 const axios = require('axios');
 
-const headers = {
-  'X-API-Key': 'vk_your_api_key_here',
-  'Content-Type': 'application/json'
-};
-
-const payload = {
-  agent_id: '68ea2517dbb84c09bae1ba0a',
-  params: [
-    {
-      mobile_number: '+919876543210',
-      metadata: {
-        customer_name: 'John Doe',
-        customer_id: 'CUST-12345',
-        campaign: 'Q4_Outreach'
-      }
-    }
-  ],
-  telephony_provider: 'PLIVO'
-};
-
 const response = await axios.post(
   'https://prod.eigi.ai/v1/public/calls/outbound',
-  payload,
-  { headers }
+  {
+    agent_id: '68ea2517dbb84c09bae1ba0a',
+    params: [
+      {
+        mobile_number: '+919876543210',
+        metadata: { customer_name: 'John Doe' }
+      }
+    ],
+    telephony_provider: 'PLIVO'
+  },
+  {
+    headers: {
+      'X-API-Key': 'vk_your_api_key_here',
+      'Content-Type': 'application/json'
+    }
+  }
 );
 
-console.log(`Call initiated: ${response.data.results[0].conversation_id}`);
+console.log(response.data);
 ```
 
-</CodeGroup>
-
-## Example Responses
-
-<CodeGroup>
-
-```json Successful Single Call
-{
-  "results": [
-    {
-      "conversation_id": "35d33a43-176c-405c-92bf-db972035df28",
-      "mobile_number": "+919876543210",
-      "status": "success",
-      "message": "Call initiated successfully",
-      "call_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-    }
-  ],
-  "total_calls": 1,
-  "successful_calls": 1,
-  "failed_calls": 0
-}
-```
-
-```json Multiple Calls (Mixed Success)
-{
-  "results": [
-    {
-      "conversation_id": "35d33a43-176c-405c-92bf-db972035df28",
-      "mobile_number": "+919876543210",
-      "status": "success",
-      "message": "Call initiated successfully",
-      "call_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-    },
-    {
-      "conversation_id": "42e44b54-287d-516d-a3cg-ea083146eg39",
-      "mobile_number": "+918765432109",
-      "status": "success",
-      "message": "Call initiated successfully",
-      "call_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
-    },
-    {
-      "mobile_number": "+917654321098",
-      "status": "failed",
-      "message": "Invalid phone number format"
-    }
-  ],
-  "total_calls": 3,
-  "successful_calls": 2,
-  "failed_calls": 1
-}
-```
-
-</CodeGroup>
-
-## Error Responses
+</RequestExample>
 
 <ResponseExample>
 
-```json 400 Bad Request - Missing Agent ID
+```json 200 - Success
+{
+  "status": "success",
+  "message": "Outbound calls initiated successfully"
+}
+```
+
+```json 400 - Missing Agent ID
 {
   "detail": "agent_id is required"
 }
 ```
 
-```json 400 Bad Request - Missing Parameters
+```json 400 - Missing Params
 {
-  "detail": "params array is required and must not be empty"
+  "detail": "Parameters are required for the outbound call"
 }
 ```
 
-```json 400 Bad Request - Agent Not Configured
+```json 400 - Agent Not Configured
 {
-  "detail": "Agent is not properly configured for telephony"
+  "detail": "Agent has no mobile numbers configured for outbound calls"
 }
 ```
 
-```json 401 Unauthorized
+```json 401 - Unauthorized
 {
   "detail": "Invalid API key"
 }
 ```
 
-```json 403 Forbidden - Not Authorized
+```json 403 - Forbidden
 {
-  "detail": "User not authorized to use this agent"
+  "detail": "You are not authorized to access this agent"
 }
 ```
 
-```json 403 Forbidden - Quota Exceeded
+```json 403 - Quota Exceeded
 {
-  "detail": "Monthly call quota exceeded. Please upgrade your plan."
+  "detail": "Call quota exceeded"
 }
 ```
 
-```json 404 Not Found - User Not Found
+```json 404 - Agent Not Found
 {
-  "detail": "User not found for API key"
+  "detail": "Agent with id xxx not found"
 }
 ```
 
-```json 404 Not Found - Agent Not Found
+```json 404 - User Not Found
 {
-  "detail": "Agent not found"
+  "detail": "User not found"
 }
 ```
 
-```json 500 Internal Server Error
+```json 500 - Internal Server Error
 {
   "detail": "Internal Server Error: [error details]"
 }
 ```
 
 </ResponseExample>
+
+## Error Responses
 
 ## Status Codes
 

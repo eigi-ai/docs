@@ -24,40 +24,43 @@ This endpoint retrieves comprehensive details about a conversation, including st
 
 ## Response
 
-<ResponseField name="conversation_id" type="string">
-  Unique identifier for the conversation
-</ResponseField>
-
 <ResponseField name="agent_id" type="string">
   ID of the agent that handled this conversation
+</ResponseField>
+
+<ResponseField name="conversation_id" type="string">
+  Unique identifier (UUID) for the conversation
 </ResponseField>
 
 <ResponseField name="conversation_type" type="string">
   Type of conversation: `DAILY`, `TELEPHONY`, `WHATSAPP`, or `CHAT`
 </ResponseField>
 
+<ResponseField name="conversation_analysis" type="array | null">
+  AI-generated analysis of the conversation. Returns `null` if analysis hasn't been performed yet.
+</ResponseField>
+
 <ResponseField name="conversation_status" type="string">
   Current status: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`, or `FAILED`
 </ResponseField>
 
-<ResponseField name="calling_type" type="string">
-  Direction of the call: `INBOUND` or `OUTBOUND`
+<ResponseField name="notes" type="string | null">
+  Additional notes or annotations for the conversation
 </ResponseField>
 
-<ResponseField name="mobile_number" type="string">
-  Phone number involved in the conversation
+<ResponseField name="conversation_transcript" type="array | null">
+  Array of conversation messages. Each message contains:
+  - `role`: `user` or `assistant`
+  - `content`: The message text
+  - `timestamp`: ISO 8601 timestamp
 </ResponseField>
 
-<ResponseField name="transcript" type="array">
-  Array of conversation messages with speaker, text, and timestamps
+<ResponseField name="created_by" type="string | null">
+  User ID who created/initiated the conversation
 </ResponseField>
 
-<ResponseField name="analysis" type="object">
-  AI-generated analysis of the conversation including sentiment, summary, and key points
-</ResponseField>
-
-<ResponseField name="duration" type="number">
-  Total duration of the conversation in seconds
+<ResponseField name="conversation_metadata" type="object">
+  Metadata associated with the conversation. For CHAT type includes `last_activity` and `session_status`. For TELEPHONY includes `to_mobile_number`, `from_mobile_number`, `calling_type`, `telephony_provider`, `conversation_recording_url`, and `conversation_duration`.
 </ResponseField>
 
 <ResponseField name="created_at" type="datetime">
@@ -68,23 +71,21 @@ This endpoint retrieves comprehensive details about a conversation, including st
   Timestamp of the last update to the conversation
 </ResponseField>
 
-<ResponseField name="metadata" type="object">
-  Custom metadata associated with the conversation
+<ResponseField name="id" type="string">
+  Internal MongoDB document ID
 </ResponseField>
 
-## Example Request
-
-<CodeGroup>
+<RequestExample>
 
 ```bash cURL
-curl -X GET "https://prod.eigi.ai/v1/public/conversations/35d33a43-176c-405c-92bf-db972035df28" \
+curl -X GET "https://prod.eigi.ai/v1/public/conversations/a28e7071-508e-4d45-8887-085531aafaba" \
   -H "X-API-Key: vk_your_api_key_here"
 ```
 
 ```python Python
 import requests
 
-conversation_id = "35d33a43-176c-405c-92bf-db972035df28"
+conversation_id = "a28e7071-508e-4d45-8887-085531aafaba"
 headers = {
     "X-API-Key": "vk_your_api_key_here"
 }
@@ -101,7 +102,7 @@ print(conversation)
 ```javascript Node.js
 const axios = require('axios');
 
-const conversationId = '35d33a43-176c-405c-92bf-db972035df28';
+const conversationId = 'a28e7071-508e-4d45-8887-085531aafaba';
 
 const response = await axios.get(
   `https://prod.eigi.ai/v1/public/conversations/${conversationId}`,
@@ -115,85 +116,78 @@ const response = await axios.get(
 console.log(response.data);
 ```
 
-</CodeGroup>
-
-## Example Response
-
-```json
-{
-  "conversation_id": "35d33a43-176c-405c-92bf-db972035df28",
-  "agent_id": "68ea2517dbb84c09bae1ba0a",
-  "conversation_type": "TELEPHONY",
-  "conversation_status": "COMPLETED",
-  "calling_type": "OUTBOUND",
-  "mobile_number": "+919876543210",
-  "transcript": [
-    {
-      "speaker": "agent",
-      "text": "Hello! This is Emma from eigi.ai. How can I help you today?",
-      "timestamp": "2025-12-04T10:30:15Z"
-    },
-    {
-      "speaker": "user",
-      "text": "Hi, I'd like to schedule an appointment.",
-      "timestamp": "2025-12-04T10:30:22Z"
-    },
-    {
-      "speaker": "agent",
-      "text": "I'd be happy to help you schedule an appointment. What date works best for you?",
-      "timestamp": "2025-12-04T10:30:25Z"
-    }
-  ],
-  "analysis": {
-    "sentiment": "positive",
-    "summary": "Customer requested appointment scheduling. Positive interaction with successful booking.",
-    "key_points": [
-      "Appointment scheduling request",
-      "Customer engagement was positive",
-      "Successfully captured customer preferences"
-    ],
-    "outcome": "success"
-  },
-  "duration": 245.8,
-  "created_at": "2025-12-04T10:30:00Z",
-  "updated_at": "2025-12-04T10:34:05Z",
-  "metadata": {
-    "customer_name": "John Doe",
-    "campaign": "Q4_Outreach",
-    "priority": "high"
-  }
-}
-```
-
-## Error Responses
+</RequestExample>
 
 <ResponseExample>
 
-```json 401 Unauthorized
+```json 200 - Success
+{
+  "agent_id": "68ea2517dbb84c09bae1ba0a",
+  "conversation_id": "a28e7071-508e-4d45-8887-085531aafaba",
+  "conversation_type": "CHAT",
+  "conversation_analysis": null,
+  "conversation_status": "IN_PROGRESS",
+  "notes": null,
+  "conversation_transcript": [
+    {
+      "role": "user",
+      "content": "hi",
+      "timestamp": "2025-12-03T14:14:23.735228+00:00"
+    },
+    {
+      "role": "assistant",
+      "content": "Hi there! How can I help you today?",
+      "timestamp": "2025-12-03T14:14:23.738544+00:00"
+    },
+    {
+      "role": "user",
+      "content": "who are you ?",
+      "timestamp": "2025-12-03T14:14:46.605904+00:00"
+    },
+    {
+      "role": "assistant",
+      "content": "I am a large language model, trained by Google.",
+      "timestamp": "2025-12-03T14:14:46.610178+00:00"
+    }
+  ],
+  "created_by": null,
+  "conversation_metadata": {
+    "last_activity": "2025-12-03T14:15:20.985321+00:00",
+    "session_status": "active"
+  },
+  "created_at": "2025-12-03T14:14:22.719000",
+  "updated_at": "2025-12-03T14:15:20.985000",
+  "id": "69316c7d6519e8d49433e40b"
+}
+```
+
+```json 401 - Unauthorized
 {
   "detail": "Invalid API key"
 }
 ```
 
-```json 403 Forbidden
+```json 403 - Forbidden
 {
   "detail": "API key owner doesn't have access to this conversation"
 }
 ```
 
-```json 404 Not Found
+```json 404 - Not Found
 {
   "detail": "Conversation not found"
 }
 ```
 
-```json 500 Internal Server Error
+```json 500 - Internal Server Error
 {
   "detail": "Internal Server Error: [error details]"
 }
 ```
 
 </ResponseExample>
+
+## Error Responses
 
 ## Status Codes
 

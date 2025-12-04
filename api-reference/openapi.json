@@ -457,38 +457,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "results": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "conversation_id": {
-                            "type": "string"
-                          },
-                          "mobile_number": {
-                            "type": "string"
-                          },
-                          "status": {
-                            "type": "string",
-                            "enum": ["success", "failed"]
-                          },
-                          "message": {
-                            "type": "string"
-                          },
-                          "call_id": {
-                            "type": "string"
-                          }
-                        }
-                      }
+                    "status": {
+                      "type": "string",
+                      "example": "success"
                     },
-                    "total_calls": {
-                      "type": "integer"
-                    },
-                    "successful_calls": {
-                      "type": "integer"
-                    },
-                    "failed_calls": {
-                      "type": "integer"
+                    "message": {
+                      "type": "string",
+                      "example": "Outbound calls initiated successfully"
                     }
                   }
                 }

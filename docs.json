@@ -7,7 +7,20 @@
     "light": "#07C983",
     "dark": "#15803D"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
+  "openapi": [
+    "api-reference/openapi.json"
+  ],
+  "api": {
+    "baseUrl": "https://prod.eigi.ai/v1",
+    "auth": {
+      "method": "key",
+      "name": "X-API-Key"
+    },
+    "playground": {
+      "mode": "show"
+    }
+  },
   "navigation": {
     "tabs": [
       {
