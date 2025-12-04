@@ -1,97 +1,191 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Welcome to eigi.ai"
+description: "Transform Business Communication with AI-Powered Voice Agents"
 ---
 
-## Setting up
+## What is eigi.ai?
 
-Get your documentation site up and running in minutes.
+**eigi.ai** (powered by Agent-360) is an enterprise-grade conversational AI platform that enables businesses to create, deploy, and manage intelligent voice agents. Built with modular architecture, eigi.ai integrates cutting-edge LLM, TTS (Text-to-Speech), STT (Speech-to-Text), and telephony services to deliver natural, context-aware voice conversations at scale.
+
+Whether you're building customer support agents, sales assistants, appointment schedulers, or survey bots, eigi.ai provides everything you need to create sophisticated voice agents without writing code.
 
 <Card
-  title="Start here"
+  title="Get started in minutes"
   icon="rocket"
   href="/quickstart"
   horizontal
 >
-  Follow our three step quickstart guide.
+  Follow our quickstart guide to deploy your first AI voice agent.
 </Card>
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
+## Core Capabilities
 
 <Columns cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Natural Voice Conversations"
+    icon="microphone"
   >
-    Edit your docs locally and preview them in real time.
+    AI agents that speak and listen like humans using state-of-the-art LLM, TTS, and STT providers.
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
+    title="Modular Architecture"
+    icon="puzzle-piece"
+  >
+    Mix and match LLM (OpenAI, Anthropic, Google), TTS (ElevenLabs, Cartesia, Sarvam), and STT (Deepgram) providers.
+  </Card>
+  <Card
+    title="Enterprise Telephony"
+    icon="phone"
+  >
+    Production-ready integration with Plivo and Twilio for inbound and outbound calls at scale.
+  </Card>
+  <Card
+    title="No-Code Builder"
+    icon="wand-magic-sparkles"
+  >
+    Intuitive dashboard to configure agents, prompts, voices, and integrations without programming.
+  </Card>
+  <Card
+    title="API Integrations"
+    icon="plug"
+  >
+    Connect to any external system, database, or service through Dynamic API Tools and MCP (Model Context Protocol).
+  </Card>
+  <Card
+    title="Real-Time Analytics"
+    icon="chart-line"
+  >
+    Monitor conversations, track performance, analyze sentiment, and optimize agent behavior.
+  </Card>
+</Columns>
+
+## Platform Features
+
+Explore what makes eigi.ai the perfect platform for conversational AI.
+
+<Columns cols={2}>
+  <Card
+    title="Agent Builder"
+    icon="robot"
     href="/essentials/settings"
   >
-    Customize the design and colors of your site to match your brand.
+    Create and configure AI voice agents with custom prompts, tools, and voice profiles.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
+  <Card
+    title="Call Management"
+    icon="phone-volume"
     href="/essentials/navigation"
   >
-    Organize your docs to help users find what they need and succeed with your product.
+    Initiate outbound calls, handle inbound routing, and schedule calls at scale.
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
+    title="API Documentation"
+    icon="code"
     href="/api-reference/introduction"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    Comprehensive API reference for integrating eigi.ai into your applications.
+  </Card>
+  <Card
+    title="Development Setup"
+    icon="terminal"
+    href="/development"
+  >
+    Set up your local development environment and start building.
   </Card>
 </Columns>
 
-## Create beautiful pages
+## Use Cases
 
-Everything you need to create world-class documentation.
+<AccordionGroup>
+  <Accordion title="Customer Support" icon="headset">
+    Automate customer service calls with AI agents that understand context, access customer data through APIs, and resolve issues naturally. Handle common queries 24/7 while routing complex issues to human agents.
+  </Accordion>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+  <Accordion title="Sales & Lead Qualification" icon="chart-mixed">
+    Engage leads with conversational agents that qualify prospects, answer questions, schedule meetings with sales teams, and follow up automatically. Increase conversion rates with personalized outreach at scale.
+  </Accordion>
 
-## Need inspiration?
+  <Accordion title="Appointment Scheduling" icon="calendar-check">
+    Manage bookings and appointments through voice calls with calendar integration, automated reminders, and rescheduling capabilities. Reduce no-shows and optimize scheduling efficiency.
+  </Accordion>
+
+  <Accordion title="Surveys & Feedback" icon="clipboard-question">
+    Conduct phone surveys at scale with agents that adapt questions based on responses, capture detailed feedback, and analyze sentiment. Get higher response rates than traditional methods.
+  </Accordion>
+
+  <Accordion title="Healthcare & Wellness" icon="heart-pulse">
+    Patient reminders, prescription refills, appointment confirmations, and health check-ins with HIPAA-ready architecture. Improve patient engagement and reduce administrative overhead.
+  </Accordion>
+
+  <Accordion title="Education & Training" icon="graduation-cap">
+    Interactive voice-based learning experiences, student support, attendance tracking, and administrative task automation. Enhance student engagement with conversational AI.
+  </Accordion>
+</AccordionGroup>
+
+## Technology Stack
+
+eigi.ai is built on a modern, cloud-native stack designed for performance, scalability, and reliability:
+
+- **Frontend**: React 18+, Material-UI, Redux Toolkit
+- **Backend**: FastAPI, Python 3.11+, Uvicorn ASGI server
+- **AI/ML**: Pipecat framework, multi-provider AI integrations
+- **Telephony**: Plivo/Twilio API, WebRTC, WebSocket streaming
+- **Database**: MongoDB with ODMantic ODM
+- **Observability**: LangFuse for AI pipeline monitoring
+- **Infrastructure**: Docker, AWS (ECS, Lambda, S3), Cerebrium
+
+## Getting Started
+
+<Steps>
+  <Step title="Create an Account">
+    Sign up for eigi.ai and get your API keys from the dashboard.
+  </Step>
+  <Step title="Build Your First Agent">
+    Use the no-code builder to configure your agent's personality, voice, and tools.
+  </Step>
+  <Step title="Test & Refine">
+    Test conversations in the sandbox environment and refine your prompts.
+  </Step>
+  <Step title="Deploy & Monitor">
+    Go live with your agent and monitor performance through real-time analytics.
+  </Step>
+</Steps>
+
+## API Integration
+
+Integrate eigi.ai into your applications with our comprehensive REST APIs.
 
 <Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
+  title="API Reference"
+  icon="brackets-curly"
+  href="/api-reference/introduction"
+  horizontal
 >
-  Browse our showcase of exceptional documentation sites.
+  Explore our full API documentation with authentication, endpoints, and examples.
 </Card>
+
+## Support & Resources
+
+<CardGroup cols={3}>
+  <Card
+    title="Dashboard"
+    icon="grid"
+    href="https://eigi.ai"
+  >
+    Access the eigi.ai platform
+  </Card>
+  <Card
+    title="GitHub"
+    icon="github"
+    href="https://github.com/your-org/agent-360"
+  >
+    Explore the open-source code
+  </Card>
+  <Card
+    title="Support"
+    icon="envelope"
+    href="mailto:support@eigi.ai"
+  >
+    Get help from our team
+  </Card>
+</CardGroup>

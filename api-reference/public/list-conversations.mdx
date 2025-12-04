@@ -1,0 +1,326 @@
+---
+title: 'List Conversations'
+api: 'GET /v1/public/conversations'
+description: 'Retrieve a paginated list of conversations with comprehensive filtering options'
+---
+
+## Overview
+
+This endpoint returns a paginated list of conversations based on the API key owner's agents. It supports comprehensive filtering by status, type, date range, time of day, and more.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Query Parameters
+
+### Pagination
+
+<ParamField query="page" type="integer" default="1">
+  Page number to retrieve (minimum: 1)
+</ParamField>
+
+<ParamField query="page_size" type="integer" default="10">
+  Number of items per page (minimum: 1, maximum: 100)
+</ParamField>
+
+### Search & Filters
+
+<ParamField query="search" type="string">
+  Search text to filter conversations by content in metadata or transcript
+</ParamField>
+
+<ParamField query="conversation_id" type="string">
+  Filter by specific conversation ID
+</ParamField>
+
+<ParamField query="agent_id" type="string">
+  Filter conversations by specific agent ID
+</ParamField>
+
+<ParamField query="conversation_type" type="string">
+  Filter by conversation type. Options: `DAILY`, `TELEPHONY`, `WHATSAPP`, `CHAT`
+</ParamField>
+
+<ParamField query="calling_type" type="string">
+  Filter by call direction. Options: `INBOUND`, `OUTBOUND`
+</ParamField>
+
+<ParamField query="conversation_status" type="string">
+  Filter by conversation status. Options: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`, `FAILED`
+</ParamField>
+
+### Date & Time Filters
+
+<ParamField query="from_date" type="datetime">
+  Filter conversations created on or after this date (ISO 8601 format)
+
+  Example: `2025-12-01T00:00:00Z`
+</ParamField>
+
+<ParamField query="to_date" type="datetime">
+  Filter conversations created on or before this date (ISO 8601 format)
+
+  Example: `2025-12-31T23:59:59Z`
+</ParamField>
+
+<ParamField query="from_time" type="string">
+  Filter by time of day - start time (HH:MM format, 24-hour)
+
+  Example: `09:00`
+</ParamField>
+
+<ParamField query="to_time" type="string">
+  Filter by time of day - end time (HH:MM format, 24-hour)
+
+  Example: `17:00`
+</ParamField>
+
+<ParamField query="timezone_offset" type="integer" default="330">
+  Timezone offset in minutes from UTC for time filtering
+
+  Examples:
+  - IST: `330` (UTC+5:30)
+  - EST: `-300` (UTC-5:00)
+  - PST: `-480` (UTC-8:00)
+</ParamField>
+
+## Response
+
+<ResponseField name="conversations" type="array">
+  Array of conversation objects matching the filter criteria
+</ResponseField>
+
+<ResponseField name="total" type="integer">
+  Total number of conversations matching the filters
+</ResponseField>
+
+<ResponseField name="page" type="integer">
+  Current page number
+</ResponseField>
+
+<ResponseField name="page_size" type="integer">
+  Number of items per page
+</ResponseField>
+
+<ResponseField name="total_pages" type="integer">
+  Total number of pages available
+</ResponseField>
+
+<ResponseField name="has_next" type="boolean">
+  Whether there are more pages available
+</ResponseField>
+
+<ResponseField name="has_previous" type="boolean">
+  Whether there are previous pages available
+</ResponseField>
+
+## Example Requests
+
+<CodeGroup>
+
+```bash Basic Pagination
+curl -X GET "https://prod.eigi.ai/v1/public/conversations?page=1&page_size=10" \
+  -H "X-API-Key: vk_your_api_key_here"
+```
+
+```bash Filter by Status
+curl -X GET "https://prod.eigi.ai/v1/public/conversations?conversation_status=COMPLETED&page=1&page_size=20" \
+  -H "X-API-Key: vk_your_api_key_here"
+```
+
+```bash Filter by Date Range
+curl -X GET "https://prod.eigi.ai/v1/public/conversations?from_date=2025-12-01T00:00:00Z&to_date=2025-12-31T23:59:59Z" \
+  -H "X-API-Key: vk_your_api_key_here"
+```
+
+```bash Filter by Agent and Type
+curl -X GET "https://prod.eigi.ai/v1/public/conversations?agent_id=68ea2517dbb84c09bae1ba0a&conversation_type=TELEPHONY" \
+  -H "X-API-Key: vk_your_api_key_here"
+```
+
+```bash Filter by Time of Day
+curl -X GET "https://prod.eigi.ai/v1/public/conversations?from_time=09:00&to_time=17:00&timezone_offset=330" \
+  -H "X-API-Key: vk_your_api_key_here"
+```
+
+```python Python
+import requests
+
+headers = {
+    "X-API-Key": "vk_your_api_key_here"
+}
+
+params = {
+    "page": 1,
+    "page_size": 20,
+    "conversation_status": "COMPLETED",
+    "from_date": "2025-12-01T00:00:00Z",
+    "to_date": "2025-12-31T23:59:59Z"
+}
+
+response = requests.get(
+    "https://prod.eigi.ai/v1/public/conversations",
+    headers=headers,
+    params=params
+)
+
+data = response.json()
+print(f"Total conversations: {data['total']}")
+for conversation in data['conversations']:
+    print(f"- {conversation['conversation_id']}: {conversation['conversation_status']}")
+```
+
+```javascript Node.js
+const axios = require('axios');
+
+const response = await axios.get(
+  'https://prod.eigi.ai/v1/public/conversations',
+  {
+    headers: {
+      'X-API-Key': 'vk_your_api_key_here'
+    },
+    params: {
+      page: 1,
+      page_size: 20,
+      conversation_status: 'COMPLETED',
+      from_date: '2025-12-01T00:00:00Z',
+      to_date: '2025-12-31T23:59:59Z'
+    }
+  }
+);
+
+const { conversations, total, page, total_pages } = response.data;
+console.log(`Page ${page} of ${total_pages} (${total} total)`);
+conversations.forEach(conv => {
+  console.log(`- ${conv.conversation_id}: ${conv.conversation_status}`);
+});
+```
+
+</CodeGroup>
+
+## Example Response
+
+```json
+{
+  "conversations": [
+    {
+      "conversation_id": "35d33a43-176c-405c-92bf-db972035df28",
+      "agent_id": "68ea2517dbb84c09bae1ba0a",
+      "agent_name": "Customer Support Agent",
+      "conversation_type": "TELEPHONY",
+      "conversation_status": "COMPLETED",
+      "calling_type": "OUTBOUND",
+      "mobile_number": "+919876543210",
+      "duration": 245.8,
+      "created_at": "2025-12-04T10:30:00Z",
+      "updated_at": "2025-12-04T10:34:05Z",
+      "metadata": {
+        "customer_name": "John Doe",
+        "campaign": "Q4_Outreach"
+      }
+    },
+    {
+      "conversation_id": "42e44b54-287d-516d-a3cg-ea083146eg39",
+      "agent_id": "68ea2517dbb84c09bae1ba0a",
+      "agent_name": "Customer Support Agent",
+      "conversation_type": "TELEPHONY",
+      "conversation_status": "COMPLETED",
+      "calling_type": "INBOUND",
+      "mobile_number": "+919123456789",
+      "duration": 182.3,
+      "created_at": "2025-12-04T11:15:00Z",
+      "updated_at": "2025-12-04T11:18:02Z",
+      "metadata": {
+        "customer_name": "Jane Smith",
+        "campaign": "Support_Callback"
+      }
+    }
+  ],
+  "total": 47,
+  "page": 1,
+  "page_size": 10,
+  "total_pages": 5,
+  "has_next": true,
+  "has_previous": false
+}
+```
+
+## Error Responses
+
+<ResponseExample>
+
+```json 401 Unauthorized
+{
+  "detail": "Invalid API key"
+}
+```
+
+```json 500 Internal Server Error
+{
+  "detail": "Internal Server Error: [error details]"
+}
+```
+
+</ResponseExample>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Successfully retrieved conversations |
+| 401 | Missing, invalid, inactive, or expired API key |
+| 500 | Internal server error |
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Dashboard Analytics">
+    Retrieve all conversations for a date range to build analytics dashboards showing call volumes, success rates, and trends.
+  </Accordion>
+
+  <Accordion title="Campaign Reporting">
+    Filter by agent and date range to analyze the performance of specific campaigns or outreach efforts.
+  </Accordion>
+
+  <Accordion title="Business Hours Analysis">
+    Use time filters to analyze conversations during specific business hours and optimize agent availability.
+  </Accordion>
+
+  <Accordion title="Status Monitoring">
+    Filter by status to monitor failed calls, track in-progress conversations, or review completed interactions.
+  </Accordion>
+
+  <Accordion title="Export for CRM">
+    Paginate through all conversations to export data for integration with CRM systems or data warehouses.
+  </Accordion>
+</AccordionGroup>
+
+## Filtering Tips
+
+<Tip>
+**Combine Multiple Filters**: You can combine multiple filters for precise results. For example, filter by agent, status, and date range simultaneously.
+
+```bash
+?agent_id=68ea2517dbb84c09bae1ba0a&conversation_status=COMPLETED&from_date=2025-12-01
+```
+</Tip>
+
+<Tip>
+**Time Zone Handling**: The `timezone_offset` parameter helps filter conversations by local time. For IST (India), use 330 minutes (UTC+5:30).
+</Tip>
+
+<Tip>
+**Pagination Best Practices**: Start with a smaller `page_size` (10-20) for faster responses. Use `has_next` to determine if more pages are available.
+</Tip>
+
+## Notes
+
+- Only conversations from agents owned by the API key holder are returned
+- Maximum `page_size` is capped at 100 items
+- If `page_size` exceeds 100, it's automatically adjusted to 100
+- If `page_size` is less than 1, it defaults to 10
+- Results are sorted by `created_at` in descending order (newest first)
+- Empty result sets return an empty array with `total: 0`
