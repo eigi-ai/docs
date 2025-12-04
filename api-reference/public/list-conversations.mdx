@@ -84,14 +84,9 @@ Example: `17:00`
 </ParamField>
 
 <ParamField query="timezone_offset" type="integer" default="330">
-  Timezone offset in minutes from UTC for time filtering
-
-Examples:
-
-- IST: `330` (UTC+5:30)
-- EST: `-300` (UTC-5:00)
-- PST: `-480` (UTC-8:00)
-  </ParamField>
+  Timezone offset in minutes from UTC for time filtering. Examples: IST is `330`
+  (UTC+5:30), EST is `-300` (UTC-5:00), PST is `-480` (UTC-8:00).
+</ParamField>
 
 ## Response
 
@@ -271,29 +266,24 @@ console.log(response.data);
 
 <AccordionGroup>
   <Accordion title="Dashboard Analytics">
-    Retrieve all conversations for a date range to build analytics dashboards showing call volumes, success rates, and trends.
+    Retrieve all conversations for a date range to build analytics dashboards
+    showing call volumes, success rates, and trends.
   </Accordion>
-
-{" "}
-<Accordion title="Campaign Reporting">
-  Filter by agent and date range to analyze the performance of specific
-  campaigns or outreach efforts.
-</Accordion>
-
-{" "}
-<Accordion title="Business Hours Analysis">
-  Use time filters to analyze conversations during specific business hours and
-  optimize agent availability.
-</Accordion>
-
-{" "}
-<Accordion title="Status Monitoring">
-  Filter by status to monitor failed calls, track in-progress conversations, or
-  review completed interactions.
-</Accordion>
-
+  <Accordion title="Campaign Reporting">
+    Filter by agent and date range to analyze the performance of specific
+    campaigns or outreach efforts.
+  </Accordion>
+  <Accordion title="Business Hours Analysis">
+    Use time filters to analyze conversations during specific business hours and
+    optimize agent availability.
+  </Accordion>
+  <Accordion title="Status Monitoring">
+    Filter by status to monitor failed calls, track in-progress conversations,
+    or review completed interactions.
+  </Accordion>
   <Accordion title="Export for CRM">
-    Paginate through all conversations to export data for integration with CRM systems or data warehouses.
+    Paginate through all conversations to export data for integration with CRM
+    systems or data warehouses.
   </Accordion>
 </AccordionGroup>
 

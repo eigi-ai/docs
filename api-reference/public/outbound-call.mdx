@@ -24,13 +24,10 @@ Example: `68ea2517dbb84c09bae1ba0a`
 </ParamField>
 
 <ParamField body="params" type="array" required>
-  Array of call parameter objects. Each object represents one outbound call to initiate.
-
-**Array Item Structure:**
-
-- `mobile_number` (string, required): Phone number to call in E.164 format (e.g., `+919876543210`)
-- `metadata` (object, optional): Custom metadata to attach to the conversation
-  </ParamField>
+  Array of call parameter objects. Each object represents one outbound call to
+  initiate. Each item should have `mobile_number` (string, required) in E.164
+  format and optional `metadata` object.
+</ParamField>
 
 <ParamField body="telephony_provider" type="string" default="PLIVO">
   Telephony provider to use for the call. Options: `PLIVO` or `TWILIO`
@@ -232,35 +229,28 @@ Phone numbers must be in **E.164 format**:
 
 <AccordionGroup>
   <Accordion title="Customer Outreach Campaigns">
-    Initiate bulk calls to customers for product updates, surveys, or promotional campaigns. Track results using conversation IDs.
+    Initiate bulk calls to customers for product updates, surveys, or
+    promotional campaigns. Track results using conversation IDs.
   </Accordion>
-
-{" "}
-<Accordion title="Appointment Reminders">
-  Automatically call customers to remind them of upcoming appointments, reducing
-  no-shows and improving scheduling efficiency.
-</Accordion>
-
-{" "}
-<Accordion title="Lead Qualification">
-  Call leads from your CRM to qualify them and schedule meetings with sales
-  teams. Pass customer data via metadata for personalized conversations.
-</Accordion>
-
-{" "}
-<Accordion title="Payment Reminders">
-  Initiate calls to customers with pending payments, providing personalized
-  reminders and payment options.
-</Accordion>
-
-{" "}
-<Accordion title="Customer Satisfaction Surveys">
-  Call customers after service interactions to gather feedback and measure
-  satisfaction using AI-powered surveys.
-</Accordion>
-
+  <Accordion title="Appointment Reminders">
+    Automatically call customers to remind them of upcoming appointments,
+    reducing no-shows and improving scheduling efficiency.
+  </Accordion>
+  <Accordion title="Lead Qualification">
+    Call leads from your CRM to qualify them and schedule meetings with sales
+    teams. Pass customer data via metadata for personalized conversations.
+  </Accordion>
+  <Accordion title="Payment Reminders">
+    Initiate calls to customers with pending payments, providing personalized
+    reminders and payment options.
+  </Accordion>
+  <Accordion title="Customer Satisfaction Surveys">
+    Call customers after service interactions to gather feedback and measure
+    satisfaction using AI-powered surveys.
+  </Accordion>
   <Accordion title="Emergency Notifications">
-    Quickly notify customers of urgent issues, service disruptions, or critical updates through automated voice calls.
+    Quickly notify customers of urgent issues, service disruptions, or critical
+    updates through automated voice calls.
   </Accordion>
 </AccordionGroup>
 
