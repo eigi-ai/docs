@@ -66,11 +66,20 @@
             "pages": ["api-reference/introduction"]
           },
           {
-            "group": "Public APIs",
+            "group": "Conversations",
             "pages": [
               "api-reference/public/get-conversation",
               "api-reference/public/list-conversations",
               "api-reference/public/outbound-call"
+            ]
+          },
+          {
+            "group": "Chat",
+            "pages": [
+              "api-reference/public/chat-send-message",
+              "api-reference/public/chat-list-sessions",
+              "api-reference/public/chat-get-session",
+              "api-reference/public/chat-first-message"
             ]
           }
         ]

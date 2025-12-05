@@ -139,6 +139,160 @@
             "description": "Error message"
           }
         }
+      },
+      "ChatRequest": {
+        "type": "object",
+        "required": ["agent_id", "message"],
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "The ID of the agent to chat with",
+            "example": "68ea2517dbb84c09bae1ba0a"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000,
+            "description": "User message to send to the agent",
+            "example": "Hello, how can you help me?"
+          },
+          "session_id": {
+            "type": "string",
+            "description": "Session ID for continuing a conversation (created if not provided)",
+            "example": "58a6b549-ef07-4a31-86bc-0eb0e026840a"
+          },
+          "streaming": {
+            "type": "boolean",
+            "default": true,
+            "description": "If true, response streams in real-time. If false, returns complete JSON response."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional metadata for the conversation",
+            "example": {
+              "user_id": "user_123",
+              "source": "website"
+            }
+          }
+        }
+      },
+      "ChatResponse": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "string",
+            "description": "The AI agent's response"
+          },
+          "session_id": {
+            "type": "string",
+            "description": "Session ID for subsequent messages"
+          }
+        }
+      },
+      "ChatSession": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique session identifier"
+          },
+          "object": {
+            "type": "string",
+            "example": "chat.session"
+          },
+          "created_at": {
+            "type": "integer",
+            "description": "Unix timestamp of creation"
+          },
+          "updated_at": {
+            "type": "integer",
+            "description": "Unix timestamp of last update"
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent handling this session"
+          },
+          "conversation_name": {
+            "type": "string",
+            "description": "Name of the conversation"
+          },
+          "message_count": {
+            "type": "integer",
+            "description": "Total messages in session"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Custom metadata"
+          }
+        }
+      },
+      "ChatSessionDetail": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "description": "Unique session identifier"
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the agent"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["IN_PROGRESS", "COMPLETED", "DISCONNECTED", "FAILED"],
+            "description": "Session status"
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "enum": ["user", "assistant"]
+                },
+                "content": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "message_count": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "metadata": {
+            "type": "object"
+          }
+        }
+      },
+      "FirstMessageResponse": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "description": "New session ID for the chat"
+          },
+          "first_message": {
+            "type": "string",
+            "description": "Agent's greeting message"
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "The agent ID"
+          }
+        }
       }
     }
   },
@@ -395,7 +549,7 @@
         "summary": "Initiate Outbound Call",
         "description": "Create and initiate one or more outbound calls to phone numbers using AI voice agents",
         "operationId": "createOutboundCall",
-        "tags": ["Calls"],
+        "tags": ["Conversations"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -502,6 +656,369 @@
           },
           "404": {
             "description": "User or agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/chat": {
+      "post": {
+        "summary": "Send Chat Message",
+        "description": "Send a message to an AI agent and receive a response with optional streaming",
+        "operationId": "sendChatMessage",
+        "tags": ["Chat"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              },
+              "examples": {
+                "streaming": {
+                  "summary": "Streaming chat request",
+                  "value": {
+                    "agent_id": "68ea2517dbb84c09bae1ba0a",
+                    "message": "Hello, how can you help me?",
+                    "streaming": true
+                  }
+                },
+                "non_streaming": {
+                  "summary": "Non-streaming chat request",
+                  "value": {
+                    "agent_id": "68ea2517dbb84c09bae1ba0a",
+                    "message": "What are your business hours?",
+                    "streaming": false
+                  }
+                },
+                "with_session": {
+                  "summary": "Continue existing conversation",
+                  "value": {
+                    "agent_id": "68ea2517dbb84c09bae1ba0a",
+                    "session_id": "58a6b549-ef07-4a31-86bc-0eb0e026840a",
+                    "message": "Tell me more about that",
+                    "streaming": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat response (JSON for non-streaming, text/plain stream for streaming)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "Streaming response text"
+                }
+              }
+            },
+            "headers": {
+              "X-Session-ID": {
+                "description": "Session ID for subsequent messages (streaming mode)",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Agent has no LLM configuration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied to agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/chat/sessions": {
+      "get": {
+        "summary": "List Chat Sessions",
+        "description": "Retrieve a paginated list of all chat sessions for your agents",
+        "operationId": "listChatSessions",
+        "tags": ["Chat"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (minimum: 1)",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Items per page (minimum: 1, maximum: 100)",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "agent_id",
+            "in": "query",
+            "description": "Filter sessions by agent ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved chat sessions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "object": {
+                      "type": "string",
+                      "example": "list"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ChatSession"
+                      }
+                    },
+                    "has_more": {
+                      "type": "boolean"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "page_size": {
+                      "type": "integer"
+                    },
+                    "total_pages": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied to agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/chat/sessions/{session_id}": {
+      "get": {
+        "summary": "Get Chat Session",
+        "description": "Retrieve complete details and messages for a specific chat session",
+        "operationId": "getChatSession",
+        "tags": ["Chat"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique session ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "58a6b549-ef07-4a31-86bc-0eb0e026840a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved chat session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatSessionDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Session is not a chat session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied to session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Session not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/agents/{agent_id}/first-message": {
+      "get": {
+        "summary": "Get First Message",
+        "description": "Retrieve the agent's greeting message to initialize a chat session",
+        "operationId": "getFirstMessage",
+        "tags": ["Chat"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique agent ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "68ea2517dbb84c09bae1ba0a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved first message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FirstMessageResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied to agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
             "content": {
               "application/json": {
                 "schema": {

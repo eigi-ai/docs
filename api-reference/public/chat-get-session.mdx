@@ -1,0 +1,228 @@
+---
+title: "Get Chat Session"
+api: "GET /v1/public/chat/sessions/{session_id}"
+description: "Retrieve complete details and messages for a specific chat session"
+---
+
+## Overview
+
+This endpoint retrieves the complete chat session including all messages, status, and metadata. Use it to review conversation history, display chat transcripts, or sync session data with external systems.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="session_id" type="string" required>
+  The unique identifier of the chat session to retrieve. Example:
+  `58a6b549-ef07-4a31-86bc-0eb0e026840a`
+</ParamField>
+
+## Response
+
+<ResponseField name="session_id" type="string">
+  Unique identifier for the chat session.
+</ResponseField>
+
+<ResponseField name="agent_id" type="string">
+  ID of the agent handling this session.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current session status. One of: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`,
+  `FAILED`.
+</ResponseField>
+
+<ResponseField name="messages" type="array">
+  Array of all messages in the session.
+</ResponseField>
+
+<ResponseField name="message_count" type="integer">
+  Total number of messages in the session.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp when the session was created.
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  ISO 8601 timestamp when the session was last updated.
+</ResponseField>
+
+<ResponseField name="metadata" type="object">
+  Custom metadata attached to the session.
+</ResponseField>
+
+### Message Object
+
+Each message in the `messages` array contains:
+
+<ResponseField name="role" type="string">
+  Who sent the message: `user` or `assistant`.
+</ResponseField>
+
+<ResponseField name="content" type="string">
+  The text content of the message.
+</ResponseField>
+
+<ResponseField name="timestamp" type="string">
+  ISO 8601 timestamp when the message was sent.
+</ResponseField>
+
+## Examples
+
+### Get Session Details
+
+<CodeGroup>
+
+```bash cURL
+curl -X GET "https://prod.eigi.ai/v1/public/chat/sessions/58a6b549-ef07-4a31-86bc-0eb0e026840a" \
+  -H "X-API-Key: vk_your_api_key_here"
+```
+
+```python Python
+import requests
+
+session_id = "58a6b549-ef07-4a31-86bc-0eb0e026840a"
+
+response = requests.get(
+    f"https://prod.eigi.ai/v1/public/chat/sessions/{session_id}",
+    headers={"X-API-Key": "vk_your_api_key_here"}
+)
+
+session = response.json()
+print(f"Session Status: {session['status']}")
+print(f"Total Messages: {session['message_count']}")
+
+for msg in session["messages"]:
+    print(f"{msg['role'].title()}: {msg['content']}")
+```
+
+```javascript JavaScript
+const sessionId = "58a6b549-ef07-4a31-86bc-0eb0e026840a";
+
+const response = await fetch(
+  `https://prod.eigi.ai/v1/public/chat/sessions/${sessionId}`,
+  {
+    headers: {
+      "X-API-Key": "vk_your_api_key_here",
+    },
+  }
+);
+
+const session = await response.json();
+console.log(`Session Status: ${session.status}`);
+console.log(`Total Messages: ${session.message_count}`);
+
+session.messages.forEach((msg) => {
+  console.log(`${msg.role}: ${msg.content}`);
+});
+```
+
+</CodeGroup>
+
+### Response Example
+
+```json
+{
+  "session_id": "58a6b549-ef07-4a31-86bc-0eb0e026840a",
+  "agent_id": "68ea2517dbb84c09bae1ba0a",
+  "status": "IN_PROGRESS",
+  "messages": [
+    {
+      "role": "assistant",
+      "content": "Hello! Welcome to our support. How can I help you today?",
+      "timestamp": "2025-12-05T10:00:00.000Z"
+    },
+    {
+      "role": "user",
+      "content": "I need help resetting my password",
+      "timestamp": "2025-12-05T10:00:15.000Z"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you reset your password. Could you please provide the email address associated with your account?",
+      "timestamp": "2025-12-05T10:00:17.000Z"
+    },
+    {
+      "role": "user",
+      "content": "It's john@example.com",
+      "timestamp": "2025-12-05T10:00:30.000Z"
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you! I've sent a password reset link to john@example.com. Please check your inbox and follow the instructions. The link will expire in 24 hours. Is there anything else I can help you with?",
+      "timestamp": "2025-12-05T10:00:33.000Z"
+    }
+  ],
+  "message_count": 5,
+  "created_at": "2025-12-05T10:00:00.000Z",
+  "updated_at": "2025-12-05T10:00:33.000Z",
+  "metadata": {
+    "user_id": "user_123",
+    "source": "website"
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="400 Bad Request">
+  The specified session is not a chat session (e.g., it's a voice call).
+  
+  ```json
+  {
+    "detail": "Session is not a chat session"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized">
+  Missing, invalid, inactive, or expired API key.
+  
+  ```json
+  {
+    "detail": "Invalid API key"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="403 Forbidden">
+  API key owner doesn't have access to this session.
+  
+  ```json
+  {
+    "detail": "Access denied to this session"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="404 Not Found">
+  Session not found with the given ID.
+  
+  ```json
+  {
+    "detail": "Session not found"
+  }
+  ```
+</ResponseField>
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Chat History" icon="clock-rotate-left">
+    Display full conversation history to users
+  </Card>
+  <Card title="Export Transcripts" icon="file-export">
+    Export chat transcripts for records or analysis
+  </Card>
+  <Card title="Resume Conversations" icon="rotate">
+    Continue conversations from where they left off
+  </Card>
+  <Card title="Support Handoff" icon="users">
+    Review context before human agent takeover
+  </Card>
+</CardGroup>
