@@ -189,20 +189,20 @@ Configure notifications based on events:
 
 Only notify when conditions are met:
 
-<AccordionGroup>
-  <Accordion title="High-Value Leads Only" icon="star">
-    ``` IF lead_score > 80 AND product_interest = "Enterprise" THEN
+<CardGroup cols={1}>
+  <Card title="High-Value Leads Only" icon="star">
+    ```text IF lead_score > 80 AND product_interest = "Enterprise" THEN
     send_slack_alert to #sales-leads ```
-  </Accordion>
-  <Accordion title="Urgent Issues Only" icon="exclamation">
-    ``` IF sentiment = "negative" AND escalation_requested = true THEN
+  </Card>
+  <Card title="Urgent Issues Only" icon="exclamation">
+    ```text IF sentiment = "negative" AND escalation_requested = true THEN
     send_email to support_manager@company.com ```
-  </Accordion>
-  <Accordion title="Business Hours Only" icon="clock">
-    ``` IF current_time BETWEEN 9:00 AND 18:00 THEN send_slack_alert ELSE
+  </Card>
+  <Card title="Business Hours Only" icon="clock">
+    ```text IF current_time BETWEEN 9:00 AND 18:00 THEN send_slack_alert ELSE
     queue_for_digest ```
-  </Accordion>
-</AccordionGroup>
+  </Card>
+</CardGroup>
 
 ---
 
