@@ -199,25 +199,16 @@ print(f"Found {data['total']} sessions for this agent")
 
 ## Error Responses
 
-<ResponseField name="401 Unauthorized">
-  Missing, invalid, inactive, or expired API key.
-  
-  ```json
-  {
-    "detail": "Invalid API key"
-  }
-  ```
-</ResponseField>
+| Status Code          | Description                                              |
+| -------------------- | -------------------------------------------------------- |
+| **401 Unauthorized** | Missing, invalid, inactive, or expired API key           |
+| **403 Forbidden**    | API key owner doesn't have access to the specified agent |
 
-<ResponseField name="403 Forbidden">
-  API key owner doesn't have access to the specified agent.
-  
-  ```json
-  {
-    "detail": "Access denied to this agent"
-  }
-  ```
-</ResponseField>
+```json Example Error Response
+{
+  "detail": "Invalid API key"
+}
+```
 
 ## Use Cases
 

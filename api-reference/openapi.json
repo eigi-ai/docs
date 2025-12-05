@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://prod.eigi.ai/v1",
+      "url": "https://prod.eigi.ai",
       "description": "Production server"
     }
   ],
@@ -297,7 +297,7 @@
     }
   },
   "paths": {
-    "/public/conversations/{conversation_id}": {
+    "/v1/public/conversations/{conversation_id}": {
       "get": {
         "summary": "Get Conversation by ID",
         "description": "Retrieve detailed information about a specific conversation using its unique ID",
@@ -364,7 +364,7 @@
         }
       }
     },
-    "/public/conversations": {
+    "/v1/public/conversations": {
       "get": {
         "summary": "List Conversations",
         "description": "Retrieve a paginated list of conversations with comprehensive filtering options",
@@ -544,7 +544,7 @@
         }
       }
     },
-    "/public/calls/outbound": {
+    "/v1/public/calls/outbound": {
       "post": {
         "summary": "Initiate Outbound Call",
         "description": "Create and initiate one or more outbound calls to phone numbers using AI voice agents",
@@ -667,7 +667,7 @@
         }
       }
     },
-    "/public/chat": {
+    "/v1/public/chat": {
       "post": {
         "summary": "Send Chat Message",
         "description": "Send a message to an AI agent and receive a response with optional streaming",
@@ -783,7 +783,7 @@
         }
       }
     },
-    "/public/chat/sessions": {
+    "/v1/public/chat/sessions": {
       "get": {
         "summary": "List Chat Sessions",
         "description": "Retrieve a paginated list of all chat sessions for your agents",
@@ -886,7 +886,7 @@
         }
       }
     },
-    "/public/chat/sessions/{session_id}": {
+    "/v1/public/chat/sessions/{session_id}": {
       "get": {
         "summary": "Get Chat Session",
         "description": "Retrieve complete details and messages for a specific chat session",
@@ -963,7 +963,7 @@
         }
       }
     },
-    "/public/agents/{agent_id}/first-message": {
+    "/v1/public/agents/{agent_id}/first-message": {
       "get": {
         "summary": "Get First Message",
         "description": "Retrieve the agent's greeting message to initialize a chat session",

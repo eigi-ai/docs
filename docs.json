@@ -10,7 +10,7 @@
   "favicon": "/favicon.ico",
   "openapi": ["api-reference/openapi.json"],
   "api": {
-    "baseUrl": "https://prod.eigi.ai/v1",
+    "baseUrl": "https://prod.eigi.ai",
     "auth": {
       "method": "key",
       "name": "X-API-Key"

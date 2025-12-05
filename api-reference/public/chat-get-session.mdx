@@ -170,45 +170,18 @@ session.messages.forEach((msg) => {
 
 ## Error Responses
 
-<ResponseField name="400 Bad Request">
-  The specified session is not a chat session (e.g., it's a voice call).
-  
-  ```json
-  {
-    "detail": "Session is not a chat session"
-  }
-  ```
-</ResponseField>
+| Status Code          | Description                                                           |
+| -------------------- | --------------------------------------------------------------------- |
+| **400 Bad Request**  | The specified session is not a chat session (e.g., it's a voice call) |
+| **401 Unauthorized** | Missing, invalid, inactive, or expired API key                        |
+| **403 Forbidden**    | API key owner doesn't have access to this session                     |
+| **404 Not Found**    | Session not found with the given ID                                   |
 
-<ResponseField name="401 Unauthorized">
-  Missing, invalid, inactive, or expired API key.
-  
-  ```json
-  {
-    "detail": "Invalid API key"
-  }
-  ```
-</ResponseField>
-
-<ResponseField name="403 Forbidden">
-  API key owner doesn't have access to this session.
-  
-  ```json
-  {
-    "detail": "Access denied to this session"
-  }
-  ```
-</ResponseField>
-
-<ResponseField name="404 Not Found">
-  Session not found with the given ID.
-  
-  ```json
-  {
-    "detail": "Session not found"
-  }
-  ```
-</ResponseField>
+```json Example Error Response
+{
+  "detail": "Session not found"
+}
+```
 
 ## Use Cases
 

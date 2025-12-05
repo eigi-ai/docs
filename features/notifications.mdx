@@ -66,7 +66,6 @@ Set up email notifications for your team:
     Includes: - Call duration and outcome - AI-generated summary - Key points
     discussed - Next action items - Link to full transcript
   </Accordion>
-
   <Accordion title="Lead Notification Email" icon="star">
     Includes: - Lead information extracted - Interest level assessment - Contact
     details captured - Best time to follow up - Urgency indicator
@@ -192,18 +191,25 @@ Only notify when conditions are met:
 
 <AccordionGroup>
   <Accordion title="High-Value Leads Only" icon="star">
-    ``` IF lead_score > 80 AND product_interest = "Enterprise" THEN
-    send_slack_alert to #sales-leads ```
+    ```
+    IF lead_score > 80
+    AND product_interest = "Enterprise"
+    THEN send_slack_alert to #sales-leads
+    ```
   </Accordion>
-
   <Accordion title="Urgent Issues Only" icon="exclamation">
-    ``` IF sentiment = "negative" AND escalation_requested = true THEN
-    send_email to support_manager@company.com ```
+    ```
+    IF sentiment = "negative"
+    AND escalation_requested = true
+    THEN send_email to support_manager@company.com
+    ```
   </Accordion>
-
   <Accordion title="Business Hours Only" icon="clock">
-    ``` IF current_time BETWEEN 9:00 AND 18:00 THEN send_slack_alert ELSE
-    queue_for_digest ```
+    ```
+    IF current_time BETWEEN 9:00 AND 18:00
+    THEN send_slack_alert
+    ELSE queue_for_digest
+    ```
   </Accordion>
 </AccordionGroup>
 
@@ -328,11 +334,10 @@ Track all sent notifications:
     Confirm notification triggers are configured - Check webhook endpoint is
     reachable
   </Accordion>
-
   <Accordion title="Webhook failures">
-    - Verify endpoint URL is correct and HTTPS - Check your server logs for
-    errors - Ensure endpoint returns 2xx response quickly - Verify
-    authentication headers are correct
+    - Verify endpoint URL is correct and HTTPS - Check your server logs for errors
+    - Ensure endpoint returns 2xx response quickly - Verify authentication headers
+    are correct
   </Accordion>
 
   <Accordion title="Too many notifications">

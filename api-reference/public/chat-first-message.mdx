@@ -180,35 +180,17 @@ console.log("Bot:", reply);
 
 ## Error Responses
 
-<ResponseField name="401 Unauthorized">
-  Missing, invalid, inactive, or expired API key.
-  
-  ```json
-  {
-    "detail": "Invalid API key"
-  }
-  ```
-</ResponseField>
+| Status Code          | Description                                     |
+| -------------------- | ----------------------------------------------- |
+| **401 Unauthorized** | Missing, invalid, inactive, or expired API key  |
+| **403 Forbidden**    | API key owner doesn't have access to this agent |
+| **404 Not Found**    | Agent not found with the given ID               |
 
-<ResponseField name="403 Forbidden">
-  API key owner doesn't have access to this agent.
-  
-  ```json
-  {
-    "detail": "Access denied to this agent"
-  }
-  ```
-</ResponseField>
-
-<ResponseField name="404 Not Found">
-  Agent not found with the given ID.
-  
-  ```json
-  {
-    "detail": "Agent not found"
-  }
-  ```
-</ResponseField>
+```json Example Error Response
+{
+  "detail": "Agent not found"
+}
+```
 
 ## Best Practices
 
