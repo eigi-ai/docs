@@ -189,20 +189,26 @@ Configure notifications based on events:
 
 Only notify when conditions are met:
 
-<CardGroup cols={1}>
-  <Card title="High-Value Leads Only" icon="star">
-    ```text IF lead_score > 80 AND product_interest = "Enterprise" THEN
-    send_slack_alert to #sales-leads ```
-  </Card>
-  <Card title="Urgent Issues Only" icon="exclamation">
-    ```text IF sentiment = "negative" AND escalation_requested = true THEN
-    send_email to support_manager@company.com ```
-  </Card>
-  <Card title="Business Hours Only" icon="clock">
-    ```text IF current_time BETWEEN 9:00 AND 18:00 THEN send_slack_alert ELSE
-    queue_for_digest ```
-  </Card>
-</CardGroup>
+**High-Value Leads Only**
+
+```text
+IF lead_score > 80 AND product_interest = "Enterprise" THEN
+send_slack_alert to #sales-leads
+```
+
+**Urgent Issues Only**
+
+```text
+IF sentiment = "negative" AND escalation_requested = true THEN
+send_email to support_manager@company.com
+```
+
+**Business Hours Only**
+
+```text
+IF current_time BETWEEN 9:00 AND 18:00 THEN send_slack_alert ELSE
+queue_for_digest
+```
 
 ---
 
