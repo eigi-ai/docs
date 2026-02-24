@@ -1,0 +1,42 @@
+---
+title: "Get Prompt Versions"
+openapi: "GET /v1/public/prompts/{prompt_name}/versions"
+description: "Retrieve all versions of a specific prompt"
+---
+
+## Overview
+
+Get all versions of a specific prompt, sorted by version number in descending order (newest first). Useful for auditing prompt changes or rolling back to a previous version.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="prompt_name" type="string" required>
+  The unique prompt name.
+
+  Example: `customer_support_v1`
+</ParamField>
+
+## Response
+
+<ResponseField name="prompt_name" type="string">
+  The prompt name.
+</ResponseField>
+
+<ResponseField name="versions" type="array">
+  Array of version objects sorted by version number (descending).
+
+  Each version contains:
+  - `prompt_version` (integer): Version number
+  - `prompt_content` (string): The prompt text content
+  - `created_at` (string): ISO 8601 timestamp when this version was created
+</ResponseField>
+
+<ResponseField name="total_versions" type="integer">
+  Total number of versions for this prompt.
+</ResponseField>

@@ -82,7 +82,7 @@ Example: `35d33a43-176c-405c-92bf-db972035df28`
 <RequestExample>
 
 ```bash cURL
-curl -X GET "https://prod.eigi.ai/v1/public/conversations/a28e7071-508e-4d45-8887-085531aafaba" \
+curl -X GET "https://api.eigi.ai/v1/public/conversations/a28e7071-508e-4d45-8887-085531aafaba" \
   -H "X-API-Key: vk_your_api_key_here"
 ```
 
@@ -95,7 +95,7 @@ headers = {
 }
 
 response = requests.get(
-    f"https://prod.eigi.ai/v1/public/conversations/{conversation_id}",
+    f"https://api.eigi.ai/v1/public/conversations/{conversation_id}",
     headers=headers
 )
 
@@ -109,7 +109,7 @@ const axios = require("axios");
 const conversationId = "a28e7071-508e-4d45-8887-085531aafaba";
 
 const response = await axios.get(
-  `https://prod.eigi.ai/v1/public/conversations/${conversationId}`,
+  `https://api.eigi.ai/v1/public/conversations/${conversationId}`,
   {
     headers: {
       "X-API-Key": "vk_your_api_key_here",

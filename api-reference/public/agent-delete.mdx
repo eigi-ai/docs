@@ -1,0 +1,45 @@
+---
+title: "Delete Agent"
+openapi: "DELETE /v1/public/agents/{agent_id}"
+description: "Permanently delete an agent and its associated internal prompt"
+---
+
+## Overview
+
+Permanently delete an agent. This also deletes the agent's internal prompt (if one was auto-created via `prompt_content`).
+
+<Warning>
+  This action cannot be undone. The agent and all its configuration will be permanently removed.
+</Warning>
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="agent_id" type="string" required>
+  The unique agent ID to delete.
+
+  Example: `68ea2517dbb84c09bae1ba0a`
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string">
+  Success confirmation message.
+</ResponseField>
+
+<ResponseField name="agent_id" type="string">
+  ID of the deleted agent.
+</ResponseField>
+
+<ResponseField name="agent_name" type="string">
+  Name of the deleted agent.
+</ResponseField>
+
+<ResponseField name="deleted_at" type="string">
+  ISO 8601 timestamp of when the deletion occurred.
+</ResponseField>

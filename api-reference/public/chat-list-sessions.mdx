@@ -99,7 +99,7 @@ This endpoint returns all chat sessions created through your agents. Use it to m
 <CodeGroup>
 
 ```bash cURL
-curl -X GET "https://prod.eigi.ai/v1/public/chat/sessions?page=1&page_size=10" \
+curl -X GET "https://api.eigi.ai/v1/public/chat/sessions?page=1&page_size=10" \
   -H "X-API-Key: vk_your_api_key_here"
 ```
 
@@ -107,7 +107,7 @@ curl -X GET "https://prod.eigi.ai/v1/public/chat/sessions?page=1&page_size=10" \
 import requests
 
 response = requests.get(
-    "https://prod.eigi.ai/v1/public/chat/sessions",
+    "https://api.eigi.ai/v1/public/chat/sessions",
     headers={"X-API-Key": "vk_your_api_key_here"},
     params={"page": 1, "page_size": 10}
 )
@@ -119,7 +119,7 @@ for session in data["data"]:
 
 ```javascript JavaScript
 const response = await fetch(
-  "https://prod.eigi.ai/v1/public/chat/sessions?page=1&page_size=10",
+  "https://api.eigi.ai/v1/public/chat/sessions?page=1&page_size=10",
   {
     headers: {
       "X-API-Key": "vk_your_api_key_here",
@@ -140,7 +140,7 @@ data.data.forEach((session) => {
 <CodeGroup>
 
 ```bash cURL
-curl -X GET "https://prod.eigi.ai/v1/public/chat/sessions?agent_id=68ea2517dbb84c09bae1ba0a" \
+curl -X GET "https://api.eigi.ai/v1/public/chat/sessions?agent_id=68ea2517dbb84c09bae1ba0a" \
   -H "X-API-Key: vk_your_api_key_here"
 ```
 
@@ -148,7 +148,7 @@ curl -X GET "https://prod.eigi.ai/v1/public/chat/sessions?agent_id=68ea2517dbb84
 import requests
 
 response = requests.get(
-    "https://prod.eigi.ai/v1/public/chat/sessions",
+    "https://api.eigi.ai/v1/public/chat/sessions",
     headers={"X-API-Key": "vk_your_api_key_here"},
     params={"agent_id": "68ea2517dbb84c09bae1ba0a"}
 )

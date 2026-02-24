@@ -10,7 +10,7 @@
   "favicon": "/favicon.ico",
   "openapi": ["api-reference/openapi.json"],
   "api": {
-    "baseUrl": "https://prod.eigi.ai",
+    "baseUrl": "https://api.eigi.ai",
     "auth": {
       "method": "key",
       "name": "X-API-Key"
@@ -80,6 +80,35 @@
               "api-reference/public/chat-list-sessions",
               "api-reference/public/chat-get-session",
               "api-reference/public/chat-first-message"
+            ]
+          },
+          {
+            "group": "Prompts",
+            "pages": [
+              "api-reference/public/prompt-create",
+              "api-reference/public/prompt-list",
+              "api-reference/public/prompt-get",
+              "api-reference/public/prompt-update",
+              "api-reference/public/prompt-versions",
+              "api-reference/public/prompt-delete"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "api-reference/public/agent-create",
+              "api-reference/public/agent-list",
+              "api-reference/public/agent-get",
+              "api-reference/public/agent-update",
+              "api-reference/public/agent-delete"
+            ]
+          },
+          {
+            "group": "Utilities",
+            "pages": [
+              "api-reference/public/providers-list",
+              "api-reference/public/voices-list",
+              "api-reference/public/mobile-numbers"
             ]
           }
         ]

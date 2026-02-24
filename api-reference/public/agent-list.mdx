@@ -1,0 +1,59 @@
+---
+title: "List Agents"
+openapi: "GET /v1/public/agents"
+description: "Retrieve a paginated list of all your agents"
+---
+
+## Overview
+
+List all agents owned by the API key holder with pagination, search, and filtering by type and category.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="page" type="integer" default="1">
+  Page number (minimum: 1).
+</ParamField>
+
+<ParamField query="page_size" type="integer" default="10">
+  Items per page (minimum: 1, maximum: 100).
+</ParamField>
+
+<ParamField query="search" type="string">
+  Search in agent name and description.
+</ParamField>
+
+<ParamField query="agent_type" type="string">
+  Filter by agent type: `INBOUND` or `OUTBOUND`.
+</ParamField>
+
+<ParamField query="agent_category" type="string">
+  Filter by agent category (e.g., `Customer Service`, `Sales`).
+</ParamField>
+
+## Response
+
+<ResponseField name="agents" type="array">
+  Array of agent objects — each containing the full agent configuration (id, name, type, STT/LLM/TTS config, prompt, tools, etc.).
+</ResponseField>
+
+<ResponseField name="total" type="integer">
+  Total number of agents matching the criteria.
+</ResponseField>
+
+<ResponseField name="page" type="integer">
+  Current page number.
+</ResponseField>
+
+<ResponseField name="page_size" type="integer">
+  Number of items per page.
+</ResponseField>
+
+<ResponseField name="total_pages" type="integer">
+  Total number of pages available.
+</ResponseField>

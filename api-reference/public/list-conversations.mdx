@@ -121,7 +121,7 @@ Example: `17:00`
 <RequestExample>
 
 ```bash cURL
-curl -X GET "https://prod.eigi.ai/v1/public/conversations?page=1&page_size=5" \
+curl -X GET "https://api.eigi.ai/v1/public/conversations?page=1&page_size=5" \
   -H "X-API-Key: vk_your_api_key_here"
 ```
 
@@ -139,7 +139,7 @@ params = {
 }
 
 response = requests.get(
-    "https://prod.eigi.ai/v1/public/conversations",
+    "https://api.eigi.ai/v1/public/conversations",
     headers=headers,
     params=params
 )
@@ -152,7 +152,7 @@ print(f"Total: {data['pagination']['total']}")
 const axios = require("axios");
 
 const response = await axios.get(
-  "https://prod.eigi.ai/v1/public/conversations",
+  "https://api.eigi.ai/v1/public/conversations",
   {
     headers: {
       "X-API-Key": "vk_your_api_key_here",
