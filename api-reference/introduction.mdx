@@ -1,6 +1,6 @@
 ---
-title: 'API Reference'
-description: 'Complete API documentation for integrating eigi.ai into your applications'
+title: "API Reference"
+description: "Complete API documentation for integrating eigi.ai into your applications"
 ---
 
 ## Welcome to eigi.ai API
@@ -12,7 +12,7 @@ The eigi.ai API allows you to programmatically create, manage, and interact with
 All API requests should be made to:
 
 ```
-https://api.eigi.ai/v1
+https://api.eigi.ai
 ```
 
 ## Authentication
@@ -36,12 +36,15 @@ curl https://api.eigi.ai/v1/public/conversations \
 4. Copy and securely store your API key (it will only be shown once)
 
 <Warning>
-  **Keep your API keys secure!** Never commit them to version control or expose them in client-side code. Use environment variables or secure secret management systems.
+  **Keep your API keys secure!** Never commit them to version control or expose
+  them in client-side code. Use environment variables or secure secret
+  management systems.
 </Warning>
 
 ### API Key Format
 
 API keys follow this format:
+
 ```
 vk_xxxxxxxxxxxxxxxxxxxxxxxx
 ```
@@ -63,13 +66,13 @@ All keys are prefixed with `vk_` to help identify them in code and logs.
 
 If authentication fails, you'll receive one of these error responses:
 
-| Status Code | Error | Description |
-|-------------|-------|-------------|
-| `401` | Missing API Key | The `X-API-Key` header is not provided |
-| `401` | Invalid API Key | The provided API key is not valid |
-| `401` | Inactive API Key | The API key has been deactivated |
-| `401` | Expired API Key | The API key has expired |
-| `403` | Unauthorized Access | You don't have permission to access this resource |
+| Status Code | Error               | Description                                       |
+| ----------- | ------------------- | ------------------------------------------------- |
+| `401`       | Missing API Key     | The `X-API-Key` header is not provided            |
+| `401`       | Invalid API Key     | The provided API key is not valid                 |
+| `401`       | Inactive API Key    | The API key has been deactivated                  |
+| `401`       | Expired API Key     | The API key has expired                           |
+| `403`       | Unauthorized Access | You don't have permission to access this resource |
 
 ## Rate Limiting
 
@@ -112,6 +115,7 @@ When you exceed the rate limit, you'll receive a `429 Too Many Requests` respons
 All API responses follow a consistent JSON format:
 
 ### Success Response
+
 ```json
 {
   "status": "success",
@@ -123,6 +127,7 @@ All API responses follow a consistent JSON format:
 ```
 
 ### Error Response
+
 ```json
 {
   "detail": "Error message describing what went wrong"
@@ -131,33 +136,25 @@ All API responses follow a consistent JSON format:
 
 ## Common HTTP Status Codes
 
-| Status Code | Meaning | Description |
-|-------------|---------|-------------|
-| `200` | OK | Request succeeded |
-| `201` | Created | Resource created successfully |
-| `400` | Bad Request | Invalid request parameters |
-| `401` | Unauthorized | Authentication failed |
-| `403` | Forbidden | Insufficient permissions |
-| `404` | Not Found | Resource not found |
-| `422` | Unprocessable Entity | Validation error |
-| `429` | Too Many Requests | Rate limit exceeded |
-| `500` | Internal Server Error | Server error occurred |
+| Status Code | Meaning               | Description                   |
+| ----------- | --------------------- | ----------------------------- |
+| `200`       | OK                    | Request succeeded             |
+| `201`       | Created               | Resource created successfully |
+| `400`       | Bad Request           | Invalid request parameters    |
+| `401`       | Unauthorized          | Authentication failed         |
+| `403`       | Forbidden             | Insufficient permissions      |
+| `404`       | Not Found             | Resource not found            |
+| `422`       | Unprocessable Entity  | Validation error              |
+| `429`       | Too Many Requests     | Rate limit exceeded           |
+| `500`       | Internal Server Error | Server error occurred         |
 
 ## Need Help?
 
 <CardGroup cols={2}>
-  <Card
-    title="Support"
-    icon="envelope"
-    href="mailto:support@eigi.ai"
-  >
+  <Card title="Support" icon="envelope" href="mailto:support@eigi.ai">
     Contact our support team
   </Card>
-  <Card
-    title="Dashboard"
-    icon="grid"
-    href="https://eigi.ai"
-  >
+  <Card title="Dashboard" icon="grid" href="https://eigi.ai">
     Manage your API keys and agents
   </Card>
 </CardGroup>
