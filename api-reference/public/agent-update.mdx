@@ -1,0 +1,81 @@
+---
+title: "Update Agent"
+openapi: "PATCH /v1/public/agents/{agent_id}"
+description: "Update an existing agent — only provided fields are modified"
+---
+
+## Overview
+
+Update an existing agent's configuration. Only the fields you provide will be updated — all other settings remain unchanged.
+
+If `prompt_content` is provided, a new version of the agent's internal prompt is automatically created.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="agent_id" type="string" required>
+  The unique agent ID to update.
+
+  Example: `68ea2517dbb84c09bae1ba0a`
+</ParamField>
+
+## Request Body
+
+All fields are optional. Only provided fields will be updated.
+
+<ParamField body="agent_name" type="string">
+  Updated agent name (1-100 characters).
+</ParamField>
+
+<ParamField body="agent_description" type="string">
+  Updated description (max 500 characters).
+</ParamField>
+
+<ParamField body="agent_type" type="string">
+  `INBOUND` or `OUTBOUND`.
+</ParamField>
+
+<ParamField body="agent_category" type="string">
+  Updated category.
+</ParamField>
+
+<ParamField body="stt" type="object">
+  Updated STT configuration (no params allowed).
+</ParamField>
+
+<ParamField body="llm" type="object">
+  Updated LLM configuration (only `temperature` param allowed).
+</ParamField>
+
+<ParamField body="tts" type="object">
+  Updated TTS configuration (only `speed` param allowed).
+</ParamField>
+
+<ParamField body="prompt_content" type="string">
+  New prompt content — creates a new version of the agent's internal prompt.
+</ParamField>
+
+<ParamField body="prompt" type="object">
+  Reference an existing prompt by name and optionally version.
+</ParamField>
+
+<ParamField body="first_message_prompt" type="string">
+  Updated greeting message.
+</ParamField>
+
+<ParamField body="tools" type="object">
+  Update agent tools. Only specified tools are modified.
+</ParamField>
+
+<ParamField body="widget_config" type="object">
+  Updated widget configuration.
+</ParamField>
+
+## Response
+
+Returns the complete updated agent object with all configurations and timestamps.

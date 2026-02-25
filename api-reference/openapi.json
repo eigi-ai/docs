@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://prod.eigi.ai",
+      "url": "https://api.eigi.ai",
       "description": "Production server"
     }
   ],
@@ -26,7 +26,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-Key",
-        "description": "API key for authentication. Get your API key from the eigi.ai Dashboard under Settings → API Keys."
+        "description": "API key for authentication. Get your API key from the eigi.ai Dashboard under Settings \u00e2\u2020\u2019 API Keys."
       }
     },
     "schemas": {
@@ -43,17 +43,30 @@
           },
           "conversation_type": {
             "type": "string",
-            "enum": ["DAILY", "TELEPHONY", "WHATSAPP", "CHAT"],
+            "enum": [
+              "DAILY",
+              "TELEPHONY",
+              "WHATSAPP",
+              "CHAT"
+            ],
             "description": "Type of conversation"
           },
           "conversation_status": {
             "type": "string",
-            "enum": ["IN_PROGRESS", "COMPLETED", "DISCONNECTED", "FAILED"],
+            "enum": [
+              "IN_PROGRESS",
+              "COMPLETED",
+              "DISCONNECTED",
+              "FAILED"
+            ],
             "description": "Current status of the conversation"
           },
           "calling_type": {
             "type": "string",
-            "enum": ["INBOUND", "OUTBOUND"],
+            "enum": [
+              "INBOUND",
+              "OUTBOUND"
+            ],
             "description": "Direction of the call"
           },
           "mobile_number": {
@@ -93,7 +106,10 @@
       },
       "OutboundCallRequest": {
         "type": "object",
-        "required": ["agent_id", "params"],
+        "required": [
+          "agent_id",
+          "params"
+        ],
         "properties": {
           "agent_id": {
             "type": "string",
@@ -105,7 +121,9 @@
             "description": "Array of call parameter objects",
             "items": {
               "type": "object",
-              "required": ["mobile_number"],
+              "required": [
+                "mobile_number"
+              ],
               "properties": {
                 "mobile_number": {
                   "type": "string",
@@ -125,7 +143,10 @@
           },
           "telephony_provider": {
             "type": "string",
-            "enum": ["PLIVO", "TWILIO"],
+            "enum": [
+              "PLIVO",
+              "TWILIO"
+            ],
             "default": "PLIVO",
             "description": "Telephony provider to use"
           }
@@ -142,7 +163,10 @@
       },
       "ChatRequest": {
         "type": "object",
-        "required": ["agent_id", "message"],
+        "required": [
+          "agent_id",
+          "message"
+        ],
         "properties": {
           "agent_id": {
             "type": "string",
@@ -239,7 +263,12 @@
           },
           "status": {
             "type": "string",
-            "enum": ["IN_PROGRESS", "COMPLETED", "DISCONNECTED", "FAILED"],
+            "enum": [
+              "IN_PROGRESS",
+              "COMPLETED",
+              "DISCONNECTED",
+              "FAILED"
+            ],
             "description": "Session status"
           },
           "messages": {
@@ -249,7 +278,10 @@
               "properties": {
                 "role": {
                   "type": "string",
-                  "enum": ["user", "assistant"]
+                  "enum": [
+                    "user",
+                    "assistant"
+                  ]
                 },
                 "content": {
                   "type": "string"
@@ -293,6 +325,815 @@
             "description": "The agent ID"
           }
         }
+      },
+      "PromptCreate": {
+        "type": "object",
+        "required": [
+          "prompt_name",
+          "prompt_content"
+        ],
+        "properties": {
+          "prompt_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Unique prompt name (1-100 characters)",
+            "example": "customer_support_v1"
+          },
+          "prompt_content": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The prompt text content",
+            "example": "You are a helpful customer support agent for TechCorp. Be polite, professional, and solve customer issues efficiently."
+          },
+          "prompt_metadata": {
+            "type": "object",
+            "description": "Metadata for the prompt",
+            "properties": {
+              "prompt_type": {
+                "type": "string",
+                "enum": [
+                  "main",
+                  "analysis"
+                ],
+                "default": "main",
+                "description": "Type of prompt: 'main' for agent prompts, 'analysis' for analysis prompts"
+              }
+            },
+            "example": {
+              "prompt_type": "main"
+            }
+          }
+        }
+      },
+      "PromptUpdate": {
+        "type": "object",
+        "required": [
+          "prompt_content"
+        ],
+        "properties": {
+          "prompt_content": {
+            "type": "string",
+            "minLength": 1,
+            "description": "New prompt text content",
+            "example": "You are an expert customer support agent for TechCorp with 10 years of experience."
+          },
+          "prompt_metadata": {
+            "type": "object",
+            "description": "Updated metadata for the prompt",
+            "properties": {
+              "prompt_type": {
+                "type": "string",
+                "enum": [
+                  "main",
+                  "analysis"
+                ],
+                "description": "Type of prompt: 'main' or 'analysis'"
+              }
+            }
+          }
+        }
+      },
+      "PromptResponse": {
+        "type": "object",
+        "properties": {
+          "prompt_name": {
+            "type": "string",
+            "description": "Unique prompt name"
+          },
+          "prompt_version": {
+            "type": "integer",
+            "description": "Version number of the prompt"
+          },
+          "prompt_content": {
+            "type": "string",
+            "description": "The prompt text content"
+          },
+          "prompt_metadata": {
+            "type": "object",
+            "description": "Additional metadata"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      },
+      "PromptVersionsResponse": {
+        "type": "object",
+        "properties": {
+          "prompt_name": {
+            "type": "string",
+            "description": "Prompt name"
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "prompt_version": {
+                  "type": "integer",
+                  "description": "Version number"
+                },
+                "prompt_content": {
+                  "type": "string",
+                  "description": "Prompt text content"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Version creation timestamp"
+                }
+              }
+            },
+            "description": "List of all versions (sorted by version descending)"
+          },
+          "total_versions": {
+            "type": "integer",
+            "description": "Total number of versions"
+          }
+        }
+      },
+      "PromptDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message"
+          },
+          "prompt_name": {
+            "type": "string",
+            "description": "Name of the deleted prompt"
+          },
+          "versions_deleted": {
+            "type": "integer",
+            "description": "Number of versions deleted"
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Deletion timestamp"
+          }
+        }
+      },
+      "STTConfig": {
+        "type": "object",
+        "required": [
+          "provider_name",
+          "model_name",
+          "language"
+        ],
+        "properties": {
+          "provider_name": {
+            "type": "string",
+            "enum": [
+              "DEEPGRAM",
+              "WHISPER"
+            ],
+            "description": "STT provider name"
+          },
+          "model_name": {
+            "type": "string",
+            "description": "Model name for the STT provider",
+            "example": "nova-2"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language code (e.g., en, hi, es, fr)",
+            "example": "en"
+          },
+          "params": {
+            "type": "object",
+            "description": "Must be empty for public API - no additional STT params allowed",
+            "example": {}
+          }
+        }
+      },
+      "LLMConfig": {
+        "type": "object",
+        "required": [
+          "provider_name",
+          "model_name"
+        ],
+        "properties": {
+          "provider_name": {
+            "type": "string",
+            "enum": [
+              "OPENAI",
+              "ANTHROPIC",
+              "GOOGLE",
+              "GROK"
+            ],
+            "description": "LLM provider name"
+          },
+          "model_name": {
+            "type": "string",
+            "description": "Model name for the LLM provider",
+            "example": "gpt-4o"
+          },
+          "params": {
+            "type": "object",
+            "description": "Only 'temperature' (0.0-2.0) is allowed for public API",
+            "properties": {
+              "temperature": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 2.0,
+                "description": "Controls randomness (0.0-2.0)"
+              }
+            },
+            "example": {
+              "temperature": 0.7
+            }
+          }
+        }
+      },
+      "TTSConfig": {
+        "type": "object",
+        "required": [
+          "provider_name",
+          "model_name",
+          "language",
+          "voice_id"
+        ],
+        "properties": {
+          "provider_name": {
+            "type": "string",
+            "enum": [
+              "CARTESIA",
+              "ELEVENLABS",
+              "SARVAM",
+              "GOOGLE",
+              "HUME"
+            ],
+            "description": "TTS provider name"
+          },
+          "model_name": {
+            "type": "string",
+            "description": "Model name for the TTS provider",
+            "example": "sonic-2"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language code (e.g., en, hi)",
+            "example": "en"
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "Voice ID from the TTS provider",
+            "example": "a0e99841-438c-4a64-b679-ae501e7d6091"
+          },
+          "params": {
+            "type": "object",
+            "description": "Only 'speed' param is allowed for public API",
+            "properties": {
+              "speed": {
+                "type": "number",
+                "description": "Speech speed multiplier"
+              }
+            },
+            "example": {
+              "speed": 1.0
+            }
+          }
+        }
+      },
+      "ToolsConfig": {
+        "type": "object",
+        "description": "Configure agent tools. Each tool can be true (enable), false (disable), or an object with configuration.",
+        "properties": {
+          "end_call": {
+            "description": "End call tool - enabled by default. Use true/false to toggle.",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          },
+          "transfer_call": {
+            "description": "Transfer call tool. When using config object, requires transfer_phone_number.",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "transfer_phone_number": {
+                    "type": "string",
+                    "description": "Phone number to transfer to"
+                  }
+                },
+                "required": [
+                  "transfer_phone_number"
+                ]
+              }
+            ]
+          },
+          "schedule_call": {
+            "description": "Schedule call tool. Optional allow_immediate config.",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "allow_immediate": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            ]
+          },
+          "set_language": {
+            "description": "Set language tool. Optional language_string config.",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "language_string": {
+                    "type": "string",
+                    "default": "en-US"
+                  }
+                }
+              }
+            ]
+          },
+          "background_audio": {
+            "description": "Background audio tool with audio file and volume config.",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "audio_files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "env1.wav",
+                        "honk1.wav",
+                        "market1.wav",
+                        "office1.mp3",
+                        "office2.mp3",
+                        "office3.mp3",
+                        "office4.wav",
+                        "office5.wav",
+                        "temple1.wav",
+                        "temple2.wav"
+                      ]
+                    }
+                  },
+                  "background_noise_reduce": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "default_volume": {
+                    "type": "number",
+                    "minimum": 0.1,
+                    "maximum": 1.0,
+                    "default": 0.2
+                  }
+                }
+              }
+            ]
+          },
+          "user_idle": {
+            "description": "User idle detection with timeout and retry config.",
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "idle_timeout_seconds": {
+                    "type": "number",
+                    "minimum": 3,
+                    "maximum": 30,
+                    "default": 10
+                  },
+                  "max_retry_count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10,
+                    "default": 3
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "AgentCreate": {
+        "type": "object",
+        "required": [
+          "agent_name",
+          "agent_type",
+          "stt",
+          "llm",
+          "tts"
+        ],
+        "properties": {
+          "agent_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Agent name (1-100 characters)",
+            "example": "Customer Support Agent"
+          },
+          "agent_description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Agent description (max 500 characters)"
+          },
+          "agent_type": {
+            "type": "string",
+            "enum": [
+              "INBOUND",
+              "OUTBOUND"
+            ],
+            "description": "Agent type"
+          },
+          "agent_category": {
+            "type": "string",
+            "enum": [
+              "Customer Service",
+              "Sales",
+              "Scheduling",
+              "Research",
+              "Healthcare",
+              "Customer Success",
+              "Education",
+              "Finance",
+              "HR",
+              "Legal",
+              "Productivity",
+              "Creative",
+              "IT/DevOps",
+              "E-commerce",
+              "Entertainment",
+              "Travel",
+              "Wellness",
+              "Anime",
+              "Cartoon",
+              "Gaming",
+              "Lifestyle",
+              "other"
+            ],
+            "default": "other",
+            "description": "Agent category"
+          },
+          "agent_tips": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Usage tips for the agent"
+          },
+          "agent_mobile_number": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Mobile numbers associated with the agent"
+          },
+          "stt": {
+            "$ref": "#/components/schemas/STTConfig"
+          },
+          "llm": {
+            "$ref": "#/components/schemas/LLMConfig"
+          },
+          "tts": {
+            "$ref": "#/components/schemas/TTSConfig"
+          },
+          "prompt_content": {
+            "type": "string",
+            "description": "Inline prompt content \u2014 auto-creates an internal prompt for the agent"
+          },
+          "prompt": {
+            "type": "object",
+            "description": "Reference to an existing prompt (alternative to prompt_content)",
+            "properties": {
+              "prompt_name": {
+                "type": "string",
+                "description": "Name of existing prompt"
+              },
+              "prompt_version": {
+                "type": "integer",
+                "description": "Specific version (omit for latest)"
+              }
+            },
+            "required": [
+              "prompt_name"
+            ]
+          },
+          "first_message_prompt": {
+            "type": "string",
+            "description": "Agent's greeting message shown when chat starts"
+          },
+          "tools": {
+            "$ref": "#/components/schemas/ToolsConfig"
+          },
+          "widget_config": {
+            "type": "object",
+            "description": "Widget configuration for chat interface customization",
+            "properties": {
+              "widget_interface": {
+                "type": "object",
+                "description": "Interface settings (enable_chat, mute_button, etc.)"
+              },
+              "widget_appearance": {
+                "type": "object",
+                "description": "Appearance settings (variant, placement, etc.)"
+              },
+              "widget_avatar": {
+                "type": "object",
+                "description": "Avatar settings (type, colors)"
+              },
+              "widget_tnc_config": {
+                "type": "object",
+                "description": "Terms and conditions settings"
+              }
+            }
+          }
+        }
+      },
+      "AgentUpdate": {
+        "type": "object",
+        "description": "All fields are optional \u2014 only provided fields will be updated.",
+        "properties": {
+          "agent_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Agent name"
+          },
+          "agent_description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Agent description"
+          },
+          "agent_type": {
+            "type": "string",
+            "enum": [
+              "INBOUND",
+              "OUTBOUND"
+            ],
+            "description": "Agent type"
+          },
+          "agent_category": {
+            "type": "string",
+            "enum": [
+              "Customer Service",
+              "Sales",
+              "Scheduling",
+              "Research",
+              "Healthcare",
+              "Customer Success",
+              "Education",
+              "Finance",
+              "HR",
+              "Legal",
+              "Productivity",
+              "Creative",
+              "IT/DevOps",
+              "E-commerce",
+              "Entertainment",
+              "Travel",
+              "Wellness",
+              "Anime",
+              "Cartoon",
+              "Gaming",
+              "Lifestyle",
+              "other"
+            ],
+            "description": "Agent category"
+          },
+          "agent_tips": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Usage tips"
+          },
+          "agent_mobile_number": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Mobile numbers associated with the agent"
+          },
+          "stt": {
+            "$ref": "#/components/schemas/STTConfig"
+          },
+          "llm": {
+            "$ref": "#/components/schemas/LLMConfig"
+          },
+          "tts": {
+            "$ref": "#/components/schemas/TTSConfig"
+          },
+          "prompt_content": {
+            "type": "string",
+            "description": "New prompt content \u2014 creates a new version of the agent's internal prompt"
+          },
+          "prompt": {
+            "type": "object",
+            "description": "Reference to an existing prompt",
+            "properties": {
+              "prompt_name": {
+                "type": "string"
+              },
+              "prompt_version": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "prompt_name"
+            ]
+          },
+          "first_message_prompt": {
+            "type": "string",
+            "description": "Agent's greeting message"
+          },
+          "tools": {
+            "$ref": "#/components/schemas/ToolsConfig"
+          },
+          "widget_config": {
+            "type": "object",
+            "description": "Widget configuration",
+            "properties": {
+              "widget_interface": {
+                "type": "object"
+              },
+              "widget_appearance": {
+                "type": "object"
+              },
+              "widget_avatar": {
+                "type": "object"
+              },
+              "widget_tnc_config": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "AgentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Agent ID"
+          },
+          "agent_name": {
+            "type": "string",
+            "description": "Agent name"
+          },
+          "agent_description": {
+            "type": "string",
+            "description": "Agent description"
+          },
+          "agent_type": {
+            "type": "string",
+            "enum": [
+              "INBOUND",
+              "OUTBOUND"
+            ],
+            "description": "Agent type"
+          },
+          "agent_category": {
+            "type": "string",
+            "description": "Agent category"
+          },
+          "agent_tips": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Usage tips"
+          },
+          "agent_mobile_number": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Associated mobile numbers"
+          },
+          "stt": {
+            "type": "object",
+            "description": "STT configuration"
+          },
+          "llm": {
+            "type": "object",
+            "description": "LLM configuration"
+          },
+          "tts": {
+            "type": "object",
+            "description": "TTS configuration"
+          },
+          "sts": {
+            "type": "object",
+            "description": "STS configuration (if set)"
+          },
+          "prompt": {
+            "type": "object",
+            "description": "Prompt reference",
+            "properties": {
+              "prompt_name": {
+                "type": "string"
+              },
+              "prompt_version": {
+                "type": "integer"
+              },
+              "prompt_content": {
+                "type": "string"
+              }
+            }
+          },
+          "first_message_prompt": {
+            "type": "string",
+            "description": "Agent's greeting message"
+          },
+          "dynamic_variables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Dynamic variables in the prompt"
+          },
+          "tools": {
+            "type": "object",
+            "description": "Configured tools"
+          },
+          "widget_config": {
+            "type": "object",
+            "description": "Widget configuration"
+          },
+          "MediaFiles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "fileType": {
+                  "type": "string"
+                },
+                "mediaUrl": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Media files associated with the agent"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      },
+      "AgentDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message"
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "ID of the deleted agent"
+          },
+          "agent_name": {
+            "type": "string",
+            "description": "Name of the deleted agent"
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Deletion timestamp"
+          }
+        }
       }
     }
   },
@@ -302,7 +1143,9 @@
         "summary": "Get Conversation by ID",
         "description": "Retrieve detailed information about a specific conversation using its unique ID",
         "operationId": "getConversation",
-        "tags": ["Conversations"],
+        "tags": [
+          "Conversations"
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -369,7 +1212,9 @@
         "summary": "List Conversations",
         "description": "Retrieve a paginated list of conversations with comprehensive filtering options",
         "operationId": "listConversations",
-        "tags": ["Conversations"],
+        "tags": [
+          "Conversations"
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -427,7 +1272,12 @@
             "description": "Filter by conversation type",
             "schema": {
               "type": "string",
-              "enum": ["DAILY", "TELEPHONY", "WHATSAPP", "CHAT"]
+              "enum": [
+                "DAILY",
+                "TELEPHONY",
+                "WHATSAPP",
+                "CHAT"
+              ]
             }
           },
           {
@@ -436,7 +1286,10 @@
             "description": "Filter by call direction",
             "schema": {
               "type": "string",
-              "enum": ["INBOUND", "OUTBOUND"]
+              "enum": [
+                "INBOUND",
+                "OUTBOUND"
+              ]
             }
           },
           {
@@ -445,7 +1298,12 @@
             "description": "Filter by conversation status",
             "schema": {
               "type": "string",
-              "enum": ["IN_PROGRESS", "COMPLETED", "DISCONNECTED", "FAILED"]
+              "enum": [
+                "IN_PROGRESS",
+                "COMPLETED",
+                "DISCONNECTED",
+                "FAILED"
+              ]
             }
           },
           {
@@ -549,7 +1407,9 @@
         "summary": "Initiate Outbound Call",
         "description": "Create and initiate one or more outbound calls to phone numbers using AI voice agents",
         "operationId": "createOutboundCall",
-        "tags": ["Conversations"],
+        "tags": [
+          "Conversations"
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -672,7 +1532,9 @@
         "summary": "Send Chat Message",
         "description": "Send a message to an AI agent and receive a response with optional streaming",
         "operationId": "sendChatMessage",
-        "tags": ["Chat"],
+        "tags": [
+          "Chat"
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -788,7 +1650,9 @@
         "summary": "List Chat Sessions",
         "description": "Retrieve a paginated list of all chat sessions for your agents",
         "operationId": "listChatSessions",
-        "tags": ["Chat"],
+        "tags": [
+          "Chat"
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -891,7 +1755,9 @@
         "summary": "Get Chat Session",
         "description": "Retrieve complete details and messages for a specific chat session",
         "operationId": "getChatSession",
-        "tags": ["Chat"],
+        "tags": [
+          "Chat"
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -968,7 +1834,9 @@
         "summary": "Get First Message",
         "description": "Retrieve the agent's greeting message to initialize a chat session",
         "operationId": "getFirstMessage",
-        "tags": ["Chat"],
+        "tags": [
+          "Chat"
+        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1019,6 +1887,1326 @@
           },
           "404": {
             "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/prompts": {
+      "post": {
+        "summary": "Create Prompt",
+        "description": "Create a new prompt or a new version of an existing prompt. If a prompt with the same name exists, a new version is auto-created with an incremented version number.",
+        "operationId": "createPrompt",
+        "tags": [
+          "Prompts"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptCreate"
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Create a simple prompt",
+                  "value": {
+                    "prompt_name": "customer_support_v1",
+                    "prompt_content": "You are a helpful customer support agent. Be polite and professional.",
+                    "prompt_metadata": {
+                      "prompt_type": "main"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Prompt created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List Prompts",
+        "description": "Retrieve a paginated list of prompts. Returns the latest version of each prompt by default.",
+        "operationId": "listPrompts",
+        "tags": [
+          "Prompts"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Items per page (max: 100)",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search in prompt name and content",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "latest_only",
+            "in": "query",
+            "description": "Return only latest versions",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved prompts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PromptResponse"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "page_size": {
+                      "type": "integer"
+                    },
+                    "total_pages": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/prompts/{prompt_name}": {
+      "get": {
+        "summary": "Get Prompt",
+        "description": "Retrieve a specific prompt by name. Returns the latest version by default, or a specific version if the version query parameter is provided.",
+        "operationId": "getPrompt",
+        "tags": [
+          "Prompts"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prompt_name",
+            "in": "path",
+            "required": true,
+            "description": "The unique prompt name",
+            "schema": {
+              "type": "string"
+            },
+            "example": "customer_support_v1"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "description": "Specific version to retrieve (omit for latest)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved prompt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Prompt",
+        "description": "Update a prompt by creating a new version. The version number is automatically incremented.",
+        "operationId": "updatePrompt",
+        "tags": [
+          "Prompts"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prompt_name",
+            "in": "path",
+            "required": true,
+            "description": "The unique prompt name",
+            "schema": {
+              "type": "string"
+            },
+            "example": "customer_support_v1"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptUpdate"
+              },
+              "examples": {
+                "update": {
+                  "summary": "Update prompt content",
+                  "value": {
+                    "prompt_content": "You are an expert customer support agent with 10 years of experience. Always be empathetic and solution-oriented."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt updated (new version created)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Prompt",
+        "description": "Permanently delete all versions of a prompt. Cannot delete a prompt currently used by any agent.",
+        "operationId": "deletePrompt",
+        "tags": [
+          "Prompts"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prompt_name",
+            "in": "path",
+            "required": true,
+            "description": "The unique prompt name",
+            "schema": {
+              "type": "string"
+            },
+            "example": "customer_support_v1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompt deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptDeleteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/prompts/{prompt_name}/versions": {
+      "get": {
+        "summary": "Get Prompt Versions",
+        "description": "Retrieve all versions of a specific prompt, sorted by version number (descending).",
+        "operationId": "getPromptVersions",
+        "tags": [
+          "Prompts"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prompt_name",
+            "in": "path",
+            "required": true,
+            "description": "The unique prompt name",
+            "schema": {
+              "type": "string"
+            },
+            "example": "customer_support_v1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved prompt versions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptVersionsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/agents": {
+      "post": {
+        "summary": "Create Agent",
+        "description": "Create a new AI agent with complete configuration including STT, LLM, TTS, prompt, tools, and widget settings. Supports two modes for prompt: inline prompt_content (auto-creates internal prompt) or reference to an existing prompt by name.",
+        "operationId": "createAgent",
+        "tags": [
+          "Agents"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentCreate"
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Create agent with inline prompt",
+                  "value": {
+                    "agent_name": "Support Agent",
+                    "agent_type": "INBOUND",
+                    "agent_category": "Customer Service",
+                    "stt": {
+                      "provider_name": "DEEPGRAM",
+                      "model_name": "nova-2",
+                      "language": "en",
+                      "params": {}
+                    },
+                    "llm": {
+                      "provider_name": "OPENAI",
+                      "model_name": "gpt-4o",
+                      "params": {
+                        "temperature": 0.7
+                      }
+                    },
+                    "tts": {
+                      "provider_name": "CARTESIA",
+                      "model_name": "sonic-2",
+                      "language": "en",
+                      "voice_id": "a0e99841-438c-4a64-b679-ae501e7d6091",
+                      "params": {
+                        "speed": 1.0
+                      }
+                    },
+                    "prompt_content": "You are a helpful customer support agent.",
+                    "first_message_prompt": "Hello! How can I help you today?",
+                    "tools": {
+                      "end_call": true,
+                      "transfer_call": {
+                        "transfer_phone_number": "+919876543210"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Agent created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List Agents",
+        "description": "Retrieve a paginated list of all agents owned by the API key holder. Supports filtering by type, category, and search.",
+        "operationId": "listAgents",
+        "tags": [
+          "Agents"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Items per page (max: 100)",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search in agent name and description",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "agent_type",
+            "in": "query",
+            "description": "Filter by agent type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "INBOUND",
+                "OUTBOUND"
+              ]
+            }
+          },
+          {
+            "name": "agent_category",
+            "in": "query",
+            "description": "Filter by agent category",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved agents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agents": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AgentResponse"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "page_size": {
+                      "type": "integer"
+                    },
+                    "total_pages": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/agents/{agent_id}": {
+      "get": {
+        "summary": "Get Agent",
+        "description": "Retrieve complete agent configuration by ID, including all STT/LLM/TTS settings, prompt, tools, and widget config.",
+        "operationId": "getAgent",
+        "tags": [
+          "Agents"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique agent ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "68ea2517dbb84c09bae1ba0a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Agent",
+        "description": "Update an existing agent. Only provided fields will be updated. If prompt_content is provided, creates a new version of the agent's internal prompt.",
+        "operationId": "updateAgent",
+        "tags": [
+          "Agents"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique agent ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "68ea2517dbb84c09bae1ba0a"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentUpdate"
+              },
+              "examples": {
+                "update_name": {
+                  "summary": "Update agent name and prompt",
+                  "value": {
+                    "agent_name": "Updated Support Agent",
+                    "prompt_content": "You are an updated customer support agent."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Agent",
+        "description": "Permanently delete an agent and its associated internal prompt.",
+        "operationId": "deleteAgent",
+        "tags": [
+          "Agents"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique agent ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "68ea2517dbb84c09bae1ba0a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentDeleteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/providers": {
+      "get": {
+        "summary": "List Providers",
+        "description": "Get all available STT, LLM, and TTS providers with their supported models. Use this to understand available options when configuring agents.",
+        "operationId": "listProviders",
+        "tags": [
+          "Utilities"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved providers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "llm": {
+                      "type": "object",
+                      "description": "LLM providers with their models",
+                      "example": {
+                        "OPENAI": [
+                          "gpt-4o",
+                          "gpt-4o-mini"
+                        ],
+                        "ANTHROPIC": [
+                          "claude-sonnet-4-20250514"
+                        ]
+                      }
+                    },
+                    "tts": {
+                      "type": "object",
+                      "description": "TTS providers with their models"
+                    },
+                    "stt": {
+                      "type": "object",
+                      "description": "STT providers with their models"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/voices": {
+      "get": {
+        "summary": "List Voices",
+        "description": "Retrieve available voices from a specific TTS provider with optional filtering by language, gender, model, and search terms.",
+        "operationId": "listVoices",
+        "tags": [
+          "Utilities"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "query",
+            "required": true,
+            "description": "Voice provider (CARTESIA, ELEVENLABS, SARVAM, GOOGLE, HUME)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Items per page (max: 100)",
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Filter by language code (e.g., en, hi, es)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "query",
+            "description": "Filter by gender",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MALE",
+                "FEMALE",
+                "NEUTRAL"
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search by voice name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "show_cloned_only",
+            "in": "query",
+            "description": "Show only cloned voices",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "description": "Filter by model (e.g., bulbul:v2)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved voices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "voices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Voice ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Voice name"
+                          },
+                          "provider": {
+                            "type": "string"
+                          },
+                          "gender": {
+                            "type": "string"
+                          },
+                          "language": {
+                            "type": "string"
+                          },
+                          "preview_url": {
+                            "type": "string",
+                            "description": "URL to preview the voice"
+                          }
+                        }
+                      }
+                    },
+                    "total_count": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "page_size": {
+                      "type": "integer"
+                    },
+                    "has_more": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/mobile-numbers": {
+      "get": {
+        "summary": "Get Mobile Numbers",
+        "description": "Retrieve the API key owner's purchased/rented mobile numbers with telephony provider information.",
+        "operationId": "getMobileNumbers",
+        "tags": [
+          "Utilities"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved mobile numbers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "description": "User ID"
+                    },
+                    "purchased_mobile_numbers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "mobile_number": {
+                            "type": "string",
+                            "description": "Phone number in E.164 format"
+                          },
+                          "telephony_provider": {
+                            "type": "string",
+                            "description": "Provider (PLIVO, TWILIO)"
+                          }
+                        }
+                      },
+                      "description": "List of purchased mobile numbers"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {

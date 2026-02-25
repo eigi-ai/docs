@@ -1,0 +1,27 @@
+---
+title: "Get Mobile Numbers"
+openapi: "GET /v1/public/mobile-numbers"
+description: "Retrieve your purchased/rented mobile numbers"
+---
+
+## Overview
+
+Get the list of mobile phone numbers purchased or rented by the API key owner. These numbers can be assigned to agents for inbound/outbound telephony calls.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Response
+
+<ResponseField name="user_id" type="string">
+  Your user ID.
+</ResponseField>
+
+<ResponseField name="purchased_mobile_numbers" type="array">
+  Array of mobile number objects, each containing:
+  - `mobile_number` (string): Phone number in E.164 format (e.g., `+919876543210`)
+  - `telephony_provider` (string): Provider (`PLIVO` or `TWILIO`)
+</ResponseField>

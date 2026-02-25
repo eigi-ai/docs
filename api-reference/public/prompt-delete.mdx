@@ -1,0 +1,45 @@
+---
+title: "Delete Prompt"
+openapi: "DELETE /v1/public/prompts/{prompt_name}"
+description: "Permanently delete all versions of a prompt"
+---
+
+## Overview
+
+Permanently delete all versions of a prompt. This action cannot be undone.
+
+<Warning>
+  You cannot delete a prompt that is currently used by any agent. Unassign the prompt from all agents before deleting it.
+</Warning>
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="prompt_name" type="string" required>
+  The unique name of the prompt to delete.
+
+  Example: `customer_support_v1`
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string">
+  Success confirmation message.
+</ResponseField>
+
+<ResponseField name="prompt_name" type="string">
+  Name of the deleted prompt.
+</ResponseField>
+
+<ResponseField name="versions_deleted" type="integer">
+  Number of versions that were deleted.
+</ResponseField>
+
+<ResponseField name="deleted_at" type="string">
+  ISO 8601 timestamp of when the deletion occurred.
+</ResponseField>

@@ -1,0 +1,79 @@
+---
+title: "List Voices"
+openapi: "GET /v1/public/voices"
+description: "List available voices from a TTS provider with optional filtering"
+---
+
+## Overview
+
+Retrieve available voices from a specific TTS provider. Use this endpoint to find the right `voice_id` for your agent's TTS configuration.
+
+Supports filtering by language, gender, model, and search terms.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="provider" type="string" required>
+  Voice provider to query. One of: `CARTESIA`, `ELEVENLABS`, `SARVAM`, `GOOGLE`, `HUME`.
+</ParamField>
+
+<ParamField query="page" type="integer" default="1">
+  Page number (minimum: 1).
+</ParamField>
+
+<ParamField query="page_size" type="integer" default="20">
+  Items per page (minimum: 1, maximum: 100).
+</ParamField>
+
+<ParamField query="language" type="string">
+  Filter by language code (e.g., `en`, `hi`, `es`).
+</ParamField>
+
+<ParamField query="gender" type="string">
+  Filter by gender: `MALE`, `FEMALE`, or `NEUTRAL`.
+</ParamField>
+
+<ParamField query="search" type="string">
+  Search by voice name.
+</ParamField>
+
+<ParamField query="show_cloned_only" type="boolean" default="false">
+  Show only cloned (custom) voices.
+</ParamField>
+
+<ParamField query="model" type="string">
+  Filter by model (e.g., `bulbul:v2`, `bulbul:v3`).
+</ParamField>
+
+## Response
+
+<ResponseField name="voices" type="array">
+  Array of voice objects, each containing:
+  - `id` (string): Voice ID to use in TTS config
+  - `name` (string): Human-readable voice name
+  - `provider` (string): Provider name
+  - `gender` (string): Voice gender
+  - `language` (string): Language code
+  - `preview_url` (string): URL to preview the voice
+</ResponseField>
+
+<ResponseField name="total_count" type="integer">
+  Total number of voices matching the filters.
+</ResponseField>
+
+<ResponseField name="page" type="integer">
+  Current page number.
+</ResponseField>
+
+<ResponseField name="page_size" type="integer">
+  Number of items per page.
+</ResponseField>
+
+<ResponseField name="has_more" type="boolean">
+  Whether more pages are available.
+</ResponseField>

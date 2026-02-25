@@ -57,7 +57,7 @@ Defaults to `PLIVO` if not specified.
 <RequestExample>
 
 ```bash cURL
-curl -X POST "https://prod.eigi.ai/v1/public/calls/outbound" \
+curl -X POST "https://api.eigi.ai/v1/public/calls/outbound" \
   -H "X-API-Key: vk_your_api_key_here" \
   -H "Content-Type: application/json" \
   -d '{
@@ -97,7 +97,7 @@ payload = {
 }
 
 response = requests.post(
-    "https://prod.eigi.ai/v1/public/calls/outbound",
+    "https://api.eigi.ai/v1/public/calls/outbound",
     headers=headers,
     json=payload
 )
@@ -109,7 +109,7 @@ print(response.json())
 const axios = require("axios");
 
 const response = await axios.post(
-  "https://prod.eigi.ai/v1/public/calls/outbound",
+  "https://api.eigi.ai/v1/public/calls/outbound",
   {
     agent_id: "68ea2517dbb84c09bae1ba0a",
     params: [

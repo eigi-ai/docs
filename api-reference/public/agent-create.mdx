@@ -1,0 +1,145 @@
+---
+title: "Create Agent"
+openapi: "POST /v1/public/agents"
+description: "Create a new AI agent with complete configuration"
+---
+
+## Overview
+
+Create a new AI agent with full configuration including speech-to-text (STT), large language model (LLM), text-to-speech (TTS), prompt, tools, and widget settings.
+
+### Prompt Configuration
+
+You can configure the agent's prompt in two ways:
+
+1. **Inline prompt** (`prompt_content`) — Provide the prompt text directly. An internal prompt is auto-created for the agent.
+2. **Prompt reference** (`prompt`) — Reference an existing prompt by name and optionally version.
+
+### Provider Restrictions (Public API)
+
+| Provider | Allowed params |
+|----------|---------------|
+| **STT** | No params allowed (must be empty `{}`) |
+| **LLM** | Only `temperature` (0.0 - 2.0) |
+| **TTS** | Only `speed` |
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Request Body
+
+<ParamField body="agent_name" type="string" required>
+  Agent name (1-100 characters).
+</ParamField>
+
+<ParamField body="agent_type" type="string" required>
+  Agent type: `INBOUND` or `OUTBOUND`.
+</ParamField>
+
+<ParamField body="stt" type="object" required>
+  Speech-to-Text configuration.
+
+  <Expandable title="properties">
+    <ParamField body="provider_name" type="string" required>
+      STT provider: `DEEPGRAM` or `WHISPER`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name (e.g., `nova-2`).
+    </ParamField>
+    <ParamField body="language" type="string" required>
+      Language code (e.g., `en`, `hi`).
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="llm" type="object" required>
+  Large Language Model configuration.
+
+  <Expandable title="properties">
+    <ParamField body="provider_name" type="string" required>
+      LLM provider: `OPENAI`, `ANTHROPIC`, `GOOGLE`, or `GROK`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name (e.g., `gpt-4o`).
+    </ParamField>
+    <ParamField body="params" type="object">
+      Only `temperature` (0.0-2.0) is allowed.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="tts" type="object" required>
+  Text-to-Speech configuration.
+
+  <Expandable title="properties">
+    <ParamField body="provider_name" type="string" required>
+      TTS provider: `CARTESIA`, `ELEVENLABS`, `SARVAM`, `GOOGLE`, or `HUME`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name (e.g., `sonic-2`).
+    </ParamField>
+    <ParamField body="language" type="string" required>
+      Language code.
+    </ParamField>
+    <ParamField body="voice_id" type="string" required>
+      Voice ID from the provider. Use the [List Voices](/api-reference/public/voices-list) endpoint to find available voices.
+    </ParamField>
+    <ParamField body="params" type="object">
+      Only `speed` is allowed.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="agent_description" type="string">
+  Agent description (max 500 characters).
+</ParamField>
+
+<ParamField body="agent_category" type="string" default="other">
+  Agent category (e.g., `Customer Service`, `Sales`, `Healthcare`, etc.).
+</ParamField>
+
+<ParamField body="agent_tips" type="array">
+  Array of usage tip strings for the agent.
+</ParamField>
+
+<ParamField body="agent_mobile_number" type="array">
+  Mobile numbers to associate with the agent.
+</ParamField>
+
+<ParamField body="prompt_content" type="string">
+  Inline prompt content. Auto-creates an internal prompt for the agent.
+</ParamField>
+
+<ParamField body="prompt" type="object">
+  Reference to an existing prompt (alternative to `prompt_content`).
+
+  <Expandable title="properties">
+    <ParamField body="prompt_name" type="string" required>
+      Name of the existing prompt.
+    </ParamField>
+    <ParamField body="prompt_version" type="integer">
+      Specific version (omit for latest).
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="first_message_prompt" type="string">
+  Agent's greeting message displayed when a chat session starts.
+</ParamField>
+
+<ParamField body="tools" type="object">
+  Configure agent tools. Each tool can be `true` (enable), `false` (disable), or an object with configuration.
+
+  Available tools: `end_call`, `transfer_call`, `schedule_call`, `set_language`, `background_audio`, `user_idle`.
+</ParamField>
+
+<ParamField body="widget_config" type="object">
+  Widget configuration for chat interface customization.
+</ParamField>
+
+## Response
+
+Returns the complete agent object with all configurations, `id`, and timestamps.

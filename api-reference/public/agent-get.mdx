@@ -1,0 +1,85 @@
+---
+title: "Get Agent"
+openapi: "GET /v1/public/agents/{agent_id}"
+description: "Retrieve complete agent configuration by ID"
+---
+
+## Overview
+
+Get the full configuration of a specific agent, including STT/LLM/TTS settings, prompt, tools, widget config, and associated media files.
+
+## Authentication
+
+<ParamField header="X-API-Key" type="string" required>
+  Your eigi.ai API key. Must be prefixed with `vk_`.
+</ParamField>
+
+## Path Parameters
+
+<ParamField path="agent_id" type="string" required>
+  The unique agent ID.
+
+  Example: `68ea2517dbb84c09bae1ba0a`
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Agent ID.
+</ResponseField>
+
+<ResponseField name="agent_name" type="string">
+  Agent name.
+</ResponseField>
+
+<ResponseField name="agent_description" type="string">
+  Agent description.
+</ResponseField>
+
+<ResponseField name="agent_type" type="string">
+  `INBOUND` or `OUTBOUND`.
+</ResponseField>
+
+<ResponseField name="agent_category" type="string">
+  Agent category.
+</ResponseField>
+
+<ResponseField name="stt" type="object">
+  Speech-to-Text configuration.
+</ResponseField>
+
+<ResponseField name="llm" type="object">
+  Large Language Model configuration.
+</ResponseField>
+
+<ResponseField name="tts" type="object">
+  Text-to-Speech configuration.
+</ResponseField>
+
+<ResponseField name="prompt" type="object">
+  Prompt reference with name, version, and content.
+</ResponseField>
+
+<ResponseField name="first_message_prompt" type="string">
+  Agent's greeting message.
+</ResponseField>
+
+<ResponseField name="tools" type="object">
+  Configured tools.
+</ResponseField>
+
+<ResponseField name="widget_config" type="object">
+  Widget configuration.
+</ResponseField>
+
+<ResponseField name="MediaFiles" type="array">
+  Media files associated with the agent (avatars, images).
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 creation timestamp.
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  ISO 8601 last update timestamp.
+</ResponseField>
