@@ -35,7 +35,7 @@
           },
           {
             "group": "MCP Server",
-            "pages": ["mcp/index"]
+            "pages": ["mcp"]
           },
           {
             "group": "Platform Features",
