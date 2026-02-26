@@ -34,6 +34,10 @@
             ]
           },
           {
+            "group": "MCP Server",
+            "pages": ["mcp/index"]
+          },
+          {
             "group": "Platform Features",
             "pages": [
               "features/agent-builder",
@@ -123,7 +127,7 @@
         },
         {
           "anchor": "Support",
-          "href": "mailto:support@eigi.ai",
+          "href": "mailto:buddy@eigi.ai",
           "icon": "envelope"
         }
       ]
@@ -137,7 +141,7 @@
     "links": [
       {
         "label": "Contact Support",
-        "href": "mailto:support@eigi.ai"
+        "href": "mailto:buddy@eigi.ai"
       }
     ],
     "primary": {

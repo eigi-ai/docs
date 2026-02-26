@@ -1,0 +1,214 @@
+---
+title: "MCP Server"
+sidebarTitle: "MCP Server"
+description: "Connect AI agents to eigi.ai using the Model Context Protocol"
+icon: "plug"
+---
+
+The Model Context Protocol (MCP) server provides a standardized interface that allows any compatible AI model or agent to access your eigi.ai data in a simple and secure way.
+
+Connect to our MCP server natively in Claude, Cursor, VS Code, and other clients. The eigi.ai MCP server has tools available for creating, managing, and testing AI voice agents — with more functionality on the way.
+
+[eigi.ai](https://eigi.ai) is a platform for building and deploying AI voice agents. Create intelligent voice bots that can handle phone calls, chat conversations, and customer interactions in 30+ languages with providers like OpenAI, ElevenLabs, and Deepgram.
+
+---
+
+## Setup Instructions
+
+### General
+
+Our MCP server uses Streamable HTTP transport with OAuth 2.1 for authentication:
+
+- **URL**: `https://mcp.eigi.ai/mcp`
+
+### Claude
+
+**Team, Enterprise (Claude.ai)**
+
+1. Navigate to **Settings** in the sidebar on web or desktop
+2. Scroll to **Integrations** at the bottom and click **Add more**
+3. In the prompt enter:
+   - Integration name: `eigi.ai`
+   - Integration URL: `https://mcp.eigi.ai/mcp`
+4. Make sure to enable the tools in any new chats
+
+**Free, Pro (Claude Desktop)**
+
+1. Open the file `~/Library/Application Support/Claude/claude_desktop_config.json`
+2. Add the following and restart the Claude desktop app:
+
+```json
+{
+  "mcpServers": {
+    "eigi": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.eigi.ai/mcp"]
+    }
+  }
+}
+```
+
+### Claude Code
+
+```bash
+claude mcp add --transport http eigi https://mcp.eigi.ai/mcp
+```
+
+Then run `/mcp` once you've opened a Claude Code session to go through the authentication flow.
+
+### Cursor
+
+1. Press `Cmd+,` (macOS) or `Ctrl+,` (Windows) to open Settings
+2. Go to **Features** → **MCP Servers**
+3. Click **Add Server** and enter:
+   - Name: `eigi.ai`
+   - URL: `https://mcp.eigi.ai/mcp`
+
+Or manually add to `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "eigi": {
+      "url": "https://mcp.eigi.ai/mcp",
+      "transport": "streamable-http"
+    }
+  }
+}
+```
+
+### Visual Studio Code
+
+1. `Ctrl/Cmd+Shift+P` and search for **MCP: Add Server**
+2. Select **Command (stdio)**
+3. Enter the following command: `npx mcp-remote https://mcp.eigi.ai/mcp`
+4. Enter the name `eigi` and hit enter
+5. Activate the server using **MCP: List Servers**, select **eigi**, then **Start Server**
+
+### Windsurf
+
+1. `Ctrl/Cmd+,` to open Windsurf settings
+2. Scroll to **Cascade** → **MCP servers**
+3. Select **Add Server** → **Add custom server**
+4. Add the following:
+
+```json
+{
+  "mcpServers": {
+    "eigi": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.eigi.ai/mcp"]
+    }
+  }
+}
+```
+
+### Zed
+
+1. `Cmd+,` to open Zed settings
+2. Add the following:
+
+```json
+{
+  "context_servers": {
+    "eigi": {
+      "source": "custom",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.eigi.ai/mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+### ChatGPT / OpenAI
+
+<Warning>
+  The eigi.ai connector is currently **under review** for the OpenAI Connectors
+  directory. Until approved, use **development mode**.
+</Warning>
+
+1. Go to ChatGPT **Settings** → **Connected Apps**
+2. Click **Add Connection** → **Developer Mode**
+3. Enter the MCP URL: `https://mcp.eigi.ai/mcp`
+4. Complete the OAuth flow
+
+### Others
+
+Many other tools now support MCP servers. Configure them with:
+
+- **Command**: `npx`
+- **Arguments**: `-y mcp-remote https://mcp.eigi.ai/mcp`
+- **Environment**: None
+
+---
+
+## Available Tools
+
+The eigi.ai MCP server provides **23 tools** across 6 categories:
+
+| Category          | Tools | Description                                                    |
+| ----------------- | ----- | -------------------------------------------------------------- |
+| **Agents**        | 6     | Create, list, get, update, delete agents + interactive testing |
+| **Conversations** | 2     | List and retrieve conversation transcripts                     |
+| **Calls**         | 3     | Initiate outbound calls, bulk campaigns, list phone numbers    |
+| **Chat**          | 4     | Text-based agent testing and chat session management           |
+| **Prompts**       | 6     | Create, manage, and version system prompts                     |
+| **Providers**     | 2     | Browse available LLM/TTS/STT providers and voices              |
+
+---
+
+## Example Prompts
+
+After connecting, try these:
+
+**Agent Management**
+
+- "Create a new voice agent named 'Support Bot' that speaks English"
+- "List all my agents"
+- "Update my Sales Agent to use ElevenLabs voice"
+
+**Calls & Conversations**
+
+- "Show me the last 10 conversations"
+- "Call +1234567890 using my Reminder agent"
+- "Get the transcript for my latest call"
+
+**Testing**
+
+- "Test my FAQ Bot with a sample question"
+- "Send a chat message to my Support Agent"
+
+---
+
+## FAQ
+
+<Accordion title="Why am I seeing an internal server error when trying to connect?">
+  This usually means the OAuth flow failed. Try: 1. Clear browser cookies for
+  `eigi.ai` 2. Restart your MCP client 3. Try the authentication again
+</Accordion>
+
+<Accordion title="I'm using Windows/WSL and seeing an error">
+  Make sure Node.js is installed and accessible from your terminal: ```bash node
+  --version ``` If not installed, download from
+  [nodejs.org](https://nodejs.org).
+</Accordion>
+
+<Accordion title="Can I authenticate with my own API keys?">
+  The MCP server uses OAuth 2.0 for authentication. API key authentication is
+  not currently supported for the remote MCP server.
+</Accordion>
+
+---
+
+## Requirements
+
+- **Free eigi.ai account** — Sign up at [eigi.ai](https://eigi.ai)
+- **Authentication** — OAuth 2.0 (automatic via browser when you first connect)
+- **MCP-compatible client** — Claude, Cursor, VS Code, Windsurf, or any MCP client
+
+---
+
+## Support
+
+- **Email**: [buddy@eigi.ai](mailto:buddy@eigi.ai)

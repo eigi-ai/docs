@@ -5,7 +5,7 @@
     "description": "REST API for managing AI voice agents and conversations",
     "version": "1.0.0",
     "contact": {
-      "email": "support@eigi.ai",
+      "email": "buddy@eigi.ai",
       "url": "https://eigi.ai"
     }
   },
@@ -43,30 +43,17 @@
           },
           "conversation_type": {
             "type": "string",
-            "enum": [
-              "DAILY",
-              "TELEPHONY",
-              "WHATSAPP",
-              "CHAT"
-            ],
+            "enum": ["DAILY", "TELEPHONY", "WHATSAPP", "CHAT"],
             "description": "Type of conversation"
           },
           "conversation_status": {
             "type": "string",
-            "enum": [
-              "IN_PROGRESS",
-              "COMPLETED",
-              "DISCONNECTED",
-              "FAILED"
-            ],
+            "enum": ["IN_PROGRESS", "COMPLETED", "DISCONNECTED", "FAILED"],
             "description": "Current status of the conversation"
           },
           "calling_type": {
             "type": "string",
-            "enum": [
-              "INBOUND",
-              "OUTBOUND"
-            ],
+            "enum": ["INBOUND", "OUTBOUND"],
             "description": "Direction of the call"
           },
           "mobile_number": {
@@ -106,10 +93,7 @@
       },
       "OutboundCallRequest": {
         "type": "object",
-        "required": [
-          "agent_id",
-          "params"
-        ],
+        "required": ["agent_id", "params"],
         "properties": {
           "agent_id": {
             "type": "string",
@@ -121,9 +105,7 @@
             "description": "Array of call parameter objects",
             "items": {
               "type": "object",
-              "required": [
-                "mobile_number"
-              ],
+              "required": ["mobile_number"],
               "properties": {
                 "mobile_number": {
                   "type": "string",
@@ -143,10 +125,7 @@
           },
           "telephony_provider": {
             "type": "string",
-            "enum": [
-              "PLIVO",
-              "TWILIO"
-            ],
+            "enum": ["PLIVO", "TWILIO"],
             "default": "PLIVO",
             "description": "Telephony provider to use"
           }
@@ -163,10 +142,7 @@
       },
       "ChatRequest": {
         "type": "object",
-        "required": [
-          "agent_id",
-          "message"
-        ],
+        "required": ["agent_id", "message"],
         "properties": {
           "agent_id": {
             "type": "string",
@@ -263,12 +239,7 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "IN_PROGRESS",
-              "COMPLETED",
-              "DISCONNECTED",
-              "FAILED"
-            ],
+            "enum": ["IN_PROGRESS", "COMPLETED", "DISCONNECTED", "FAILED"],
             "description": "Session status"
           },
           "messages": {
@@ -278,10 +249,7 @@
               "properties": {
                 "role": {
                   "type": "string",
-                  "enum": [
-                    "user",
-                    "assistant"
-                  ]
+                  "enum": ["user", "assistant"]
                 },
                 "content": {
                   "type": "string"
@@ -328,10 +296,7 @@
       },
       "PromptCreate": {
         "type": "object",
-        "required": [
-          "prompt_name",
-          "prompt_content"
-        ],
+        "required": ["prompt_name", "prompt_content"],
         "properties": {
           "prompt_name": {
             "type": "string",
@@ -352,10 +317,7 @@
             "properties": {
               "prompt_type": {
                 "type": "string",
-                "enum": [
-                  "main",
-                  "analysis"
-                ],
+                "enum": ["main", "analysis"],
                 "default": "main",
                 "description": "Type of prompt: 'main' for agent prompts, 'analysis' for analysis prompts"
               }
@@ -368,9 +330,7 @@
       },
       "PromptUpdate": {
         "type": "object",
-        "required": [
-          "prompt_content"
-        ],
+        "required": ["prompt_content"],
         "properties": {
           "prompt_content": {
             "type": "string",
@@ -384,10 +344,7 @@
             "properties": {
               "prompt_type": {
                 "type": "string",
-                "enum": [
-                  "main",
-                  "analysis"
-                ],
+                "enum": ["main", "analysis"],
                 "description": "Type of prompt: 'main' or 'analysis'"
               }
             }
@@ -484,18 +441,11 @@
       },
       "STTConfig": {
         "type": "object",
-        "required": [
-          "provider_name",
-          "model_name",
-          "language"
-        ],
+        "required": ["provider_name", "model_name", "language"],
         "properties": {
           "provider_name": {
             "type": "string",
-            "enum": [
-              "DEEPGRAM",
-              "WHISPER"
-            ],
+            "enum": ["DEEPGRAM", "WHISPER"],
             "description": "STT provider name"
           },
           "model_name": {
@@ -517,19 +467,11 @@
       },
       "LLMConfig": {
         "type": "object",
-        "required": [
-          "provider_name",
-          "model_name"
-        ],
+        "required": ["provider_name", "model_name"],
         "properties": {
           "provider_name": {
             "type": "string",
-            "enum": [
-              "OPENAI",
-              "ANTHROPIC",
-              "GOOGLE",
-              "GROK"
-            ],
+            "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "GROK"],
             "description": "LLM provider name"
           },
           "model_name": {
@@ -556,22 +498,11 @@
       },
       "TTSConfig": {
         "type": "object",
-        "required": [
-          "provider_name",
-          "model_name",
-          "language",
-          "voice_id"
-        ],
+        "required": ["provider_name", "model_name", "language", "voice_id"],
         "properties": {
           "provider_name": {
             "type": "string",
-            "enum": [
-              "CARTESIA",
-              "ELEVENLABS",
-              "SARVAM",
-              "GOOGLE",
-              "HUME"
-            ],
+            "enum": ["CARTESIA", "ELEVENLABS", "SARVAM", "GOOGLE", "HUME"],
             "description": "TTS provider name"
           },
           "model_name": {
@@ -633,9 +564,7 @@
                     "description": "Phone number to transfer to"
                   }
                 },
-                "required": [
-                  "transfer_phone_number"
-                ]
+                "required": ["transfer_phone_number"]
               }
             ]
           },
@@ -743,13 +672,7 @@
       },
       "AgentCreate": {
         "type": "object",
-        "required": [
-          "agent_name",
-          "agent_type",
-          "stt",
-          "llm",
-          "tts"
-        ],
+        "required": ["agent_name", "agent_type", "stt", "llm", "tts"],
         "properties": {
           "agent_name": {
             "type": "string",
@@ -765,10 +688,7 @@
           },
           "agent_type": {
             "type": "string",
-            "enum": [
-              "INBOUND",
-              "OUTBOUND"
-            ],
+            "enum": ["INBOUND", "OUTBOUND"],
             "description": "Agent type"
           },
           "agent_category": {
@@ -840,9 +760,7 @@
                 "description": "Specific version (omit for latest)"
               }
             },
-            "required": [
-              "prompt_name"
-            ]
+            "required": ["prompt_name"]
           },
           "first_message_prompt": {
             "type": "string",
@@ -892,10 +810,7 @@
           },
           "agent_type": {
             "type": "string",
-            "enum": [
-              "INBOUND",
-              "OUTBOUND"
-            ],
+            "enum": ["INBOUND", "OUTBOUND"],
             "description": "Agent type"
           },
           "agent_category": {
@@ -964,9 +879,7 @@
                 "type": "integer"
               }
             },
-            "required": [
-              "prompt_name"
-            ]
+            "required": ["prompt_name"]
           },
           "first_message_prompt": {
             "type": "string",
@@ -1012,10 +925,7 @@
           },
           "agent_type": {
             "type": "string",
-            "enum": [
-              "INBOUND",
-              "OUTBOUND"
-            ],
+            "enum": ["INBOUND", "OUTBOUND"],
             "description": "Agent type"
           },
           "agent_category": {
@@ -1143,9 +1053,7 @@
         "summary": "Get Conversation by ID",
         "description": "Retrieve detailed information about a specific conversation using its unique ID",
         "operationId": "getConversation",
-        "tags": [
-          "Conversations"
-        ],
+        "tags": ["Conversations"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1212,9 +1120,7 @@
         "summary": "List Conversations",
         "description": "Retrieve a paginated list of conversations with comprehensive filtering options",
         "operationId": "listConversations",
-        "tags": [
-          "Conversations"
-        ],
+        "tags": ["Conversations"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1272,12 +1178,7 @@
             "description": "Filter by conversation type",
             "schema": {
               "type": "string",
-              "enum": [
-                "DAILY",
-                "TELEPHONY",
-                "WHATSAPP",
-                "CHAT"
-              ]
+              "enum": ["DAILY", "TELEPHONY", "WHATSAPP", "CHAT"]
             }
           },
           {
@@ -1286,10 +1187,7 @@
             "description": "Filter by call direction",
             "schema": {
               "type": "string",
-              "enum": [
-                "INBOUND",
-                "OUTBOUND"
-              ]
+              "enum": ["INBOUND", "OUTBOUND"]
             }
           },
           {
@@ -1298,12 +1196,7 @@
             "description": "Filter by conversation status",
             "schema": {
               "type": "string",
-              "enum": [
-                "IN_PROGRESS",
-                "COMPLETED",
-                "DISCONNECTED",
-                "FAILED"
-              ]
+              "enum": ["IN_PROGRESS", "COMPLETED", "DISCONNECTED", "FAILED"]
             }
           },
           {
@@ -1407,9 +1300,7 @@
         "summary": "Initiate Outbound Call",
         "description": "Create and initiate one or more outbound calls to phone numbers using AI voice agents",
         "operationId": "createOutboundCall",
-        "tags": [
-          "Conversations"
-        ],
+        "tags": ["Conversations"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1532,9 +1423,7 @@
         "summary": "Send Chat Message",
         "description": "Send a message to an AI agent and receive a response with optional streaming",
         "operationId": "sendChatMessage",
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1650,9 +1539,7 @@
         "summary": "List Chat Sessions",
         "description": "Retrieve a paginated list of all chat sessions for your agents",
         "operationId": "listChatSessions",
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1755,9 +1642,7 @@
         "summary": "Get Chat Session",
         "description": "Retrieve complete details and messages for a specific chat session",
         "operationId": "getChatSession",
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1834,9 +1719,7 @@
         "summary": "Get First Message",
         "description": "Retrieve the agent's greeting message to initialize a chat session",
         "operationId": "getFirstMessage",
-        "tags": [
-          "Chat"
-        ],
+        "tags": ["Chat"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1903,9 +1786,7 @@
         "summary": "Create Prompt",
         "description": "Create a new prompt or a new version of an existing prompt. If a prompt with the same name exists, a new version is auto-created with an incremented version number.",
         "operationId": "createPrompt",
-        "tags": [
-          "Prompts"
-        ],
+        "tags": ["Prompts"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -1980,9 +1861,7 @@
         "summary": "List Prompts",
         "description": "Retrieve a paginated list of prompts. Returns the latest version of each prompt by default.",
         "operationId": "listPrompts",
-        "tags": [
-          "Prompts"
-        ],
+        "tags": ["Prompts"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2087,9 +1966,7 @@
         "summary": "Get Prompt",
         "description": "Retrieve a specific prompt by name. Returns the latest version by default, or a specific version if the version query parameter is provided.",
         "operationId": "getPrompt",
-        "tags": [
-          "Prompts"
-        ],
+        "tags": ["Prompts"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2163,9 +2040,7 @@
         "summary": "Update Prompt",
         "description": "Update a prompt by creating a new version. The version number is automatically incremented.",
         "operationId": "updatePrompt",
-        "tags": [
-          "Prompts"
-        ],
+        "tags": ["Prompts"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2258,9 +2133,7 @@
         "summary": "Delete Prompt",
         "description": "Permanently delete all versions of a prompt. Cannot delete a prompt currently used by any agent.",
         "operationId": "deletePrompt",
-        "tags": [
-          "Prompts"
-        ],
+        "tags": ["Prompts"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2337,9 +2210,7 @@
         "summary": "Get Prompt Versions",
         "description": "Retrieve all versions of a specific prompt, sorted by version number (descending).",
         "operationId": "getPromptVersions",
-        "tags": [
-          "Prompts"
-        ],
+        "tags": ["Prompts"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2406,9 +2277,7 @@
         "summary": "Create Agent",
         "description": "Create a new AI agent with complete configuration including STT, LLM, TTS, prompt, tools, and widget settings. Supports two modes for prompt: inline prompt_content (auto-creates internal prompt) or reference to an existing prompt by name.",
         "operationId": "createAgent",
-        "tags": [
-          "Agents"
-        ],
+        "tags": ["Agents"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2521,9 +2390,7 @@
         "summary": "List Agents",
         "description": "Retrieve a paginated list of all agents owned by the API key holder. Supports filtering by type, category, and search.",
         "operationId": "listAgents",
-        "tags": [
-          "Agents"
-        ],
+        "tags": ["Agents"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2565,10 +2432,7 @@
             "description": "Filter by agent type",
             "schema": {
               "type": "string",
-              "enum": [
-                "INBOUND",
-                "OUTBOUND"
-              ]
+              "enum": ["INBOUND", "OUTBOUND"]
             }
           },
           {
@@ -2639,9 +2503,7 @@
         "summary": "Get Agent",
         "description": "Retrieve complete agent configuration by ID, including all STT/LLM/TTS settings, prompt, tools, and widget config.",
         "operationId": "getAgent",
-        "tags": [
-          "Agents"
-        ],
+        "tags": ["Agents"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2716,9 +2578,7 @@
         "summary": "Update Agent",
         "description": "Update an existing agent. Only provided fields will be updated. If prompt_content is provided, creates a new version of the agent's internal prompt.",
         "operationId": "updateAgent",
-        "tags": [
-          "Agents"
-        ],
+        "tags": ["Agents"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2812,9 +2672,7 @@
         "summary": "Delete Agent",
         "description": "Permanently delete an agent and its associated internal prompt.",
         "operationId": "deleteAgent",
-        "tags": [
-          "Agents"
-        ],
+        "tags": ["Agents"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2891,9 +2749,7 @@
         "summary": "List Providers",
         "description": "Get all available STT, LLM, and TTS providers with their supported models. Use this to understand available options when configuring agents.",
         "operationId": "listProviders",
-        "tags": [
-          "Utilities"
-        ],
+        "tags": ["Utilities"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -2911,13 +2767,8 @@
                       "type": "object",
                       "description": "LLM providers with their models",
                       "example": {
-                        "OPENAI": [
-                          "gpt-4o",
-                          "gpt-4o-mini"
-                        ],
-                        "ANTHROPIC": [
-                          "claude-sonnet-4-20250514"
-                        ]
+                        "OPENAI": ["gpt-4o", "gpt-4o-mini"],
+                        "ANTHROPIC": ["claude-sonnet-4-20250514"]
                       }
                     },
                     "tts": {
@@ -2965,9 +2816,7 @@
         "summary": "List Voices",
         "description": "Retrieve available voices from a specific TTS provider with optional filtering by language, gender, model, and search terms.",
         "operationId": "listVoices",
-        "tags": [
-          "Utilities"
-        ],
+        "tags": ["Utilities"],
         "security": [
           {
             "ApiKeyAuth": []
@@ -3018,11 +2867,7 @@
             "description": "Filter by gender",
             "schema": {
               "type": "string",
-              "enum": [
-                "MALE",
-                "FEMALE",
-                "NEUTRAL"
-              ]
+              "enum": ["MALE", "FEMALE", "NEUTRAL"]
             }
           },
           {
@@ -3143,9 +2988,7 @@
         "summary": "Get Mobile Numbers",
         "description": "Retrieve the API key owner's purchased/rented mobile numbers with telephony provider information.",
         "operationId": "getMobileNumbers",
-        "tags": [
-          "Utilities"
-        ],
+        "tags": ["Utilities"],
         "security": [
           {
             "ApiKeyAuth": []
