@@ -1,0 +1,65 @@
+---
+title: "CLI Configuration"
+description: "Configure API keys and output defaults for the eigi CLI"
+icon: "sliders"
+---
+
+## Overview
+
+Use `eigi config` commands to store the CLI settings you want to reuse across sessions.
+
+## Required configuration
+
+Set your API key first:
+
+```bash
+eigi config set-key <YOUR_API_KEY>
+```
+
+## Fixed API endpoint
+
+The CLI always uses the production API endpoint:
+
+```text
+https://api.eigi.ai
+```
+
+Show the active local configuration at any time:
+
+```bash
+eigi config show
+```
+
+## Environment variables
+
+Environment variables override saved config values where supported.
+
+```bash
+export EIGI_API_KEY=<YOUR_API_KEY>
+```
+
+Use environment variables when you do not want to persist secrets locally or when CI needs to inject configuration dynamically.
+
+## Suggested setup sequence
+
+```bash
+eigi config set-key <YOUR_API_KEY>
+eigi workflow list
+eigi workflow agent-create
+```
+
+## Related commands
+
+| Command                              | Purpose                             |
+| ------------------------------------ | ----------------------------------- |
+| `eigi config set-key <YOUR_API_KEY>` | Save your API key                   |
+| `eigi config set-format json`        | Make JSON the default output format |
+| `eigi config show`                   | Show the active configuration       |
+
+## Next steps
+
+After configuration, continue with:
+
+- [CLI Overview](/cli/introduction)
+- [Get Prompt](/api-reference/public/prompt-get)
+- [Create Agent](/api-reference/public/agent-create)

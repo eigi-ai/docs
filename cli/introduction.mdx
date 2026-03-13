@@ -1,0 +1,138 @@
+---
+title: "CLI Overview"
+description: "Install the official CLI, fetch prompts, and follow a safe agent creation workflow from your terminal"
+icon: "terminal"
+---
+
+## Overview
+
+The eigi CLI gives you a terminal-first path for prompt management, agent creation, chat testing, outbound calls, and operational inspection.
+
+Use it when you want to:
+
+- Fetch the current system instruction or a specific prompt version
+- Reuse prompts across multiple agents
+- Inspect valid providers, models, voices, and purchased numbers before creating agents
+- Script common tasks with JSON output and `jq`
+
+## Install
+
+```bash
+npm install -g @cliniq360/eigi-cli
+```
+
+Or run it without installing globally:
+
+```bash
+npx @cliniq360/eigi-cli workflow list
+```
+
+## Configure the CLI
+
+The CLI configuration flow is documented in [CLI Configuration](/cli/configuration).
+
+For a quick start:
+
+```bash
+eigi config set-key <YOUR_API_KEY>
+eigi config show
+```
+
+## Recommended workflow before creating an agent
+
+If you want the CLI to tell you the order of operations first, start here:
+
+```bash
+eigi workflow list
+eigi workflow agent-create
+```
+
+The built-in `agent-create` workflow covers the common sequence:
+
+<Steps>
+  <Step title="Inspect providers and models">
+    Run `eigi providers list` to confirm valid STT, LLM, and TTS combinations before filling agent flags.
+  </Step>
+  <Step title="Choose a voice">
+    Run `eigi voices list --provider CARTESIA --language en` to fetch a real `voice_id`.
+  </Step>
+  <Step title="Fetch or create the prompt">
+    Run `eigi prompts list` and `eigi prompts get <PROMPT_NAME>` to inspect the existing system instruction before reusing it.
+  </Step>
+  <Step title="Check phone numbers for inbound agents">
+    Run `eigi mobile-numbers` if the agent needs a purchased number.
+  </Step>
+  <Step title="Create and validate the agent">
+    Create the agent, then test with `eigi agents get <AGENT_ID>`, `eigi chat first-message <AGENT_ID>`, and `eigi chat interactive <AGENT_ID>`.
+  </Step>
+</Steps>
+
+## Fetching prompts and system instructions
+
+Use prompt commands when you need to inspect the current instruction set or reuse a prompt across agents.
+
+```bash
+eigi prompts list
+eigi prompts get support_v1
+eigi prompts get support_v1 --version 2
+eigi prompts versions support_v1
+```
+
+Create or update prompts from a local file so they stay in source control:
+
+```bash
+eigi prompts create --name support_v1 --file ./prompt.txt
+eigi prompts update support_v1 --file ./prompt.txt
+```
+
+You can then reference the prompt during agent creation:
+
+```bash
+eigi agents create \
+  --name "Support Bot" \
+  --type INBOUND \
+  --stt-provider DEEPGRAM \
+  --stt-model nova-2 \
+  --stt-language en \
+  --llm-provider OPENAI \
+  --llm-model gpt-4o \
+  --tts-provider CARTESIA \
+  --tts-model sonic-2 \
+  --tts-language en \
+  --tts-voice-id <VOICE_ID> \
+  --prompt-name support_v1 \
+  --first-message "Hello, how can I help you today?"
+```
+
+## Useful command groups
+
+| Command group         | What it is for                                                       |
+| --------------------- | -------------------------------------------------------------------- |
+| `eigi workflow`       | Built-in CLI guidance for common flows                               |
+| `eigi prompts`        | Create, fetch, version, update, and delete prompts                   |
+| `eigi agents`         | Create, inspect, update, list, and delete agents                     |
+| `eigi chat`           | Fetch first messages, send one-off messages, or run interactive chat |
+| `eigi providers`      | Discover valid model combinations                                    |
+| `eigi voices`         | Fetch voice IDs for TTS providers                                    |
+| `eigi mobile-numbers` | List purchased phone numbers                                         |
+
+## JSON mode for automation
+
+Every command supports `--json`.
+
+```bash
+eigi workflow list --json | jq '.workflows[].name'
+eigi prompts get support_v1 --json | jq '.prompt_content'
+eigi agents list --json | jq '.agents[].agent_name'
+```
+
+## Related references
+
+- [CLI Configuration](/cli/configuration)
+- [Create Agent](/api-reference/public/agent-create)
+- [List Agents](/api-reference/public/agent-list)
+- [Get Prompt](/api-reference/public/prompt-get)
+- [List Prompts](/api-reference/public/prompt-list)
+- [List Providers](/api-reference/public/providers-list)
+- [List Voices](/api-reference/public/voices-list)
+- [Mobile Numbers](/api-reference/public/mobile-numbers)
