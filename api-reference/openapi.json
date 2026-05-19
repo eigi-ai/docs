@@ -294,6 +294,49 @@
           }
         }
       },
+      "DynamicVariableDefinition": {
+        "type": "object",
+        "properties": {
+          "variable_name": {
+            "type": "string",
+            "description": "Canonical key used in prompts and runtime payloads"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether a value must be provided before a call or session starts",
+            "default": false
+          },
+          "field_type": {
+            "type": "string",
+            "enum": ["STRING", "NUMBER", "EMAIL", "PHONE"],
+            "description": "Expected runtime value type for this variable"
+          },
+          "description": {
+            "type": "string",
+            "description": "Human and LLM guidance for what value should be provided"
+          }
+        }
+      },
+      "AgentDynamicVariablesResponse": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "The agent ID"
+          },
+          "agent_name": {
+            "type": "string",
+            "description": "The agent name"
+          },
+          "dynamic_variables": {
+            "type": "array",
+            "description": "Normalized dynamic variable definitions configured for the agent",
+            "items": {
+              "$ref": "#/components/schemas/DynamicVariableDefinition"
+            }
+          }
+        }
+      },
       "PromptCreate": {
         "type": "object",
         "required": ["prompt_name", "prompt_content"],
@@ -1770,6 +1813,83 @@
           },
           "404": {
             "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/agents/{agent_id}/dynamic-variables": {
+      "get": {
+        "summary": "Get Agent Dynamic Variables",
+        "description": "Retrieve normalized dynamic variable definitions for a specific agent.",
+        "operationId": "getAgentDynamicVariables",
+        "tags": ["Agents"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique agent ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "68ea2517dbb84c09bae1ba0a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved agent dynamic variables",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentDynamicVariablesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Access denied to agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Agent not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {
