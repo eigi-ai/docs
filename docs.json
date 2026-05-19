@@ -42,6 +42,10 @@
             "pages": ["mcp/introduction"]
           },
           {
+            "group": "Webhooks",
+            "pages": ["webhooks/introduction"]
+          },
+          {
             "group": "Platform Features",
             "pages": [
               "features/agent-builder",

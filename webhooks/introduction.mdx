@@ -1,0 +1,182 @@
+---
+title: "Webhooks"
+sidebarTitle: "Webhooks"
+description: "Configure conversation lifecycle webhooks and use conversation IDs to fetch full call details"
+icon: "webhook"
+---
+
+Conversation webhooks let you send conversation lifecycle events from eigi.ai to your own HTTPS endpoint.
+
+They are useful when you want to:
+
+- update a CRM when a call finishes
+- trigger internal automations when a conversation disconnects or fails
+- fetch the full transcript, analysis, and metadata for one specific conversation
+
+---
+
+## Where to configure webhooks
+
+1. Log in to the eigi.ai dashboard
+2. Open the account menu at the bottom of the left drawer
+3. Click **Webhooks**
+4. Add one or more webhook destinations
+
+Each webhook supports:
+
+| Field            | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| **Name**         | Friendly label for the destination              |
+| **URL**          | Your HTTPS endpoint                             |
+| **Request Type** | `GET`, `POST`, `PATCH`, or `PUT`                |
+| **Status**       | Enable or disable delivery for that destination |
+
+<Note>Webhook URLs must use `https://`.</Note>
+
+---
+
+## Events currently sent
+
+Conversation webhooks are fired after supported conversation hangup flows complete.
+
+Current lifecycle events:
+
+| Event                       | When it fires                                                                                        |
+| --------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `conversation.completed`    | The conversation finished successfully                                                               |
+| `conversation.disconnected` | The conversation ended early or the user did not answer and the conversation was marked disconnected |
+| `conversation.failed`       | The conversation ended in a failed state                                                             |
+
+These events are currently emitted from the conversation completion flows used by outbound calls, standard hangup handling, Daily sessions, and Twilio hangup processing.
+
+---
+
+## Delivery format
+
+The event is delivered to every active webhook destination you configure.
+
+### `GET` requests
+
+For `GET` webhooks, eigi.ai sends the following query parameters:
+
+- `event`
+- `payload`
+
+`payload` is a JSON string.
+
+Example:
+
+```text
+https://your-domain.com/webhooks/conversations?event=conversation.completed&payload={...}
+```
+
+### `POST`, `PATCH`, and `PUT` requests
+
+For non-`GET` webhooks, eigi.ai sends multipart form-data with two fields:
+
+- `event`
+- `payload`
+
+`payload` is the JSON string shown below.
+
+---
+
+## Payload shape
+
+The webhook payload includes the event name plus the most useful conversation fields for downstream automation.
+
+```json
+{
+  "event": "conversation.completed",
+  "id": "69316c7d6519e8d49433e40b",
+  "conversation_id": "a28e7071-508e-4d45-8887-085531aafaba",
+  "agent_id": "68ea2517dbb84c09bae1ba0a",
+  "conversation_type": "TELEPHONY",
+  "conversation_status": "COMPLETED",
+  "notes": null,
+  "conversation_duration": 142,
+  "conversation_recording_url": "https://...",
+  "calling_type": "OUTBOUND",
+  "telephony_provider": "TWILIO",
+  "to_mobile_number": "+14155550123",
+  "from_mobile_number": "+14155550999",
+  "is_test_call": false,
+  "conversation_transcript": [],
+  "conversation_analysis": []
+}
+```
+
+### Fields included in `payload`
+
+| Field                        | Description                                        |
+| ---------------------------- | -------------------------------------------------- |
+| `event`                      | Lifecycle event name                               |
+| `id`                         | Internal conversation document ID                  |
+| `conversation_id`            | Public conversation identifier                     |
+| `agent_id`                   | Agent that handled the conversation                |
+| `conversation_type`          | Conversation channel, such as telephony or Daily   |
+| `conversation_status`        | Final conversation status                          |
+| `notes`                      | Notes saved on the conversation                    |
+| `conversation_duration`      | Duration when available                            |
+| `conversation_recording_url` | Recording URL when available                       |
+| `calling_type`               | Call direction when available                      |
+| `telephony_provider`         | Provider such as Twilio when available             |
+| `to_mobile_number`           | Destination number when available                  |
+| `from_mobile_number`         | Source number when available                       |
+| `is_test_call`               | Whether the conversation was a test call           |
+| `conversation_transcript`    | Transcript messages collected for the conversation |
+| `conversation_analysis`      | Analysis results generated for the conversation    |
+
+---
+
+## Getting full details for one conversation
+
+Every webhook includes a `conversation_id`.
+
+Use that value with the public conversation API to fetch the latest full record for the exact conversation that triggered the webhook.
+
+- Endpoint: [Get Conversation by ID](/api-reference/public/get-conversation)
+
+Example:
+
+```bash
+curl -X GET "https://api.eigi.ai/v1/public/conversations/a28e7071-508e-4d45-8887-085531aafaba" \
+  -H "X-API-Key: vk_your_api_key_here"
+```
+
+This is the recommended way to retrieve the most current conversation details if your workflow needs the complete transcript, metadata, or analysis for a particular conversation.
+
+---
+
+## Delivery behavior
+
+- Any `2xx` response is treated as a successful delivery
+- Failed deliveries are retried automatically
+- eigi.ai currently makes up to `4` total delivery attempts
+- Retries are spaced `10` seconds apart
+- Delivery attempts, HTTP status codes, and errors are visible in the **Webhooks** page under **Delivery Logs**
+
+---
+
+## Best practices
+
+- Return a `2xx` response quickly, then process the payload asynchronously in your own system
+- Use the `conversation_id` as the stable key for downstream workflows
+- Treat `conversation_recording_url`, `conversation_duration`, and analysis fields as optional
+- Store webhook deliveries idempotently so retries do not create duplicate work
+
+---
+
+## Example receiver logic
+
+1. Receive the webhook event
+2. Read `event` and parse `payload`
+3. Extract `conversation_id`
+4. Use `conversation_id` to fetch the latest conversation details from eigi.ai
+5. Update your CRM, analytics pipeline, or internal workflow
+
+---
+
+## Support
+
+- Email: [buddy@eigi.ai](mailto:buddy@eigi.ai)
