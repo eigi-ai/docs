@@ -6,7 +6,7 @@ description: "Create a new AI agent with complete configuration"
 
 ## Overview
 
-Create a new AI agent with full configuration including speech-to-text (STT), large language model (LLM), text-to-speech (TTS), prompt, tools, and widget settings.
+Create a new AI agent with full configuration including speech-to-text (STT), speech-to-speech (STS), large language model (LLM), text-to-speech (TTS), main prompt, call analysis prompt, tools, and widget settings.
 
 ### Prompt Configuration
 
@@ -15,13 +15,22 @@ You can configure the agent's prompt in two ways:
 1. **Inline prompt** (`prompt_content`) — Provide the prompt text directly. An internal prompt is auto-created for the agent.
 2. **Prompt reference** (`prompt`) — Reference an existing prompt by name and optionally version.
 
+### Call Analysis Configuration
+
+You can optionally configure a dedicated call analysis prompt and schema:
+
+1. **Analysis prompt reference** (`call_analysis_prompt`) — Reference an existing analysis prompt by name and optionally version.
+2. **Inline analysis prompt** (`call_analysis_prompt.custom_prompt`) — Provide prompt content directly to create a new analysis prompt version before linking it to the agent.
+3. **Structured output schema** (`call_analysis_schema`) — Define the expected JSON structure for call analysis output.
+
 ### Provider Restrictions (Public API)
 
-| Provider | Allowed params |
-|----------|---------------|
-| **STT** | No params allowed (must be empty `{}`) |
-| **LLM** | Only `temperature` (0.0 - 2.0) |
-| **TTS** | Only `speed` |
+| Provider | Allowed params                         |
+| -------- | -------------------------------------- |
+| **STT**  | No params allowed (must be empty `{}`) |
+| **STS**  | No public API param restrictions       |
+| **LLM**  | Only `temperature` (0.0 - 2.0)         |
+| **TTS**  | Only `speed`                           |
 
 ## Authentication
 
@@ -44,13 +53,16 @@ You can configure the agent's prompt in two ways:
 
   <Expandable title="properties">
     <ParamField body="provider_name" type="string" required>
-      STT provider: `DEEPGRAM` or `WHISPER`.
+      STT provider: `DEEPGRAM`, `OPENAI`, `WHISPER`, or `GROK`.
     </ParamField>
     <ParamField body="model_name" type="string" required>
       Model name (e.g., `nova-2`).
     </ParamField>
     <ParamField body="language" type="string" required>
       Language code (e.g., `en`, `hi`).
+    </ParamField>
+    <ParamField body="params" type="object">
+      Must be empty `{}` for public API requests.
     </ParamField>
   </Expandable>
 </ParamField>
@@ -60,7 +72,7 @@ You can configure the agent's prompt in two ways:
 
   <Expandable title="properties">
     <ParamField body="provider_name" type="string" required>
-      LLM provider: `OPENAI`, `ANTHROPIC`, `GOOGLE`, or `GROK`.
+      LLM provider: `OPENAI`, `OPENAI_RESPONSES`, `ANTHROPIC`, `GOOGLE`, `GROK`, or `OPENROUTER`.
     </ParamField>
     <ParamField body="model_name" type="string" required>
       Model name (e.g., `gpt-4o`).
@@ -76,7 +88,7 @@ You can configure the agent's prompt in two ways:
 
   <Expandable title="properties">
     <ParamField body="provider_name" type="string" required>
-      TTS provider: `CARTESIA`, `ELEVENLABS`, `SARVAM`, `GOOGLE`, or `HUME`.
+      TTS provider: `CARTESIA`, `DEEPGRAM`, `ELEVENLABS`, `SARVAM`, `GOOGLE`, `HUME`, or `GROK`.
     </ParamField>
     <ParamField body="model_name" type="string" required>
       Model name (e.g., `sonic-2`).
@@ -89,6 +101,31 @@ You can configure the agent's prompt in two ways:
     </ParamField>
     <ParamField body="params" type="object">
       Only `speed` is allowed.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="sts" type="object">
+  Speech-to-Speech configuration for realtime voice generation.
+
+  <Expandable title="properties">
+    <ParamField body="speech_to_speech_enabled" type="boolean">
+      Whether speech-to-speech is enabled.
+    </ParamField>
+    <ParamField body="provider_name" type="string" required>
+      STS provider: `GOOGLE`, `OPENAI`, or `GROK`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name for the STS provider.
+    </ParamField>
+    <ParamField body="voice_id" type="string" required>
+      Voice ID for the STS provider.
+    </ParamField>
+    <ParamField body="language" type="string" required>
+      Language code.
+    </ParamField>
+    <ParamField body="params" type="object">
+      Additional provider-specific STS parameters.
     </ParamField>
   </Expandable>
 </ParamField>
@@ -126,6 +163,27 @@ You can configure the agent's prompt in two ways:
   </Expandable>
 </ParamField>
 
+<ParamField body="call_analysis_prompt" type="object">
+  Optional call analysis prompt configuration.
+
+  <Expandable title="properties">
+    <ParamField body="prompt_name" type="string" required>
+      Name of an existing analysis prompt to reference.
+    </ParamField>
+    <ParamField body="prompt_version" type="integer">
+      Specific analysis prompt version to use (omit for latest).
+    </ParamField>
+    <ParamField body="custom_prompt" type="string">
+      Inline analysis prompt content. If provided, a new analysis prompt version is created before linking it to the agent.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="call_analysis_schema" type="object">
+  Optional schema describing the structured JSON output expected from call
+  analysis.
+</ParamField>
+
 <ParamField body="first_message_prompt" type="string">
   Agent's greeting message displayed when a chat session starts.
 </ParamField>
@@ -133,7 +191,8 @@ You can configure the agent's prompt in two ways:
 <ParamField body="tools" type="object">
   Configure agent tools. Each tool can be `true` (enable), `false` (disable), or an object with configuration.
 
-  Available tools: `end_call`, `transfer_call`, `schedule_call`, `set_language`, `background_audio`, `user_idle`.
+Available tools: `end_call`, `transfer_call`, `schedule_call`, `set_language`, `background_audio`, `user_idle`.
+
 </ParamField>
 
 <ParamField body="widget_config" type="object">

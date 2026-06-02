@@ -9,6 +9,7 @@ description: "Update an existing agent — only provided fields are modified"
 Update an existing agent's configuration. Only the fields you provide will be updated — all other settings remain unchanged.
 
 If `prompt_content` is provided, a new version of the agent's internal prompt is automatically created.
+If `call_analysis_prompt.custom_prompt` is provided, a new version of the analysis prompt is automatically created before the agent is updated.
 
 ## Authentication
 
@@ -21,12 +22,20 @@ If `prompt_content` is provided, a new version of the agent's internal prompt is
 <ParamField path="agent_id" type="string" required>
   The unique agent ID to update.
 
-  Example: `68ea2517dbb84c09bae1ba0a`
+Example: `68ea2517dbb84c09bae1ba0a`
+
 </ParamField>
 
 ## Request Body
 
 All fields are optional. Only provided fields will be updated.
+
+| Provider | Allowed params                         |
+| -------- | -------------------------------------- |
+| **STT**  | No params allowed (must be empty `{}`) |
+| **STS**  | No public API param restrictions       |
+| **LLM**  | Only `temperature` (0.0 - 2.0)         |
+| **TTS**  | Only `speed`                           |
 
 <ParamField body="agent_name" type="string">
   Updated agent name (1-100 characters).
@@ -44,16 +53,94 @@ All fields are optional. Only provided fields will be updated.
   Updated category.
 </ParamField>
 
+<ParamField body="agent_tips" type="array">
+  Updated array of usage tip strings for the agent.
+</ParamField>
+
+<ParamField body="agent_mobile_number" type="array">
+  Updated mobile numbers associated with the agent.
+</ParamField>
+
 <ParamField body="stt" type="object">
   Updated STT configuration (no params allowed).
+
+  <Expandable title="properties">
+    <ParamField body="provider_name" type="string" required>
+      STT provider: `DEEPGRAM`, `OPENAI`, `WHISPER`, or `GROK`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name for the STT provider.
+    </ParamField>
+    <ParamField body="language" type="string" required>
+      Language code.
+    </ParamField>
+    <ParamField body="params" type="object">
+      Must be empty `{}` for public API requests.
+    </ParamField>
+  </Expandable>
 </ParamField>
 
 <ParamField body="llm" type="object">
   Updated LLM configuration (only `temperature` param allowed).
+
+  <Expandable title="properties">
+    <ParamField body="provider_name" type="string" required>
+      LLM provider: `OPENAI`, `OPENAI_RESPONSES`, `ANTHROPIC`, `GOOGLE`, `GROK`, or `OPENROUTER`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name for the LLM provider.
+    </ParamField>
+    <ParamField body="params" type="object">
+      Only `temperature` (0.0-2.0) is allowed.
+    </ParamField>
+  </Expandable>
 </ParamField>
 
 <ParamField body="tts" type="object">
   Updated TTS configuration (only `speed` param allowed).
+
+  <Expandable title="properties">
+    <ParamField body="provider_name" type="string" required>
+      TTS provider: `CARTESIA`, `DEEPGRAM`, `ELEVENLABS`, `SARVAM`, `GOOGLE`, `HUME`, or `GROK`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name for the TTS provider.
+    </ParamField>
+    <ParamField body="language" type="string" required>
+      Language code.
+    </ParamField>
+    <ParamField body="voice_id" type="string" required>
+      Voice ID for the TTS provider.
+    </ParamField>
+    <ParamField body="params" type="object">
+      Only `speed` is allowed.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="sts" type="object">
+  Updated Speech-to-Speech configuration.
+
+  <Expandable title="properties">
+    <ParamField body="speech_to_speech_enabled" type="boolean">
+      Whether speech-to-speech is enabled.
+    </ParamField>
+    <ParamField body="provider_name" type="string" required>
+      STS provider: `GOOGLE`, `OPENAI`, or `GROK`.
+    </ParamField>
+    <ParamField body="model_name" type="string" required>
+      Model name for the STS provider.
+    </ParamField>
+    <ParamField body="voice_id" type="string" required>
+      Voice ID for the STS provider.
+    </ParamField>
+    <ParamField body="language" type="string" required>
+      Language code.
+    </ParamField>
+    <ParamField body="params" type="object">
+      Additional provider-specific STS parameters.
+    </ParamField>
+  </Expandable>
 </ParamField>
 
 <ParamField body="prompt_content" type="string">
@@ -62,6 +149,27 @@ All fields are optional. Only provided fields will be updated.
 
 <ParamField body="prompt" type="object">
   Reference an existing prompt by name and optionally version.
+</ParamField>
+
+<ParamField body="call_analysis_prompt" type="object">
+  Updated call analysis prompt reference or inline analysis prompt content.
+
+  <Expandable title="properties">
+    <ParamField body="prompt_name" type="string" required>
+      Name of an existing analysis prompt.
+    </ParamField>
+    <ParamField body="prompt_version" type="integer">
+      Specific analysis prompt version to use (omit for latest).
+    </ParamField>
+    <ParamField body="custom_prompt" type="string">
+      Inline analysis prompt content. If provided, a new analysis prompt version is created before linking it to the agent.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="call_analysis_schema" type="object">
+  Updated schema describing the structured JSON output expected from call
+  analysis.
 </ParamField>
 
 <ParamField body="first_message_prompt" type="string">
