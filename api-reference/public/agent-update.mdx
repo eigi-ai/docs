@@ -11,6 +11,8 @@ Update an existing agent's configuration. Only the fields you provide will be up
 If `prompt_content` is provided, a new version of the agent's internal prompt is automatically created.
 If `call_analysis_prompt.custom_prompt` is provided, a new version of the analysis prompt is automatically created before the agent is updated.
 
+Only send `call_analysis_enabled`, `call_analysis_prompt`, and `call_analysis_schema` when you explicitly want to configure call analysis. If `call_analysis_enabled` is `true`, provide `call_analysis_prompt` as well.
+
 ## Authentication
 
 <ParamField header="X-API-Key" type="string" required>
@@ -165,6 +167,11 @@ All fields are optional. Only provided fields will be updated.
       Inline analysis prompt content. If provided, a new analysis prompt version is created before linking it to the agent.
     </ParamField>
   </Expandable>
+</ParamField>
+
+<ParamField body="call_analysis_enabled" type="boolean">
+  Toggle call analysis on or off for the agent. Set this to `true` only when you
+  want call analysis to run. If `true`, provide `call_analysis_prompt` as well.
 </ParamField>
 
 <ParamField body="call_analysis_schema" type="object">

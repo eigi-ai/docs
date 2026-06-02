@@ -19,9 +19,12 @@ You can configure the agent's prompt in two ways:
 
 You can optionally configure a dedicated call analysis prompt and schema:
 
-1. **Analysis prompt reference** (`call_analysis_prompt`) — Reference an existing analysis prompt by name and optionally version.
-2. **Inline analysis prompt** (`call_analysis_prompt.custom_prompt`) — Provide prompt content directly to create a new analysis prompt version before linking it to the agent.
-3. **Structured output schema** (`call_analysis_schema`) — Define the expected JSON structure for call analysis output.
+1. **Enable analysis** (`call_analysis_enabled`) — Set this to `true` only when you want call analysis to run.
+2. **Analysis prompt reference** (`call_analysis_prompt`) — Reference an existing analysis prompt by name and optionally version.
+3. **Inline analysis prompt** (`call_analysis_prompt.custom_prompt`) — Provide prompt content directly to create a new analysis prompt version before linking it to the agent.
+4. **Structured output schema** (`call_analysis_schema`) — Define the expected JSON structure for call analysis output.
+
+If you do not want call analysis, omit `call_analysis_enabled`, `call_analysis_prompt`, and `call_analysis_schema`. If `call_analysis_enabled` is `true`, provide `call_analysis_prompt` as well.
 
 ### Provider Restrictions (Public API)
 
@@ -177,6 +180,11 @@ You can optionally configure a dedicated call analysis prompt and schema:
       Inline analysis prompt content. If provided, a new analysis prompt version is created before linking it to the agent.
     </ParamField>
   </Expandable>
+</ParamField>
+
+<ParamField body="call_analysis_enabled" type="boolean">
+  Toggle call analysis on or off for the agent. Set this to `true` only when you
+  want call analysis to run. If `true`, provide `call_analysis_prompt` as well.
 </ParamField>
 
 <ParamField body="call_analysis_schema" type="object">

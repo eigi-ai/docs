@@ -805,6 +805,10 @@
             },
             "required": ["prompt_name"]
           },
+          "call_analysis_enabled": {
+            "type": "boolean",
+            "description": "Toggle call analysis on or off for the agent. Set to true only when you want call analysis to run; when true, provide call_analysis_prompt as well."
+          },
           "call_analysis_schema": {
             "type": "object",
             "description": "Optional schema for structured call analysis output, keyed by field name.",
@@ -985,6 +989,10 @@
             },
             "required": ["prompt_name"]
           },
+          "call_analysis_enabled": {
+            "type": "boolean",
+            "description": "Toggle call analysis on or off for the agent. Set to true only when you want call analysis to run; when true, provide call_analysis_prompt as well."
+          },
           "call_analysis_schema": {
             "type": "object",
             "description": "Optional schema for structured call analysis output, keyed by field name.",
@@ -1122,6 +1130,10 @@
           "sts": {
             "type": "object",
             "description": "STS configuration (if set)"
+          },
+          "call_analysis_enabled": {
+            "type": "boolean",
+            "description": "Whether call analysis is enabled for the agent"
           },
           "prompt": {
             "type": "object",
@@ -2558,6 +2570,7 @@
                       }
                     },
                     "prompt_content": "You are a helpful customer support agent.",
+                    "call_analysis_enabled": true,
                     "call_analysis_prompt": {
                       "prompt_name": "support_call_analysis",
                       "custom_prompt": "Analyze the call outcome, customer sentiment, and follow-up actions."
@@ -2862,6 +2875,7 @@
                   "value": {
                     "agent_name": "Updated Support Agent",
                     "prompt_content": "You are an updated customer support agent.",
+                    "call_analysis_enabled": true,
                     "call_analysis_prompt": {
                       "prompt_name": "support_call_analysis",
                       "custom_prompt": "Return the summary, customer intent, and next best action."
