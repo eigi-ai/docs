@@ -1,0 +1,158 @@
+---
+title: "Claude Code Plugin"
+description: "Install the official eigi.ai Claude Code plugin with bundled MCP access and conversation prompt skills"
+icon: "puzzle-piece"
+---
+
+## Overview
+
+The eigi.ai Claude Code plugin gives you the fastest way to use eigi.ai inside Claude Code.
+
+It bundles two pieces together:
+
+- The hosted eigi.ai MCP server at `https://mcp.eigi.ai/mcp`
+- The `eigi:conversation-rules` skill for prompt-writing guardrails
+
+Use the plugin when you want Claude Code to access eigi.ai tools and prompt rules from a single installation flow.
+
+<Card
+  title="MCP Server reference"
+  icon="plug"
+  href="/mcp/introduction"
+  horizontal
+>
+  See the full MCP server guide, supported clients, and available tool
+  categories.
+</Card>
+
+## What the plugin includes
+
+| Component                       | What it does                                                                  |
+| ------------------------------- | ----------------------------------------------------------------------------- |
+| `eigi` plugin manifest          | Registers the plugin in Claude Code                                           |
+| Hosted MCP server               | Connects Claude Code to eigi.ai agent, prompt, chat, call, and provider tools |
+| `eigi:conversation-rules` skill | Adds reusable prompt-writing rules for speech-safe, multilingual voice agents |
+
+Behind the scenes, the plugin bundles the Claude Code plugin manifest, the hosted MCP server connection, and the `eigi:conversation-rules` skill into one install flow.
+
+## Prerequisites
+
+- Claude Code installed locally
+- An eigi.ai account
+- Browser-based authentication for the hosted MCP server when Claude Code prompts for it
+
+## Install from the GitHub repo
+
+Use this path to install the public plugin directly from the GitHub repository.
+
+```text
+https://github.com/eigi-ai/eigi-plugins
+```
+
+In Claude Code or Claude Desktop:
+
+1. Open **Plugins**.
+2. Choose the option to add a plugin from a GitHub repository.
+3. Paste `https://github.com/eigi-ai/eigi-plugins`.
+4. Finish the install flow.
+
+After installation:
+
+1. Start or restart Claude Code.
+2. Run `/mcp` to confirm the `eigi` server is available.
+3. Use `/eigi:conversation-rules` when writing or revising prompts.
+
+## Load the plugin locally for development
+
+Use this path when you want to test changes from the plugin repository directly.
+
+```bash
+git clone https://github.com/eigi-ai/eigi-plugins.git
+cd eigi-plugins
+claude plugin validate .
+claude --plugin-dir .
+```
+
+Inside Claude Code, reload components if needed:
+
+```text
+/reload-plugins
+```
+
+Then verify both parts of the plugin:
+
+```text
+/mcp
+/eigi:conversation-rules
+```
+
+## Using the bundled skill
+
+The `eigi:conversation-rules` skill is designed for prompt-writing and prompt review work.
+
+Use it when you want Claude Code to enforce rules such as:
+
+- Speech-safe plain-text output for voice and TTS channels
+- Hindi in Devanagari and English in Latin script
+- Natural Hinglish with Hindi words in Devanagari and English words preserved in Latin script
+- Preservation of exact IDs, URLs, commands, code, and user-provided literals
+
+This is especially useful when you are creating or auditing prompts for multilingual voice agents.
+
+## When to use the plugin vs MCP only
+
+Use the plugin if you are working in Claude Code and want:
+
+- The eigi.ai MCP tools
+- The bundled prompt skill
+- A single install path that keeps both together
+
+Use the standalone MCP setup if you want to connect from other MCP-compatible clients such as Cursor, VS Code, Windsurf, Claude Desktop, or ChatGPT.
+
+## Use eigi.ai in Claude Desktop and other clients
+
+Use the plugin install flow in Claude Code and Claude Desktop. For other AI tools, connect to the hosted MCP server directly.
+
+### Claude Desktop
+
+To add the plugin in Claude Desktop:
+
+1. Open **Customize**.
+2. Go to **Plugins**.
+3. Click **Add a GitHub repo**.
+4. Paste `https://github.com/eigi-ai/eigi-plugins`.
+5. Finish the install flow so the plugin is added to Claude Desktop.
+
+After installation, open Claude and complete authentication if the MCP connection prompts for it.
+
+### Claude.ai web app
+
+For Team or Enterprise plans:
+
+1. Open **Settings**.
+2. Go to **Integrations**.
+3. Click **Add more**.
+4. Set the integration name to `eigi.ai`.
+5. Set the integration URL to `https://mcp.eigi.ai/mcp`.
+
+### Cursor, VS Code, and Windsurf
+
+These tools also connect through the same MCP server URL: `https://mcp.eigi.ai/mcp`.
+
+- Cursor: add an MCP server in Settings.
+- VS Code: run **MCP: Add Server** and use `npx mcp-remote https://mcp.eigi.ai/mcp`.
+- Windsurf: add a custom MCP server with the same remote URL.
+
+For the full per-client setup steps, see [MCP Server](/mcp/introduction).
+
+## Notes
+
+- The plugin uses Claude Code's remote HTTP MCP transport to connect to `https://mcp.eigi.ai/mcp`.
+- If the plugin later needs custom authentication headers, the repository can add `userConfig` in `.claude-plugin/plugin.json` and reference it from `.mcp.json`.
+- The current plugin scaffold does not include Claude Code agents or hooks yet.
+
+## Related resources
+
+- [MCP Server](/mcp/introduction)
+- [CLI Overview](/cli/introduction)
+- [eigi-ai/eigi-plugins repository](https://github.com/eigi-ai/eigi-plugins)

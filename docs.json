@@ -42,6 +42,10 @@
             "pages": ["mcp/introduction"]
           },
           {
+            "group": "Claude Code Plugin",
+            "pages": ["plugins/introduction"]
+          },
+          {
             "group": "Webhooks",
             "pages": ["webhooks/introduction"]
           },
