@@ -26,14 +26,21 @@ You can optionally configure a dedicated call analysis prompt and schema:
 
 If you do not want call analysis, omit `call_analysis_enabled`, `call_analysis_prompt`, and `call_analysis_schema`. If `call_analysis_enabled` is `true`, provide `call_analysis_prompt` as well.
 
+### Try It Behavior
+
+In `Try it`, `llm` is shown as a single object.
+
+- For standard providers, fill `llm.params.temperature` only.
+- For `CUSTOM_LLM`, fill `llm.params.base_url`, `llm.params.api_key`, and optionally `llm.params.API_TYPE`.
+
 ### Provider Restrictions (Public API)
 
-| Provider | Allowed params                         |
-| -------- | -------------------------------------- |
-| **STT**  | No params allowed (must be empty `{}`) |
-| **STS**  | No public API param restrictions       |
-| **LLM**  | Only `temperature` (0.0 - 2.0)         |
-| **TTS**  | Only `speed`                           |
+| Provider | Allowed params                                                                                                                              |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **STT**  | No params allowed (must be empty `{}`)                                                                                                      |
+| **STS**  | No public API param restrictions                                                                                                            |
+| **LLM**  | Standard providers: only `temperature` (0.0 - 2.0). `CUSTOM_LLM`: requires `base_url` plus `api_key`; optional `API_TYPE` and `temperature` |
+| **TTS**  | Only `speed`                                                                                                                                |
 
 ## Authentication
 
@@ -75,13 +82,13 @@ If you do not want call analysis, omit `call_analysis_enabled`, `call_analysis_p
 
   <Expandable title="properties">
     <ParamField body="provider_name" type="string" required>
-      LLM provider: `OPENAI`, `OPENAI_RESPONSES`, `ANTHROPIC`, `GOOGLE`, `GROK`, or `OPENROUTER`.
+      LLM provider: `OPENAI`, `OPENAI_RESPONSES`, `ANTHROPIC`, `GOOGLE`, `GROK`, `OPENROUTER`, or `CUSTOM_LLM`.
     </ParamField>
     <ParamField body="model_name" type="string" required>
       Model name (e.g., `gpt-4o`).
     </ParamField>
     <ParamField body="params" type="object">
-      Only `temperature` (0.0-2.0) is allowed.
+      For standard LLM providers, only `temperature` (0.0-2.0) is allowed. For `CUSTOM_LLM`, provide `base_url`, `api_key`, and optionally `API_TYPE` (`CHAT_COMPLETION` or `RESPONSES`) and `temperature`. If `API_TYPE` is omitted, it defaults to `CHAT_COMPLETION`.
     </ParamField>
   </Expandable>
 </ParamField>

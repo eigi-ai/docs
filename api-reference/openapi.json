@@ -511,26 +511,50 @@
       "LLMConfig": {
         "type": "object",
         "required": ["provider_name", "model_name"],
+        "description": "LLM configuration. Use provider_name to choose a standard provider or CUSTOM_LLM. For standard providers, only params.temperature applies. For CUSTOM_LLM, use params.base_url, params.api_key, and optional params.API_TYPE.",
         "properties": {
           "provider_name": {
             "type": "string",
-            "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "GROK"],
+            "enum": [
+              "OPENAI",
+              "OPENAI_RESPONSES",
+              "ANTHROPIC",
+              "GOOGLE",
+              "GROK",
+              "OPENROUTER",
+              "CUSTOM_LLM"
+            ],
             "description": "LLM provider name"
           },
           "model_name": {
             "type": "string",
-            "description": "Model name for the LLM provider",
+            "description": "Model name for the selected LLM provider",
             "example": "gpt-4o"
           },
           "params": {
             "type": "object",
-            "description": "Only 'temperature' (0.0-2.0) is allowed for public API",
+            "description": "For standard providers, only temperature is used. For CUSTOM_LLM, provide base_url and api_key, and optionally API_TYPE.",
             "properties": {
               "temperature": {
                 "type": "number",
                 "minimum": 0.0,
                 "maximum": 2.0,
-                "description": "Controls randomness (0.0-2.0)"
+                "description": "Standard providers only. Controls randomness (0.0-2.0)."
+              },
+              "base_url": {
+                "type": "string",
+                "description": "CUSTOM_LLM only. Base URL for the custom LLM endpoint.",
+                "example": "https://llm.example.com/v1"
+              },
+              "api_key": {
+                "type": "string",
+                "description": "CUSTOM_LLM only. API key for the custom LLM provider.",
+                "example": "sk-..."
+              },
+              "API_TYPE": {
+                "type": "string",
+                "enum": ["CHAT_COMPLETION", "RESPONSES"],
+                "description": "CUSTOM_LLM only. Optional; defaults to CHAT_COMPLETION when omitted."
               }
             },
             "example": {
@@ -2594,6 +2618,40 @@
                       }
                     }
                   }
+                },
+                "custom_llm": {
+                  "summary": "Create agent with CUSTOM_LLM",
+                  "value": {
+                    "agent_name": "Custom LLM Support Agent",
+                    "agent_type": "OUTBOUND",
+                    "agent_category": "Customer Service",
+                    "stt": {
+                      "provider_name": "DEEPGRAM",
+                      "model_name": "nova-2",
+                      "language": "en",
+                      "params": {}
+                    },
+                    "llm": {
+                      "provider_name": "CUSTOM_LLM",
+                      "model_name": "custom-model",
+                      "params": {
+                        "base_url": "https://llm.example.com/v1",
+                        "api_key": "sk-...",
+                        "API_TYPE": "RESPONSES"
+                      }
+                    },
+                    "tts": {
+                      "provider_name": "CARTESIA",
+                      "model_name": "sonic-2",
+                      "language": "en",
+                      "voice_id": "a0e99841-438c-4a64-b679-ae501e7d6091",
+                      "params": {
+                        "speed": 1.0
+                      }
+                    },
+                    "prompt_content": "You are a helpful support agent using a custom LLM backend.",
+                    "first_message_prompt": "Hello! How can I help you today?"
+                  }
                 }
               }
             }
@@ -2889,6 +2947,20 @@
                       },
                       "next_best_action": {
                         "type": "str"
+                      }
+                    }
+                  }
+                },
+                "custom_llm": {
+                  "summary": "Switch agent to CUSTOM_LLM",
+                  "value": {
+                    "llm": {
+                      "provider_name": "CUSTOM_LLM",
+                      "model_name": "custom-model",
+                      "params": {
+                        "base_url": "https://llm.example.com/v1",
+                        "api_key": "sk-...",
+                        "API_TYPE": "CHAT_COMPLETION"
                       }
                     }
                   }

@@ -57,6 +57,7 @@
               "features/call-management",
               "features/call-analysis",
               "features/phonebook",
+              "features/connect-your-own-harness",
               "features/tools-integrations",
               "features/widget-chat",
               "features/notifications",

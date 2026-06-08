@@ -1,0 +1,331 @@
+---
+title: "Connect Your Own Harness"
+description: "Use OpenClaw, Harness, or any OpenAI-compatible Responses API with eigi.ai"
+icon: "plug-circle-plus"
+---
+
+## Overview
+
+You can connect your existing AI harness to eigi.ai instead of rebuilding it
+from scratch.
+
+This works with:
+
+- OpenClaw
+- Harness
+- Any custom harness that exposes an OpenAI-compatible Responses API
+
+In simple terms, you keep your own model stack running where you want, then
+point eigi.ai to that secure HTTPS endpoint.
+
+<Tip>
+  This is the right setup if you already have your own orchestration, tools,
+  prompts, guardrails, or model routing and want to use it inside eigi.ai.
+</Tip>
+
+---
+
+## Before You Start
+
+Make sure you have these three things ready:
+
+- A working harness with an OpenAI-compatible Responses API
+- A public HTTPS URL for that harness
+- A secret API key or token that protects access to the harness
+
+If your harness is only running on your laptop or on a private server today,
+that is fine. You can still connect it by exposing it safely over HTTPS.
+
+---
+
+## How The Flow Works
+
+<Steps>
+  <Step title="Choose your harness">
+    Pick the system you want eigi.ai to call. This can be OpenClaw, Harness, or
+    your own custom harness as long as it exposes an OpenAI-compatible
+    Responses API.
+  </Step>
+  <Step title="Host it where you are comfortable">
+    Run that harness on your own laptop, another local machine, a private
+    server, AWS, or any cloud you trust. The choice depends on your security
+    and compliance requirements.
+  </Step>
+  <Step title="Expose it through HTTPS">
+    Make the harness reachable on the internet through a secure HTTPS URL.
+    Most teams do this with a public server, `ngrok`, or Cloudflare Tunnel.
+  </Step>
+  <Step title="Protect it with a secret">
+    Create an API key, bearer token, or similar secret so eigi.ai can
+    authenticate when calling your harness.
+  </Step>
+  <Step title="Add it in eigi.ai as Custom LLM">
+    In eigi.ai Agent360, while creating or editing an agent, choose
+    **Custom LLM** and enter the base URL, API key, and model name for your
+    harness.
+  </Step>
+  <Step title="Save and test">
+    Save the connection, run a test request, and confirm eigi.ai can reach your
+    harness successfully.
+  </Step>
+</Steps>
+
+---
+
+## Step 1: Choose A Harness
+
+Your harness is the service that receives the model request and returns the AI
+response.
+
+You can use:
+
+- **OpenClaw** if you already use OpenClaw workflows
+- **Harness** if your team already has that runtime in place
+- **A custom harness** if your application already exposes an OpenAI-compatible
+  Responses API
+
+If you are unsure whether your setup is compatible, check whether your service
+already accepts OpenAI-style requests and returns OpenAI-style responses.
+
+---
+
+## Step 2: Decide Where To Host It
+
+You can host your harness in any location that matches your security needs.
+
+| Hosting option | Best for | Notes |
+| -------------- | -------- | ----- |
+| **Your laptop or desktop** | Quick testing | Fastest way to validate the setup, but your machine must stay on |
+| **Another machine on your local network** | Internal testing | Useful when a dedicated machine is available in your office or lab |
+| **AWS, GCP, Azure, or any cloud VM** | Production use | Best for stable uptime and easier team access |
+| **Private company infrastructure** | Security-sensitive deployments | Good when data must remain inside your own environment |
+
+<Note>
+  If your team has strict security rules, start with your approved internal or
+  cloud environment instead of a laptop-based setup.
+</Note>
+
+---
+
+## Step 3: Make Your Harness Reachable Over HTTPS
+
+eigi.ai needs a secure HTTPS URL to call your harness.
+
+If your harness is already deployed on a public server with HTTPS, you can use
+that URL directly.
+
+If it is only running locally or on a private network, you need a secure tunnel.
+
+### What is ngrok?
+
+`ngrok` is a tunneling tool that gives your local service a temporary public URL.
+It is useful when:
+
+- You want to test quickly from your local machine
+- You do not want to deploy to the cloud yet
+- You need a short-lived public HTTPS endpoint for development
+
+### When should you use Cloudflare Tunnel?
+
+Cloudflare Tunnel is a better fit when:
+
+- You want a more stable public hostname
+- You want to use your own domain
+- You need a production-friendly tunnel option
+- Your team already uses Cloudflare for networking or security
+
+### Choose the right option
+
+| Option | Use it when | Avoid it when |
+| ------ | ----------- | ------------- |
+| **ngrok** | You want the fastest local proof of concept | You need a long-term production endpoint |
+| **Cloudflare Tunnel** | You want a more durable and controlled setup | You only need a quick one-time test |
+| **Direct cloud HTTPS deployment** | You already run services in the cloud | You are still validating locally |
+
+---
+
+## Step 4: Install ngrok Or Cloudflare Tunnel
+
+If you are handing this to another agent, give it your **OS**, **local port**,
+and tunnel choice, then ask it to either run `ngrok http <PORT>` after ngrok
+install and auth setup, or run `cloudflared tunnel --url http://localhost:<PORT>` after Cloudflare install, and return the final public HTTPS URL.
+
+### Option A: Install ngrok
+
+Install `ngrok` from the official site:
+
+1. Go to [ngrok.com/download](https://ngrok.com/download)
+2. Download the version for your operating system
+3. Install it using the instructions shown by ngrok
+4. Create an ngrok account if required
+5. Add your ngrok auth token following ngrok's setup instructions
+
+Once your harness is running locally on a port such as `3000` or `8000`, start
+the HTTPS tunnel:
+
+```bash
+ngrok http 8000
+```
+
+ngrok will give you a public HTTPS URL such as:
+
+```text
+https://example-name.ngrok-free.app
+```
+
+Use that HTTPS URL as your harness base URL in eigi.ai.
+
+### Option B: Install Cloudflare Tunnel
+
+Install Cloudflare Tunnel from the official Cloudflare documentation:
+
+1. Go to [developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)
+2. Install `cloudflared` for your operating system
+3. Sign in to Cloudflare if your setup requires account authorization
+4. Create a tunnel and map it to your local harness port
+
+For a quick local tunnel, Cloudflare commonly uses a command like this:
+
+```bash
+cloudflared tunnel --url http://localhost:8000
+```
+
+Cloudflare will provide a public HTTPS hostname you can use as your harness
+base URL.
+
+<Warning>
+  Use only one public URL for the final configuration. If your ngrok or
+  Cloudflare URL changes, update the saved base URL in eigi.ai.
+</Warning>
+
+---
+
+## Step 5: Create A Secret For Authentication
+
+Do not expose your harness without protection.
+
+Create a secret value that eigi.ai will send with each request. Depending on
+your harness, this can be:
+
+- An API key in a header
+- A bearer token
+- A gateway secret managed by your own reverse proxy
+
+Recommended approach:
+
+1. Generate a strong random secret
+2. Save it in your harness configuration or proxy
+3. Configure your harness to reject requests that do not include that secret
+4. Copy the same secret into eigi.ai when you configure the **Custom LLM**
+  settings for your agent
+
+<Tip>
+  Never put this secret in frontend code, screenshots, shared docs, or public
+  repositories.
+</Tip>
+
+---
+
+## Step 6: Add The Harness In eigi.ai
+
+Once your harness has a public HTTPS URL and an API secret, open eigi.ai and
+add it as a **Custom LLM** while creating or editing your agent in Agent360.
+
+In Agent360:
+
+1. Open **Create Agent** or edit an existing agent
+2. Go to the LLM configuration section
+3. Choose **Custom LLM** as the provider
+4. Enter your harness details
+5. Save the agent
+
+Enter these values:
+
+- **Base URL**: the public HTTPS address for your harness
+- **API Key**: the secret token eigi.ai should send for authentication
+- **Model Name**: the model identifier your harness expects
+
+Examples:
+
+| Field | Example |
+| ----- | ------- |
+| **Base URL** | `https://your-harness.example.com` |
+| **API Key** | `sk_live_example_secret` |
+| **Model Name** | `gpt-4.1`, `gpt-4o`, or your custom routed model name |
+
+You can do this from:
+
+- The eigi.ai dashboard
+- Our MCP-based workflow
+- Our CLI-based workflow
+
+The important part is the same in every case: save the **base URL**, **API
+key**, and **model name** for your external harness in the agent's
+**Custom LLM** configuration.
+
+---
+
+## Step 7: Test The Connection
+
+After saving the **Custom LLM** configuration:
+
+1. Send a simple test request
+2. Confirm the harness responds successfully
+3. Check that the returned response format is valid
+4. Verify that authentication is working correctly
+
+If the test works, your harness is now connected to eigi.ai.
+
+---
+
+## Quick Checklist
+
+- I chose a harness that supports an OpenAI-compatible Responses API
+- I hosted it on a machine I trust
+- I exposed it through a public HTTPS URL
+- I protected it with an API key or token
+- I added the base URL, API key, and model name in eigi.ai
+- I ran a successful test
+
+---
+
+## Common Problems
+
+### eigi.ai cannot reach the harness
+
+Check that:
+
+- The URL is public and starts with `https://`
+- Your tunnel or server is still running
+- Your firewall allows inbound traffic
+- The saved base URL is correct
+
+### Authentication fails
+
+Check that:
+
+- The secret in eigi.ai matches the secret expected by your harness
+- Your harness is reading the correct header
+- The secret has not expired or been rotated
+
+### The harness responds, but the model call fails
+
+Check that:
+
+- The model name in eigi.ai matches the model name your harness expects
+- Your harness supports the required OpenAI-compatible Responses API behavior
+- Your harness is healthy and can reach its own underlying model provider
+
+---
+
+## Recommended Path For Most Teams
+
+If you are not sure where to begin, use this order:
+
+1. Start with your harness on a local machine
+2. Expose it temporarily with `ngrok`
+3. Validate the connection from eigi.ai
+4. Move it to Cloudflare Tunnel or a cloud HTTPS deployment for long-term use
+
+This keeps the first setup simple while still giving you a clean path to a more
+stable production deployment.
