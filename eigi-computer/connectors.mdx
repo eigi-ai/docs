@@ -1,0 +1,68 @@
+---
+title: "Connectors & Tools"
+description: "Plug your apps and services into Eigi so it can act on your behalf"
+icon: "plug"
+---
+
+## Overview
+
+Connectors give Eigi hands in your other apps. Connect Gmail, Notion, GitHub, your calendar, your CRM — and from then on, "check my calendar and reschedule tomorrow's call" is something Eigi can actually do, not just talk about.
+
+---
+
+## Adding Connectors
+
+<Steps>
+  <Step title="Browse the catalog">
+    The **Connectors** section has a catalog of ready-to-use integrations.
+    Search for the app you want.
+  </Step>
+  <Step title="Connect and authorize">
+    Most connectors use a standard sign-in: you approve access in the app's own
+    login screen (for example, Google's consent page). Eigi never sees your
+    password.
+  </Step>
+  <Step title="Use it in plain language">
+    Once connected, just ask. Eigi discovers the connector's abilities and uses
+    them when a task calls for it.
+  </Step>
+</Steps>
+
+<Tip>
+  You can also add a custom connector by URL if you use a service that isn't in
+  the catalog — Eigi supports the open MCP standard, so any compatible service
+  works.
+</Tip>
+
+---
+
+## HTTP Tools
+
+For simple cases, you don't need a full connector. **HTTP tools** let you teach Eigi a single API call — give it a URL, describe what it does, and Eigi can call it whenever the task needs it. Secrets like API keys are stored securely and referenced, never pasted into prompts.
+
+---
+
+## Managing Connections
+
+<CardGroup cols={2}>
+  <Card title="Status at a glance" icon="signal">
+    Each connector card shows whether it's connected and healthy.
+  </Card>
+  <Card title="Configure per connector" icon="sliders">
+    Open a connector to see what it offers, adjust its settings, or reconnect
+    it.
+  </Card>
+  <Card title="Disconnect anytime" icon="link-slash">
+    Removing a connector immediately takes those abilities away from Eigi.
+  </Card>
+  <Card title="Approvals still apply" icon="shield-check">
+    Sensitive actions through connectors follow the same approval rules as
+    everything else — you decide how much Eigi does unattended.
+  </Card>
+</CardGroup>
+
+---
+
+## Looking for Plugins?
+
+Connectors give Eigi **access** to your apps. If you want to give Eigi new **know-how** — packaged skills and workflows — that's [Plugins](/eigi-computer/plugins). They work best together.

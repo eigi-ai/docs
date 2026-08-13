@@ -1,0 +1,76 @@
+---
+title: "Automation"
+description: "Reminders, scheduled tasks, and webhooks that run on their own"
+icon: "clock"
+---
+
+## Overview
+
+Automation lets your Eigi work without you asking each time. Set up a task once — in plain language or from the dashboard — and Eigi runs it on schedule, delivers the result where you want it, and keeps going day after day.
+
+---
+
+## Reminders & Scheduled Tasks
+
+<CardGroup cols={2}>
+  <Card title="One-off reminders" icon="bell">
+    "Remind me to call the bank tomorrow at 4" — Eigi pings you at the right
+    time, on the channel you prefer.
+  </Card>
+  <Card title="Recurring tasks" icon="repeat">
+    "Every weekday at 9, summarize my unread email" — Eigi runs the full task
+    each time and sends you the result.
+  </Card>
+</CardGroup>
+
+### Two ways to create them
+
+<AccordionGroup>
+  <Accordion title="Just ask in chat" icon="message">
+    Tell Eigi what you want and when, in plain language. It sets up the
+    schedule itself and confirms what it created. Reminders keep the context of
+    the conversation they came from, so "remind me about this" works.
+  </Accordion>
+  <Accordion title="From the Automation page" icon="table-list">
+    The **Automation** section lists every scheduled job as a card — what it
+    does, when it runs next, and its recent runs. Create, edit, pause, or
+    delete jobs from here.
+  </Accordion>
+</AccordionGroup>
+
+### What a scheduled task can do
+
+A scheduled task isn't just a notification — it's a full Eigi run. It can browse the web, check your connected apps, prepare a report, and then message you the outcome on the dashboard, WhatsApp, Slack, or wherever you've asked for it.
+
+<Tip>
+  Good automations to start with: a morning briefing, a daily inbox summary, a
+  weekly report from a spreadsheet, or a price/status check that alerts you
+  only when something changes.
+</Tip>
+
+---
+
+## Webhooks
+
+Webhooks let outside systems trigger your Eigi. Each webhook route gives you a unique URL — when something calls it, Eigi wakes up and handles the event with instructions you've defined.
+
+<Steps>
+  <Step title="Create a route">
+    In **Automation → Webhooks**, add a route and describe what Eigi should do
+    when it fires.
+  </Step>
+  <Step title="Copy the URL">
+    Paste it into the external service (a form tool, a CRM, a monitoring
+    system) that should trigger it.
+  </Step>
+  <Step title="Let it run">
+    Each incoming call starts an Eigi run with the event's data. Eigi acts on
+    it and can notify you with the result.
+  </Step>
+</Steps>
+
+<Note>
+  Automations run even when you're offline — that's the point of Eigi having
+  its own always-on computer. You'll find the results waiting in your sessions
+  or delivered to your channels.
+</Note>

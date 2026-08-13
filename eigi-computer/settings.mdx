@@ -1,0 +1,90 @@
+---
+title: "Settings & Personalization"
+description: "Shape how your Eigi behaves, what it's allowed to do, and what it knows how to do"
+icon: "gear"
+---
+
+## Overview
+
+Settings is where you shape your Eigi's personality, boundaries, and abilities. Everything is optional — Eigi works well out of the box — but a few minutes here makes it distinctly *yours*.
+
+---
+
+## Personalization
+
+Tell Eigi who you are and how you like to work: your name, your role, your tone preferences, standing instructions ("always answer in bullet points", "my timezone is IST"). Eigi applies this to every conversation, on every channel.
+
+<Tip>
+  You can also just tell Eigi these things in chat — personalization and memory
+  work together. The Personalization page is simply the place to see and edit
+  it all directly.
+</Tip>
+
+---
+
+## The Settings Pages
+
+<AccordionGroup>
+  <Accordion title="General" icon="gear">
+    Your Eigi's basics — name, default model, and core behavior options.
+  </Accordion>
+  <Accordion title="Context" icon="file-lines">
+    Standing instructions Eigi carries into every session — the "how I want you
+    to work" document you can edit directly.
+  </Accordion>
+  <Accordion title="Permissions" icon="shield-check">
+    Decide how independent Eigi is. Choose what it can do freely, what needs
+    your approval each time, and what's off-limits. Approval requests show up
+    right in the chat.
+  </Accordion>
+  <Accordion title="Skills" icon="graduation-cap">
+    Skills are reusable playbooks — step-by-step know-how for specific tasks.
+    View the skills Eigi has, add new ones, or ask Eigi to write a skill from
+    something you just did together so it's repeatable.
+  </Accordion>
+  <Accordion title="Sub-agents" icon="users-gear">
+    Specialist helpers Eigi can delegate to — for example a researcher or a
+    reviewer with its own focus. Define them here; Eigi uses them when a task
+    fits.
+  </Accordion>
+  <Accordion title="Tools" icon="wrench">
+    See and manage the individual tools available to Eigi, including ones added
+    by connectors and plugins.
+  </Accordion>
+  <Accordion title="Environment" icon="terminal">
+    Values and secrets Eigi's tools may need (like API keys), stored once and
+    referenced securely.
+  </Accordion>
+  <Accordion title="Memory" icon="brain">
+    Controls for how memory behaves — what gets remembered and how it's used.
+  </Accordion>
+  <Accordion title="Developer" icon="code">
+    Advanced options, including API access to your Eigi so your own software
+    can talk to it programmatically.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Permissions: How Independent Should Eigi Be?
+
+This is the setting that matters most. Eigi can range from "ask me before anything" to "handle it and tell me after."
+
+<CardGroup cols={2}>
+  <Card title="Careful" icon="hand">
+    Eigi asks before actions that change things — sending, deleting, buying,
+    posting. Good while you're building trust.
+  </Card>
+  <Card title="Independent" icon="rocket">
+    Eigi acts freely within the boundaries you've set and only checks in for
+    genuinely sensitive steps. Good once your rules are dialed in.
+  </Card>
+</CardGroup>
+
+Either way, sensitive input (passwords, one-time codes) always goes through secure prompts — never plain chat text — and you can review everything Eigi did in the session history.
+
+---
+
+## People
+
+The **People** section lists everyone Eigi knows from your conversations across channels. When the same person appears on WhatsApp and Slack, you can link those identities so Eigi treats them as one person — with one shared history.

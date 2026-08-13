@@ -76,6 +76,41 @@
         ]
       },
       {
+        "tab": "Eigi Computer",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "eigi-computer/introduction",
+              "eigi-computer/getting-started"
+            ]
+          },
+          {
+            "group": "Everyday Use",
+            "pages": [
+              "eigi-computer/chat",
+              "eigi-computer/channels",
+              "eigi-computer/automation"
+            ]
+          },
+          {
+            "group": "Memory",
+            "pages": ["eigi-computer/memory"]
+          },
+          {
+            "group": "Extend",
+            "pages": [
+              "eigi-computer/connectors",
+              "eigi-computer/plugins"
+            ]
+          },
+          {
+            "group": "Control",
+            "pages": ["eigi-computer/settings"]
+          }
+        ]
+      },
+      {
         "tab": "API Reference",
         "groups": [
           {
