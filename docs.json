@@ -3,11 +3,11 @@
   "theme": "mint",
   "name": "eigi.ai Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#0A0A0A",
+    "light": "#FEFFF8",
+    "dark": "#000000"
   },
-  "favicon": "/favicon.ico",
+  "favicon": "/favicon.svg",
   "api": {
     "baseUrl": "https://api.eigi.ai",
     "auth": {
@@ -244,8 +244,8 @@
     }
   },
   "logo": {
-    "light": "/logo/eigi-light.png",
-    "dark": "/logo/eigi-dark.png"
+    "light": "/logo/eigi-light.svg",
+    "dark": "/logo/eigi-dark.svg"
   },
   "navbar": {
     "links": [
