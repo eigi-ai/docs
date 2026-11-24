@@ -8,7 +8,6 @@
     "dark": "#15803D"
   },
   "favicon": "/favicon.ico",
-  "openapi": ["api-reference/openapi.json"],
   "api": {
     "baseUrl": "https://api.eigi.ai",
     "auth": {
@@ -76,6 +75,30 @@
         ]
       },
       {
+        "tab": "Eigi Desktop",
+        "groups": [
+          {
+            "group": "Use Desktop",
+            "pages": [
+              "eigi-desktop/getting-started",
+              "eigi-desktop/workspace",
+              "eigi-desktop/projects",
+              "eigi-desktop/apps",
+              "eigi-desktop/buddies",
+              "eigi-desktop/messaging"
+            ]
+          },
+          {
+            "group": "Eigi Agent",
+            "pages": [
+              "eigi-agent/terminal",
+              "eigi-agent/developer-api",
+              "eigi-agent/registry"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Eigi Computer",
         "groups": [
           {
@@ -107,6 +130,19 @@
           {
             "group": "Control",
             "pages": ["eigi-computer/settings"]
+          }
+        ]
+      },
+      {
+        "tab": "Eigi Gadgets",
+        "groups": [
+          {
+            "group": "Boards",
+            "pages": [
+              "eigi-gadgets/getting-started",
+              "eigi-gadgets/using-your-board",
+              "eigi-gadgets/device-api"
+            ]
           }
         ]
       },
@@ -154,6 +190,31 @@
               "api-reference/public/agent-dynamic-variables",
               "api-reference/public/agent-update",
               "api-reference/public/agent-delete"
+            ]
+          },
+          {
+            "group": "Voice Sessions",
+            "pages": [
+              "api-reference/public/daily-session",
+              "api-reference/public/websocket-session"
+            ]
+          },
+          {
+            "group": "Cost Analytics",
+            "pages": [
+              "api-reference/public/cost-breakdown",
+              "api-reference/public/conversation-cost-breakdown"
+            ]
+          },
+          {
+            "group": "Personal Agent",
+            "pages": [
+              "api-reference/public/personal-models",
+              "api-reference/public/personal-chat",
+              "api-reference/public/personal-responses-create",
+              "api-reference/public/personal-responses-get",
+              "api-reference/public/personal-responses-delete",
+              "api-reference/public/agent-webhook"
             ]
           },
           {

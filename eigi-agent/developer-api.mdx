@@ -1,0 +1,62 @@
+---
+title: "Call your Eigi Agent from an app"
+description: "Connect an OpenAI-compatible client to Eigi Desktop or to your hosted Eigi Computer."
+---
+
+Use the Developer API when you want an application to talk to the personal agent that runs on your computer. To call a voice agent by its Studio agent ID, use the [platform API](/api-reference/introduction).
+
+## Choose where the request runs
+
+| | On your desktop | On Eigi Computer |
+| --- | --- | --- |
+| Turn it on | In Desktop, open **Settings → Developer API**, enable it, then select **Create key**. | Start your cloud computer. In Studio, open **Settings → Developer API** on that computer and enable the API. |
+| Base URL | Copy the address shown in Desktop. It includes the local port and `/v1`. Only apps on this machine can reach it. | Copy **Your endpoint** in Studio. The production base URL is `https://api.eigi.ai/v1/eigi-agent/openai`. |
+| Credential | Copy the generated `eigi-sk-…` key when it appears. Replacing it requires updating your clients. | Use a platform API key from the owning account. [Manage API keys in Studio](https://studio.eigi.ai/api-keys). |
+| Availability | The local engine must be running. Recheck the displayed address after a restart if the usual port was busy. | The hosted computer must be running and reachable. |
+
+Set `EIGI_AGENT_BASE_URL` to the whole base URL from the table and `EIGI_AGENT_KEY` to the matching key in your environment. Both surfaces accept it in the Bearer header. First check the connection without starting a chat.
+
+```bash
+curl --fail-with-body "$EIGI_AGENT_BASE_URL/models" \
+  -H "Authorization: Bearer $EIGI_AGENT_KEY"
+```
+
+Look for `eigi-agent` in `data[].id`. Then send a first turn.
+
+```bash
+curl --fail-with-body "$EIGI_AGENT_BASE_URL/responses" \
+  -H "Authorization: Bearer $EIGI_AGENT_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"eigi-agent","input":"Suggest three names for a project about local birds."}'
+```
+
+Read `output_text` and keep the response `id`. To continue, send the next input and that ID as `previous_response_id`. Stored response IDs are held in the running engine’s memory. Restarting it or evicting an older response can make an ID unavailable.
+
+## Use an existing OpenAI client
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    base_url=os.environ["EIGI_AGENT_BASE_URL"],
+    api_key=os.environ["EIGI_AGENT_KEY"],
+)
+reply = client.chat.completions.create(
+    model="eigi-agent",
+    messages=[{"role": "user", "content": "Give me a one-line project description."}],
+)
+print(reply.choices[0].message.content)
+```
+
+Chat Completions normally expects the client to send its message history. For a continuing chat, send a stable `X-Eigi-Session-Id` per conversation and supply only the new turn. Use separate IDs for different users and conversations. Both generation endpoints support `stream: true` for server-sent events. The agent processes text and uses its own configured tools and model settings.
+
+| Operation relative to your base URL | Result |
+| --- | --- |
+| `GET /models` | Model IDs this agent advertises |
+| `POST /chat/completions` | Assistant reply in `choices[0].message.content`, or streamed chunks |
+| `POST /responses` | Response ID, output, and usage, or a stream ending in `response.completed` |
+| `GET /responses/{response_id}` | A stored response |
+| `DELETE /responses/{response_id}` | Acknowledgment that the stored response was removed |
+
+If the request fails, first check that your URL and credential come from the same column above. A connection refusal on Desktop usually means the engine is stopped or the address has changed. For a hosted request, confirm the computer is running, the API is enabled, and the API key belongs to its owner. A missing response ID can be recovered by starting a new request with the context your app saved.

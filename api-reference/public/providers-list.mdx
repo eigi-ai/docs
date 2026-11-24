@@ -1,43 +1,16 @@
 ---
 title: "List Providers"
-openapi: "GET /v1/public/providers"
+openapi: "/api-reference/openapi.json GET /v1/public/providers"
 description: "Get all available STT, LLM, and TTS providers with their supported models"
 ---
 
-## Overview
+Use the returned catalog when choosing `provider_name` and `model_name` for a voice agent. The response groups models under `llm`, `stt`, and `tts`. Each provider maps to **an array of model objects**. Use the object’s `value` for the API and `label` for display. The LLM list is filtered to models selectable for voice.
 
-Retrieve a list of all available providers and their supported models. Use this endpoint to understand which provider/model combinations you can use when creating or updating agents.
+```bash
+curl 'https://api.eigi.ai/v1/public/providers' \
+  -H "X-API-Key: $EIGI_API_KEY"
+```
 
-### Provider Types
+For example, to show the LLM options for OpenAI in a picker, iterate over `llm.OPENAI` and display each entry’s `label`. `total_count` contains the provider counts for each service. `timestamp` records when the response was generated.
 
-| Type | Description | Providers |
-|------|-------------|-----------|
-| **STT** | Speech-to-Text | DEEPGRAM, WHISPER |
-| **LLM** | Language Model | OPENAI, ANTHROPIC, GOOGLE, GROK |
-| **TTS** | Text-to-Speech | CARTESIA, ELEVENLABS, SARVAM, GOOGLE, HUME |
-
-## Authentication
-
-<ParamField header="X-API-Key" type="string" required>
-  Your eigi.ai API key. Must be prefixed with `vk_`.
-</ParamField>
-
-## Response
-
-<ResponseField name="llm" type="object">
-  Dictionary of LLM providers mapped to their available models.
-
-  Example: `{"OPENAI": ["gpt-4o", "gpt-4o-mini"], "ANTHROPIC": ["claude-sonnet-4-20250514"]}`
-</ResponseField>
-
-<ResponseField name="tts" type="object">
-  Dictionary of TTS providers mapped to their available models.
-</ResponseField>
-
-<ResponseField name="stt" type="object">
-  Dictionary of STT providers mapped to their available models.
-</ResponseField>
-
-<ResponseField name="timestamp" type="string">
-  ISO 8601 response timestamp.
-</ResponseField>
+Once you have chosen a TTS provider, [list its voices](/api-reference/public/voices-list) to find a voice ID.

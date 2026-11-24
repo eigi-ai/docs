@@ -1,80 +1,25 @@
 ---
-title: "Channels"
-description: "Talk to your Eigi on WhatsApp, Slack, Instagram, and Telegram"
+title: "Connect a channel to Eigi Computer"
+description: "Connect a messaging app in Studio, choose who can reach it, and verify the first reply."
 icon: "comments"
 ---
 
-## Overview
+With a channel connected to the cloud computer, you can message Eigi while the computer is running. For a bot that runs on your laptop, use the [Desktop channel guide](/eigi-desktop/messaging).
 
-Channels connect your Eigi to the messaging apps you already use. Once a channel is linked, you can message Eigi there like you'd message a person — and it's the same Eigi, with the same memory and tools, as in the dashboard.
+1. Open **Settings → Channels** on your running Eigi Computer. Choose the service and follow its setup steps.
+2. Complete the account or bot verification. Check the account name, where the bot runs, and the rules for who can message it.
+3. Send a simple question from the connected app. Open **Show chats** in Studio to find the conversation and confirm who answered.
 
-<CardGroup cols={2}>
-  <Card title="WhatsApp" icon="whatsapp">
-    Link your WhatsApp and chat with Eigi in your DMs — voice notes included.
-  </Card>
-  <Card title="Slack" icon="slack">
-    Add Eigi to your workspace and talk to it in channels or DMs.
-  </Card>
-  <Card title="Instagram" icon="instagram">
-    Connect your Instagram account so Eigi can chat over Instagram DMs.
-  </Card>
-  <Card title="Telegram" icon="telegram">
-    Pair a Telegram bot and reach Eigi from any Telegram client.
-  </Card>
-</CardGroup>
+| Channel | First test |
+| --- | --- |
+| WhatsApp | Scan the link code with your phone and send a message in the chat allowed by your WhatsApp settings. |
+| Telegram | Connect a bot and verify its owner, then send a DM to the bot. |
+| Slack | Connect the workspace app, then DM it or mention it in a channel it has joined. |
+| Discord | Add the bot to the intended server, verify ownership, and send a DM or mention. |
+| Instagram | Complete Instagram authorization with the professional account requested in setup, then test an incoming DM. |
 
----
+## Choose who answers
 
-## How It Works
+Review the channel’s direct-message and group rules before adding other people. If a group requires a mention, mention the bot in your test. A routing choice sends an allowed conversation to Main or a particular Buddy. Check the Buddy is active and which computer currently runs the bot if a reply comes from the wrong place.
 
-<Steps>
-  <Step title="Open Channels">
-    Go to the **Channels** section of your Eigi dashboard.
-  </Step>
-  <Step title="Connect a platform">
-    Each card walks you through its own linking flow — for example, WhatsApp
-    uses a QR code you scan from your phone.
-  </Step>
-  <Step title="Start chatting">
-    Message Eigi on that platform. Replies, files, images, and voice work just
-    like a normal conversation.
-  </Step>
-</Steps>
-
-The channel cards always show real connection status, so you can see at a glance whether a platform is live.
-
----
-
-## What Eigi Can Do on Channels
-
-- **Answer and act** — everything Eigi can do in the dashboard (research, files, connected apps), it can do from a chat message.
-- **Acknowledge instantly** — Eigi reacts to your message (👀) the moment it starts working, then marks it done (✅) or failed (❌).
-- **Voice messages** — send a voice note and Eigi understands it; it can reply with audio too.
-- **Proactive messages** — automations and reminders can deliver their results straight to your channel of choice.
-
----
-
-## Groups
-
-Eigi can also sit in group chats — with controls so it doesn't take over:
-
-<AccordionGroup>
-  <Accordion title="Mention gate" icon="at">
-    In groups, Eigi only responds when mentioned, so it stays quiet unless
-    called on. You can change this per group.
-  </Accordion>
-  <Accordion title="Sender awareness" icon="users">
-    In shared group sessions, Eigi knows who said what, so it can address
-    people correctly.
-  </Accordion>
-  <Accordion title="Group summaries" icon="list">
-    Opt a group in, and Eigi can keep a daily digest of the conversation and
-    deliver a summary on schedule.
-  </Accordion>
-</AccordionGroup>
-
-<Note>
-  You can disconnect or unlink any channel at any time from the same Channels
-  page. Session behavior for groups (shared vs. per-person) is configurable in
-  settings.
-</Note>
+Scheduled jobs can deliver results to a connected channel. Check both the run and its delivery in [Automations](/eigi-computer/automation).

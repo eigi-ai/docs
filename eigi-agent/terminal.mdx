@@ -1,0 +1,40 @@
+---
+title: "Use Eigi Agent from a terminal"
+description: "Open a chat, run one task from a script, or keep the local agent running without a Desktop window."
+---
+
+`eigi-agent` uses the same local engine, chats, and sign-in as Eigi Desktop for the same profile. For managing hosted voice agents, prompts, and calls, use the [platform CLI](/cli/introduction).
+
+## Open your first terminal chat
+
+1. Install [Eigi Desktop](/eigi-desktop/getting-started). Under **Settings → Terminal → Command line tool**, choose **Install**. Follow any PATH instructions shown there, then open a new terminal.
+2. Check that the command found your installation.
+
+   ```bash
+   eigi-agent --version
+   eigi-agent runtime status
+   ```
+
+3. If you still need to sign in and choose a model, run `eigi-agent setup`. For sign-in from a machine without a browser, use `eigi-agent login --device` and approve its code in Studio.
+4. Run `eigi-agent` in your project folder. Ask “What files are in this folder?” Reopen the latest session with `eigi-agent resume --last`.
+
+## Run one task in a script
+
+```bash
+eigi-agent exec --permissions plan "Read this project and suggest three improvements."
+```
+
+`exec` prints the answer. Use `--json` for the event stream, `--file` to read a prompt from a file, or pipe text to standard input. Use `eigi-agent sessions list` to find a session ID and `eigi-agent review --last` to inspect the latest chat’s changes.
+
+## Run with the window closed
+
+With the Desktop app quit, run `eigi-agent runtime start` to start the engine for this profile. A detached engine started this way normally stops after ten idle minutes. Use `eigi-agent runtime start --keep` for continuing work, and `eigi-agent runtime stop` when finished. The computer still needs to stay awake for scheduled local work.
+
+## Check a problem
+
+| Symptom | Command | What to check |
+| --- | --- | --- |
+| The app and terminal show different chats | `eigi-agent home` | Confirm the terminal is using the intended profile. |
+| A task cannot use a model | `eigi-agent models list` | Pick an available default with `eigi-agent models use <provider/model>`. |
+| A chat behaves differently in this folder | `eigi-agent config show --effective` | Inspect the effective settings and where they came from. |
+| The engine fails to start or sign in | `eigi-agent doctor` | Follow the next step reported for the failing check. |

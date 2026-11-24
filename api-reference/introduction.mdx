@@ -1,160 +1,29 @@
 ---
-title: "API Reference"
-description: "Complete API documentation for integrating eigi.ai into your applications"
+title: "API reference"
+description: "Choose the Eigi API and credential for your integration and make a first request."
 ---
 
-## Welcome to eigi.ai API
+| What you are building | API and credentials |
+| --- | --- |
+| A voice agent integration for calls, web chat, prompts, or cost reporting | Use `https://api.eigi.ai/v1/public`. Server-side clients send a Studio API key in `X-API-Key`. OAuth-authorized clients can send their OAuth access token in `Authorization: Bearer …`. |
+| An application that talks to your personal Eigi | Enable the Developer API on the intended computer. Desktop uses a local address and a generated key. The hosted computer uses the base URL from Studio and a platform API key. [Connect your application](/eigi-agent/developer-api). |
+| A voice client for a physical Eigi board | Pair the board in Studio, then use its device credential to request a one-time call token. [Board sign-in and voice sessions](/eigi-gadgets/device-api). |
 
-The eigi.ai API allows you to programmatically create, manage, and interact with AI voice agents. Build powerful integrations to automate calls, retrieve conversation data, and manage your voice agents at scale.
+## Make a first platform request
 
-### Base URL
-
-All API requests should be made to:
-
-```
-https://api.eigi.ai
-```
-
-## Authentication
-
-eigi.ai uses **API Key authentication** for public endpoints. Your API keys carry many privileges, so be sure to keep them secure and never expose them in client-side code or public repositories.
-
-### API Key Header
-
-All API requests must include your API key in the `X-API-Key` header:
+Open [API Keys in Studio](https://studio.eigi.ai/api-keys), create a key, and keep its value in a server-side environment variable named `EIGI_API_KEY`. You can check authentication and find a voice agent with one read-only request.
 
 ```bash
-curl https://api.eigi.ai/v1/public/conversations \
-  -H "X-API-Key: vk_your_api_key_here"
+curl --fail-with-body 'https://api.eigi.ai/v1/public/agents?page_size=1' \
+  -H "X-API-Key: $EIGI_API_KEY"
 ```
 
-### Getting Your API Key
+A successful response contains `agents`, `page`, and `total`. An empty list means no agents matched. Create one in Studio or with [Create agent](/api-reference/public/agent-create). A `401` means you should check the credential and header. A `403` on an agent-specific request means you should check access to that agent.
 
-1. Log in to your [eigi.ai Dashboard](https://eigi.ai)
-2. Navigate to **Settings** → **API Keys**
-3. Click **Create New API Key**
-4. Copy and securely store your API key (it will only be shown once)
+## Choose your next request
 
-<Warning>
-  **Keep your API keys secure!** Never commit them to version control or expose
-  them in client-side code. Use environment variables or secure secret
-  management systems.
-</Warning>
+- [Send a chat message](/api-reference/public/chat-send-message) to a Studio voice agent, or [call your personal agent](/eigi-agent/developer-api) with an OpenAI-compatible client.
+- [Start an outbound phone call](/api-reference/public/outbound-call), [join a Daily room](/api-reference/public/daily-session), or [start a WebSocket device session](/api-reference/public/websocket-session).
+- [Find a conversation](/api-reference/public/list-conversations) or [review account costs](/api-reference/public/cost-breakdown).
 
-### API Key Format
-
-API keys follow this format:
-
-```
-vk_xxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-All keys are prefixed with `vk_` to help identify them in code and logs.
-
-## Authentication Flow
-
-```json
-{
-  "headers": {
-    "X-API-Key": "vk_your_api_key_here",
-    "Content-Type": "application/json"
-  }
-}
-```
-
-### Error Responses
-
-If authentication fails, you'll receive one of these error responses:
-
-| Status Code | Error               | Description                                       |
-| ----------- | ------------------- | ------------------------------------------------- |
-| `401`       | Missing API Key     | The `X-API-Key` header is not provided            |
-| `401`       | Invalid API Key     | The provided API key is not valid                 |
-| `401`       | Inactive API Key    | The API key has been deactivated                  |
-| `401`       | Expired API Key     | The API key has expired                           |
-| `403`       | Unauthorized Access | You don't have permission to access this resource |
-
-## Rate Limiting
-
-API requests are rate limited to ensure fair usage and platform stability:
-
-- **Free Tier**: 100 requests per minute
-- **Pro Tier**: 500 requests per minute
-- **Enterprise Tier**: Custom limits
-
-When you exceed the rate limit, you'll receive a `429 Too Many Requests` response with a `Retry-After` header indicating when you can make requests again.
-
-## API Endpoints
-
-<CardGroup cols={2}>
-  <Card
-    title="Get Conversation"
-    icon="message"
-    href="/api-reference/public/get-conversation"
-  >
-    Retrieve details of a specific conversation by ID
-  </Card>
-  <Card
-    title="List Conversations"
-    icon="list"
-    href="/api-reference/public/list-conversations"
-  >
-    Get paginated list of conversations with filters
-  </Card>
-  <Card
-    title="Outbound Call"
-    icon="phone-arrow-up-right"
-    href="/api-reference/public/outbound-call"
-  >
-    Initiate outbound calls to phone numbers
-  </Card>
-</CardGroup>
-
-## Response Format
-
-All API responses follow a consistent JSON format:
-
-### Success Response
-
-```json
-{
-  "status": "success",
-  "data": {
-    // Response data here
-  },
-  "message": "Operation completed successfully"
-}
-```
-
-### Error Response
-
-```json
-{
-  "detail": "Error message describing what went wrong"
-}
-```
-
-## Common HTTP Status Codes
-
-| Status Code | Meaning               | Description                   |
-| ----------- | --------------------- | ----------------------------- |
-| `200`       | OK                    | Request succeeded             |
-| `201`       | Created               | Resource created successfully |
-| `400`       | Bad Request           | Invalid request parameters    |
-| `401`       | Unauthorized          | Authentication failed         |
-| `403`       | Forbidden             | Insufficient permissions      |
-| `404`       | Not Found             | Resource not found            |
-| `422`       | Unprocessable Entity  | Validation error              |
-| `429`       | Too Many Requests     | Rate limit exceeded           |
-| `500`       | Internal Server Error | Server error occurred         |
-
-## Need Help?
-
-<CardGroup cols={2}>
-  <Card title="Support" icon="envelope" href="mailto:buddy@eigi.ai">
-    Contact our support team
-  </Card>
-  <Card title="Dashboard" icon="grid" href="https://eigi.ai">
-    Manage your API keys and agents
-  </Card>
-</CardGroup>
+Each endpoint documents its own response shape. For example, agent listing returns a JSON object, streaming chat returns text, and device session creation returns short-lived connection credentials.

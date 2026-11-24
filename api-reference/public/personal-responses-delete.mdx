@@ -1,0 +1,7 @@
+---
+title: "Delete a stored agent response"
+openapi: "/api-reference/openapi.json DELETE /v1/eigi-agent/openai/responses/{response_id}"
+description: "Remove a response snapshot from the running agent."
+---
+
+Use the response’s ID. A successful result contains the same `id`, `object: "response.deleted"`, and `deleted: true`. A later lookup or attempt to continue from the removed ID returns `404`.

@@ -1,0 +1,29 @@
+---
+title: "Projects, documents, and code review"
+description: "Keep related chats with a folder, create a document, and review repository changes."
+---
+
+## Create a project
+
+1. Click **+** beside **Projects**. Choose **Add a folder…** for an existing folder or **New project…** to create one.
+2. Use the project’s **New chat** action. In the composer, type `@` and select a file or folder to tell Eigi exactly what to use.
+3. To give the project standing instructions, open its menu and choose **Instructions…**. For example, “Save meeting summaries in the notes folder and keep them under one page.”
+
+## Create and inspect a document
+
+Put a short set of meeting notes in your project folder and mention the notes in chat. Ask “Make a Word document with a one-paragraph summary and a table of actions, owners, and dates.” Open the resulting file from the reply or Files pane. Ask for a revision in the same chat, then reopen the file to check it.
+
+You can also ask for a spreadsheet, presentation, or PDF. State the format and the intended reader. For example, “Make an Excel workbook with one row per action. Put the due date and owner in separate columns.” To discuss an existing document, attach it or mention it with `@`.
+
+## Review changes in a repository
+
+Open a Git repository as the project folder. Start with **Plan mode** if you want a proposal to review before any edits. **Ask first** pauses for edits and commands that can change files. To work in a separate checkout, start the coding task in a worktree.
+
+| In a repository chat | What it does |
+| --- | --- |
+| `/review` | Review uncommitted changes and show findings in the conversation. |
+| `/review branch` | Review changes on the current branch. |
+| `/review pr NUMBER` | Review a pull request by number when the repository and GitHub access are configured. |
+| `/review fix` | Ask Eigi to address findings. If files changed after the review, run the review again first. |
+
+Use the changes pane to inspect the diff and the terminal pane to run the project’s checks. To see the same review from a separate terminal, use [the agent CLI](/eigi-agent/terminal).

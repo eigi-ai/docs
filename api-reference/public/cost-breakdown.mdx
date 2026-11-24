@@ -1,0 +1,14 @@
+---
+title: "Get account cost breakdown"
+openapi: "/api-reference/openapi.json GET /v1/public/analytics/cost-breakdown"
+description: "See combined costs for conversations, personal Eigi usage, and transaction debits."
+---
+
+Use `period` for a named window, or send ISO timestamps in `from_date` and `to_date` for an explicit range. A supplied date bound takes precedence over `period`.
+
+```bash
+curl 'https://api.eigi.ai/v1/public/analytics/cost-breakdown?period=previous_month' \
+  -H "X-API-Key: $EIGI_API_KEY"
+```
+
+Read `data.range` for the resolved dates and `data.totals` for totals in INR and USD. `data.totals.source_breakdown` splits the costs by source. Use the [conversation cost report](/api-reference/public/conversation-cost-breakdown) to filter by voice agent or conversation type.

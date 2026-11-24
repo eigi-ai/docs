@@ -1,0 +1,16 @@
+---
+title: "Get conversation costs"
+openapi: "/api-reference/openapi.json GET /v1/public/analytics/conversations/cost-breakdown"
+description: "Review conversation costs and usage for your account or a single agent."
+---
+
+Use `agent_id` to scope the report to an agent you own. You can also filter by `conversation_type` and choose a named period or an explicit date range.
+
+```bash
+curl --get 'https://api.eigi.ai/v1/public/analytics/conversations/cost-breakdown' \
+  -H "X-API-Key: $EIGI_API_KEY" \
+  --data-urlencode 'period=week' \
+  --data-urlencode 'conversation_type=TELEPHONY'
+```
+
+Inspect `data.range`, `data.total_conversations`, and `data.costed_conversations` before interpreting the costs. A conversation with missing costing contributes to the conversation count. For the broader account total, use [account cost breakdown](/api-reference/public/cost-breakdown).
