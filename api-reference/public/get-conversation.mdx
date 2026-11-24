@@ -1,6 +1,6 @@
 ---
 title: "Get Conversation by ID"
-openapi: "GET /v1/public/conversations/{conversation_id}"
+openapi: "/api-reference/openapi.json GET /v1/public/conversations/{conversation_id}"
 description: "Retrieve detailed information about a specific conversation using its unique ID"
 ---
 
@@ -10,9 +10,7 @@ This endpoint retrieves comprehensive details about a conversation, including st
 
 ## Authentication
 
-<ParamField header="X-API-Key" type="string" required>
-  Your eigi.ai API key. Must be prefixed with `vk_`.
-</ParamField>
+Send a platform API key in `X-API-Key` or an OAuth access token in the Bearer header. [Authentication](/api-reference/introduction).
 
 ## Path Parameters
 
@@ -34,7 +32,7 @@ Example: `35d33a43-176c-405c-92bf-db972035df28`
 </ResponseField>
 
 <ResponseField name="conversation_type" type="string">
-  Type of conversation: `DAILY`, `TELEPHONY`, `WHATSAPP`, or `CHAT`
+  Type of conversation: `DAILY`, `WEBSOCKET`, `TELEPHONY`, `WHATSAPP`, or `CHAT`
 </ResponseField>
 
 <ResponseField name="conversation_analysis" type="array | null">

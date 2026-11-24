@@ -1,0 +1,22 @@
+---
+title: "Board sign-in and voice sessions"
+description: "Understand the device-side requests behind pairing, status updates, and a voice call."
+---
+
+The Eigi Pi installer handles sign-in for you. These operations are for a native device client that needs to register with Studio and start a voice session. All paths below are relative to `https://api.eigi.ai`.
+
+| Step | Request | What the device does |
+| --- | --- | --- |
+| Start pairing | `POST /v1/hardware/pair/start` | Send `kind` (for example, `pi`) and optional `fw`, `device_id`, and `confirm`. Display `user_code` and `verification_uri`, or show a QR code for `verification_uri_complete`. Keep `device_code` on the device. |
+| Wait for approval | `POST /v1/hardware/pair/token` | Send `device_code` at the returned `interval`. Continue on `authorization_pending`, back off on `slow_down`, and stop on denial or expiry. |
+| Confirm on the board | `POST /v1/hardware/pair/confirm` | When the token response includes `confirm: true`, show the approving account and have the person confirm on the board. Send the issued token to finish within `expires_in`. |
+| Sign in with a setup key | `POST /v1/hardware/pair/setup-key` | A headless board can exchange its one-time Studio `key` and `kind` for a device ID and token. |
+| Report the board | `POST /v1/hardware/board/profile` and `POST /v1/hardware/board/exchange` | The signed-in board reports its profile, status and command results, and receives pending commands it supports. |
+
+Keep the issued `dvt_…` credential on the board. A device that enrolled with a signing key must present a fresh DPoP proof bound to each protected request. The owner approves pairing in Studio. The device polls with its secret device code.
+
+## Start a call
+
+Send `POST /v1/public/websocket` with the board credential. A signed-in board may omit `agent_id` because the platform resolves the board’s own agent. The response includes a `conversation_id`, `ws_url`, one-time `token`, and `expires_in`. Open the returned WebSocket URL with the **call token** as a Bearer credential. A Pipecat WebSocket client exchanges protobuf frames for audio and RTVI messages.
+
+A server using a platform API key to start the same kind of session must supply an agent ID it owns. The endpoint reference covers device-declared tools, metadata, and the difference between an omitted and empty tool list. [Create a WebSocket voice session](/api-reference/public/websocket-session).

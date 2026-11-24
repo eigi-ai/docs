@@ -1,0 +1,9 @@
+---
+title: "Create a chat completion"
+openapi: "/api-reference/openapi.json POST /v1/eigi-agent/openai/chat/completions"
+description: "Send text to your personal Eigi using the Chat Completions format."
+---
+
+Send at least one message and a user turn. The reply is in `choices[0].message.content`. For a continuing conversation, either send its full history on each request or send a stable `X-Eigi-Session-Id` and only the next turn.
+
+For streamed output, set `stream` to true and read server-sent events through `[DONE]`. Set `stream_options.include_usage` to true for a trailing usage chunk. [Client setup and examples](/eigi-agent/developer-api).

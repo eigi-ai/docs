@@ -1,0 +1,14 @@
+---
+title: "Trigger an agent webhook"
+openapi: "/api-reference/openapi.json POST /v1/eigi-agent/webhooks/{token}/{route_name}"
+description: "Send a signed event to a webhook configured on a hosted Eigi Computer."
+---
+
+In **Automations → Main → Triggers**, create a webhook route and copy its URL and signing secret. Configure the external sender to POST the exact payload bytes to that URL. The token in the URL routes the event to the computer. The per-route secret authenticates it.
+
+| Sender | Signature |
+| --- | --- |
+| GitHub | Set the webhook secret in GitHub. Its `X-Hub-Signature-256` header is `sha256=` followed by the hex HMAC-SHA256 of the request body. |
+| Generic sender | Send Unix seconds in `X-Webhook-Timestamp`. Send a hex HMAC-SHA256 in `X-Webhook-Signature-V2`, computed over the timestamp, one period, and the original body bytes. |
+
+A `202` means the event was accepted for processing. A `200` may report delivery, a duplicate, or an ignored event. Check the response status and the run in Automations. [Use automations on Eigi Computer](/eigi-computer/automation).

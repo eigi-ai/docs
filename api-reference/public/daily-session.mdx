@@ -1,0 +1,15 @@
+---
+title: "Create a Daily session"
+openapi: "/api-reference/openapi.json POST /v1/public/daily"
+description: "Start a voice or video conversation that a browser can join over WebRTC."
+---
+
+Supply the `agent_id` of a voice agent you own. The default `conversation_config_type` is `VOICE`. Choose `VIDEO` for an agent configured for video. Set `client_tools` to the names of handlers the browser actually provides. Omitting it or sending an empty list offers no browser tools.
+
+```bash
+curl 'https://api.eigi.ai/v1/public/daily' \
+  -H "X-API-Key: $EIGI_API_KEY" -H 'Content-Type: application/json' \
+  -d '{"agent_id":"YOUR_AGENT_ID","conversation_config_type":"VOICE","client_tools":[]}'
+```
+
+On success, pass `dailyRoom` and `dailyToken` to your Daily client to join. Keep `conversation_id` to [look up the conversation](/api-reference/public/get-conversation). Inspect `unknown_client_tools` if a requested handler was unavailable.

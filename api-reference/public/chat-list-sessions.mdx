@@ -1,6 +1,6 @@
 ---
 title: "List Chat Sessions"
-openapi: "GET /v1/public/chat/sessions"
+openapi: "/api-reference/openapi.json GET /v1/public/chat/sessions"
 description: "Retrieve a paginated list of all chat sessions for your agents"
 ---
 
@@ -10,9 +10,7 @@ This endpoint returns all chat sessions created through your agents. Use it to m
 
 ## Authentication
 
-<ParamField header="X-API-Key" type="string" required>
-  Your eigi.ai API key. Must be prefixed with `vk_`.
-</ParamField>
+Send a platform API key in `X-API-Key` or an OAuth access token in the Bearer header. [Authentication](/api-reference/introduction).
 
 ## Query Parameters
 

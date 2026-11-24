@@ -1,0 +1,37 @@
+---
+title: "Get started with Eigi Desktop"
+description: "Install the app, sign in, and have Eigi create a file on your computer."
+---
+
+Eigi Desktop runs Eigi Agent on your own computer. Start here if you want Eigi to work with a local folder, use your apps, or help with a codebase. For work that needs to keep running while your laptop is off, [set up an Eigi Computer in Studio](/eigi-computer/getting-started).
+
+## Install and sign in
+
+1. Choose the installer for your computer from the [Eigi download page](https://eigi.ai/download/).
+
+   | System | Installer |
+   | --- | --- |
+   | macOS on Apple Silicon (M1 or later) | Open the DMG and move Eigi to Applications. |
+   | Windows 10 or 11 on x64 | Run the Windows installer and open Eigi. |
+   | Ubuntu 24.04 or later on x64 | Follow the installation commands on the download page. Future updates come through APT. |
+
+2. Open Eigi and choose **Sign in**. Finish signing in with Google or an emailed code in your browser, then return to the app. **Settings → Account** shows which account this computer uses.
+3. Open a new chat. If prompted to choose a model, pick one available to your account. You can change the default in **Settings → Models and providers**.
+
+## Make something you can open
+
+Click **+** beside **Projects**, choose **Add a folder…**, and start a chat in that folder. Try this request.
+
+> Create a file called packing-list.md in this folder with a packing list for a two-day trip.
+
+If Eigi asks for access, check the folder and the proposed action. When the reply arrives, open the file from the chat or the Files pane. Ask “Add a rain jacket” in the same chat and reopen the file to see the change.
+
+## What to try next
+
+- Give a specialist its own instructions and route a message to it. [Connect a Buddy](/eigi-desktop/buddies).
+- Work with your browser, run a scheduled task, or review a code change. [Work in Desktop](/eigi-desktop/workspace).
+- Continue from a terminal or another application. [Use the agent CLI](/eigi-agent/terminal) or [call the Developer API](/eigi-agent/developer-api).
+
+For updates on macOS and Windows, open **Settings → About Eigi** and check for an update. When the app offers **Restart to update**, let your current work finish and restart. Ubuntu updates through the system package manager.
+
+If a chat cannot start, check **Account** and **Models and providers** first. For a local engine problem, the [terminal diagnostics](/eigi-agent/terminal#check-a-problem) can identify which part needs attention.

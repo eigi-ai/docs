@@ -1,0 +1,40 @@
+---
+title: "Set up an Eigi Gadget"
+description: "Sign a Raspberry Pi into Studio, check its hardware, and talk to the agent on the board."
+---
+
+An Eigi Gadget is a physical board with its own agent. You manage it in Studio. A voice call uses the microphone and speaker attached to the board, so you can start a call from your laptop and talk to the board in the room.
+
+## Add a Raspberry Pi
+
+You need Raspberry Pi OS Lite **64-bit**, a network connection, an Eigi account, and the **Eigi Pi test bundle**. The installer runs from the unpacked bundle. If you need a copy, [contact Eigi](mailto:buddy@eigi.ai). A microphone and speaker are needed for the voice check. You can verify sign-in with text chat first.
+
+1. Use Raspberry Pi Imager to set up the OS, Wi-Fi, and SSH. Boot the Pi and open its terminal or connect over SSH.
+2. Open [Gadgets → Add a board](https://studio.eigi.ai/gadgets/add) in Studio. Copy the Pi bundle to the Pi, unpack it, and change into the folder that contains `install.sh`.
+3. Run the install command **on the Pi**.
+
+   ```bash
+   sudo bash install.sh
+   ```
+
+4. Open the link or scan the QR code shown in the terminal. Compare the code in Studio to the one on the Pi, approve it, then return to the Pi and press **Enter** to keep the sign-in.
+5. Confirm the board model and the connected parts in the installer. Once it starts the agent, open [your boards](https://studio.eigi.ai/gadgets) and select the board by name.
+
+## Verify it works
+
+Open the board’s **Overview** and check its current status. If **Chat** is available, send “What can you do on this board?” and look for a reply in the same thread. From the board’s actions, choose **Test speaker** and **Test microphone**. When both work, select **Start a call**, speak near the board, and use **End call** when you finish.
+
+## Sign in without a screen
+
+For a Pi set up to use the Eigi software on first boot, open [Setup keys](https://studio.eigi.ai/gadgets/setup-keys). Create a key, give the board a name and choose its expiry. Download `eigi-setup-key.txt` while the key is visible and place it on the SD card’s **bootfs** partition. The board exchanges it once for its own credential. Withdraw an unused key in Studio or create a new one if it expires.
+
+## If setup stalls
+
+| Symptom | What to check |
+| --- | --- |
+| The code expired | Start sign-in again and approve the new code before it expires. Complete the confirmation on the Pi when prompted. |
+| The board is missing or offline | Check the approving account, power, and Wi-Fi. Run `sudo eigi doctor` on the Pi. |
+| The board appears but audio is silent | Check the connected parts and mute state, then repeat the two sound tests. Run `sudo eigi setup` on the Pi if its wiring or audio hardware changed. |
+| A section is missing | Studio shows controls for commands supported by the installed board software. Pi setup is the guided installation path. An already provisioned ESP32 board can sign in using its code. |
+
+Once it is online, [manage the board and its devices](/eigi-gadgets/using-your-board).

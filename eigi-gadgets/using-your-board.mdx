@@ -1,0 +1,36 @@
+---
+title: "Use your board in Studio"
+description: "Talk to a board, schedule work, connect a chat app, and manage home devices."
+---
+
+Open [Eigi Gadgets](https://studio.eigi.ai/gadgets), choose your board, and start from **Overview**. It shows what the board is doing and which actions it can take now. The sections under its name depend on the software and capabilities the board reports.
+
+## Run a task and check the result
+
+1. Open **Chat** and ask “Write a brief welcome note into the work folder.” Watch for the tool result and reply.
+2. If the board supports **Files**, open the work folder to inspect the note. If it could not write the file, check the enabled tools under **Tools**.
+3. For recurring work, open **Schedules**. Create a job, choose when it runs, and use the run-now action to test it. Check the job’s recent runs before leaving it on a schedule. The board needs power and connectivity for work that uses online services.
+
+## Talk to the board from Telegram or WhatsApp
+
+On the board’s **Channels** page, add your Telegram bot using its BotFather token or link WhatsApp with the QR code. Follow the ownership or pairing step for the chosen service. For Telegram, send the displayed `/pair` command to the bot from your own account before testing it. Review who has access on the board’s Channels page.
+
+## Connect a light or plug
+
+1. Open **Home devices** on a supported board. Choose **Connect Home Assistant** to discover supported devices, including Hue lights available through Home Assistant. Use **Set up MQTT** for a plug or switch connected to an MQTT broker.
+2. Supply the connection details requested by Studio and check the connection from the board. Select the devices to add and give each one a name you would use out loud, such as “desk lamp.”
+3. Open the device and choose **Switch it when asked**, **Ask me first**, or **Never**. For a first test, choose **Ask me first**, ask the board to switch the lamp on, and respond to its confirmation.
+4. Check the switch state and **What changed**. If the board lost contact during an action, check the device’s actual state before trying again.
+
+## Other board controls
+
+| Section | What you can do |
+| --- | --- |
+| Voice and Model | Choose speech settings, test speaker volume, and select the board’s available model. During a call, **Stop speaking** interrupts speech and **End call** ends the call. |
+| Memory | Inspect notes and topics kept by the board and edit or remove an entry. |
+| Music | Play a supported source, such as radio or an audio file in the work folder, through the board’s speaker. |
+| Connectors and Tools | Add or test an MCP connection and choose which tools the agent may use. |
+| Browser and Terminal | Set the sites the board may browse and review terminal permissions and pending commands. |
+| Wi-Fi | Check the current connection and manage saved networks. Changing Wi-Fi can briefly take the board offline. |
+
+Integrating your own device client? [Board sign-in and voice sessions](/eigi-gadgets/device-api) explains how device credentials and one-time call tokens fit together.

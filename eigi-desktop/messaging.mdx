@@ -1,0 +1,26 @@
+---
+title: "Connect a messaging account"
+description: "Reach Eigi from your phone or team chat and choose who answers."
+---
+
+In Desktop, open **Settings → Channels**, choose the service you want to use, and follow its connection steps. Keep Eigi running on the computer that owns the connection.
+
+| Service | What to connect | How to test |
+| --- | --- | --- |
+| WhatsApp | Open Linked devices on your phone and scan Eigi’s QR code. | In the default self-chat mode, send a message in **Message yourself**. |
+| Telegram | Provide the bot token from BotFather, then follow Eigi’s owner verification prompt. | Open the bot in Telegram and send it a direct message. |
+| Slack | Connect the Slack app with the bot and app tokens requested in setup. Confirm the workspace and the owner. | Send the bot a DM or mention it in a channel it has joined. |
+| Discord | Supply the bot token, add the bot to your server, and confirm the owner. | DM the bot or mention it in the selected server. |
+
+## Check who can talk to it
+
+On the channel’s settings page, review the rules for direct messages and groups. Let one person test access before opening it to a larger group. For WhatsApp, **Who Eigi answers** lets you switch from self-chat to replying to other people on a separate bot number.
+
+**Who answers** controls whether an allowed conversation goes to Main or to a Buddy. For a single conversation, have the person message the bot first, then [route that conversation to a Buddy](/eigi-desktop/buddies#send-a-channel-chat-to-this-buddy).
+
+## When the bot is connected but silent
+
+- Check **Run on this computer**. A bot runs in one Eigi at a time. If the bot runs elsewhere, open that Eigi or use the channel’s controls to move it.
+- Check the owner verification step, the allowed people or groups, and any rule requiring a mention.
+- For Slack or Discord, use the connection page to check the bot’s permissions. Fix missing permissions in the service, then select **Check again**.
+- If WhatsApp is waiting for a scan, reopen Linked devices and scan the current code.

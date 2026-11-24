@@ -1,6 +1,6 @@
 ---
 title: "List Conversations"
-openapi: "GET /v1/public/conversations"
+openapi: "/api-reference/openapi.json GET /v1/public/conversations"
 description: "Retrieve a paginated list of conversations with comprehensive filtering options"
 ---
 
@@ -10,9 +10,7 @@ This endpoint returns a paginated list of conversations based on the API key own
 
 ## Authentication
 
-<ParamField header="X-API-Key" type="string" required>
-  Your eigi.ai API key. Must be prefixed with `vk_`.
-</ParamField>
+Send a platform API key in `X-API-Key` or an OAuth access token in the Bearer header. [Authentication](/api-reference/introduction).
 
 ## Query Parameters
 
@@ -41,7 +39,7 @@ This endpoint returns a paginated list of conversations based on the API key own
 </ParamField>
 
 <ParamField query="conversation_type" type="string">
-  Filter by conversation type. Options: `DAILY`, `TELEPHONY`, `WHATSAPP`, `CHAT`
+  Filter by conversation type. Options: `DAILY`, `WEBSOCKET`, `TELEPHONY`, `WHATSAPP`, `CHAT`
 </ParamField>
 
 <ParamField query="calling_type" type="string">
@@ -102,7 +100,7 @@ Example: `17:00`
 <ResponseField name="data" type="array">
   Array of conversation objects matching the filter criteria. Each conversation
   contains: - `agent_id`: ID of the agent - `conversation_id`: Unique UUID for
-  the conversation - `conversation_type`: `DAILY`, `TELEPHONY`, `WHATSAPP`, or
+  the conversation - `conversation_type`: `DAILY`, `WEBSOCKET`, `TELEPHONY`, `WHATSAPP`, or
   `CHAT` - `conversation_analysis`: AI analysis results (null if not analyzed) -
   `conversation_status`: `IN_PROGRESS`, `COMPLETED`, `DISCONNECTED`, or `FAILED`
   - `notes`: Additional notes - `conversation_transcript`: Array of messages

@@ -1,0 +1,7 @@
+---
+title: "Get a stored agent response"
+openapi: "/api-reference/openapi.json GET /v1/eigi-agent/openai/responses/{response_id}"
+description: "Retrieve a response by the ID returned when it was created."
+---
+
+Pass the `id` from [Create an agent response](/api-reference/public/personal-responses-create). Each running engine keeps up to 100 response snapshots in memory. An expired, removed, or unknown ID returns `404`.

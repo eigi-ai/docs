@@ -1,6 +1,6 @@
 ---
 title: "Initiate Outbound Call"
-openapi: "POST /v1/public/calls/outbound"
+openapi: "/api-reference/openapi.json POST /v1/public/calls/outbound"
 description: "Initiate one or more outbound calls to phone numbers using AI voice agents"
 ---
 
@@ -10,9 +10,7 @@ This endpoint creates conversations and initiates outbound calls via telephony p
 
 ## Authentication
 
-<ParamField header="X-API-Key" type="string" required>
-  Your eigi.ai API key. Must be prefixed with `vk_`.
-</ParamField>
+Send a platform API key in `X-API-Key` or an OAuth access token in the Bearer header. [Authentication](/api-reference/introduction).
 
 ## Request Body
 
@@ -36,280 +34,41 @@ Defaults to `PLIVO` if not specified.
 
 </ParamField>
 
-## Response
+<ParamField body="from_number" type="string">
+  Choose an outbound number assigned to this agent. If omitted, the service selects one of its numbers.
+</ParamField>
 
-<ResponseField name="status" type="string">
-  Status of the request: `success`
-</ResponseField>
+<ParamField body="is_test_call" type="boolean" default="false">
+  Mark the call as a test so it can be excluded from reports.
+</ParamField>
 
-<ResponseField name="message" type="string">
-  Human-readable message describing the result: `Outbound calls initiated
-  successfully`
-</ResponseField>
+<ParamField body="retry" type="object">
+  Retry settings for unanswered scheduled calls. `max_retries` accepts 0–5 extra attempts and `interval_minutes` accepts 5–1440 minutes.
+</ParamField>
 
-<Note>
-  The API initiates calls asynchronously. Use webhooks or poll the [Get
-  Conversation](/api-reference/public/get-conversation) endpoint with the
-  conversation ID to track call status and retrieve transcripts after
-  completion.
-</Note>
-
-<RequestExample>
-
-```bash cURL
-curl -X POST "https://api.eigi.ai/v1/public/calls/outbound" \
-  -H "X-API-Key: vk_your_api_key_here" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "agent_id": "68ea2517dbb84c09bae1ba0a",
-    "params": [
-      {
-        "mobile_number": "+919876543210",
-        "metadata": {
-          "customer_name": "John Doe",
-          "customer_id": "CUST-12345"
-        }
-      }
-    ],
-    "telephony_provider": "PLIVO"
-  }'
-```
-
-```python Python
-import requests
-
-headers = {
-    "X-API-Key": "vk_your_api_key_here",
-    "Content-Type": "application/json"
-}
-
-payload = {
-    "agent_id": "68ea2517dbb84c09bae1ba0a",
-    "params": [
-        {
-            "mobile_number": "+919876543210",
-            "metadata": {
-                "customer_name": "John Doe"
-            }
-        }
-    ],
-    "telephony_provider": "PLIVO"
-}
-
-response = requests.post(
-    "https://api.eigi.ai/v1/public/calls/outbound",
-    headers=headers,
-    json=payload
-)
-
-print(response.json())
-```
-
-```javascript Node.js
-const axios = require("axios");
-
-const response = await axios.post(
-  "https://api.eigi.ai/v1/public/calls/outbound",
-  {
-    agent_id: "68ea2517dbb84c09bae1ba0a",
-    params: [
-      {
-        mobile_number: "+919876543210",
-        metadata: { customer_name: "John Doe" },
-      },
-    ],
-    telephony_provider: "PLIVO",
-  },
-  {
-    headers: {
-      "X-API-Key": "vk_your_api_key_here",
-      "Content-Type": "application/json",
-    },
-  }
-);
-
-console.log(response.data);
-```
-
-</RequestExample>
-
-<ResponseExample>
-
-```json 200 - Success
-{
-  "status": "success",
-  "message": "Outbound calls initiated successfully"
-}
-```
-
-```json 400 - Missing Agent ID
-{
-  "detail": "agent_id is required"
-}
-```
-
-```json 400 - Missing Params
-{
-  "detail": "Parameters are required for the outbound call"
-}
-```
-
-```json 400 - Agent Not Configured
-{
-  "detail": "Agent has no mobile numbers configured for outbound calls"
-}
-```
-
-```json 401 - Unauthorized
-{
-  "detail": "Invalid API key"
-}
-```
-
-```json 403 - Forbidden
-{
-  "detail": "You are not authorized to access this agent"
-}
-```
-
-```json 403 - Quota Exceeded
-{
-  "detail": "Call quota exceeded"
-}
-```
-
-```json 404 - Agent Not Found
-{
-  "detail": "Agent with id xxx not found"
-}
-```
-
-```json 404 - User Not Found
-{
-  "detail": "User not found"
-}
-```
-
-```json 500 - Internal Server Error
-{
-  "detail": "Internal Server Error: [error details]"
-}
-```
-
-</ResponseExample>
-
-## Error Responses
-
-## Status Codes
-
-| Status Code | Description                                      |
-| ----------- | ------------------------------------------------ |
-| 200         | Calls initiated (check individual result status) |
-| 400         | Missing parameters or agent not configured       |
-| 401         | Missing, invalid, inactive, or expired API key   |
-| 403         | User not authorized for agent or quota exceeded  |
-| 404         | User or agent not found                          |
-| 500         | Internal server error                            |
-
-## Phone Number Format
-
-Phone numbers must be in **E.164 format**:
-
-- Start with `+` followed by country code
-- No spaces, dashes, or parentheses
-- Example: `+919876543210` (India), `+14155551234` (US)
-
-<Warning>
-  **Invalid formats** will result in failed calls: - ❌ `9876543210` (missing
-  country code) - ❌ `+91 98765 43210` (contains spaces) - ❌ `+91-9876543210`
-  (contains dashes) - ✅ `+919876543210` (correct format)
-</Warning>
-
-## Use Cases
-
-<AccordionGroup>
-  <Accordion title="Customer Outreach Campaigns">
-    Initiate bulk calls to customers for product updates, surveys, or
-    promotional campaigns. Track results using conversation IDs.
-  </Accordion>
-  <Accordion title="Appointment Reminders">
-    Automatically call customers to remind them of upcoming appointments,
-    reducing no-shows and improving scheduling efficiency.
-  </Accordion>
-  <Accordion title="Lead Qualification">
-    Call leads from your CRM to qualify them and schedule meetings with sales
-    teams. Pass customer data via metadata for personalized conversations.
-  </Accordion>
-  <Accordion title="Payment Reminders">
-    Initiate calls to customers with pending payments, providing personalized
-    reminders and payment options.
-  </Accordion>
-  <Accordion title="Customer Satisfaction Surveys">
-    Call customers after service interactions to gather feedback and measure
-    satisfaction using AI-powered surveys.
-  </Accordion>
-  <Accordion title="Emergency Notifications">
-    Quickly notify customers of urgent issues, service disruptions, or critical
-    updates through automated voice calls.
-  </Accordion>
-</AccordionGroup>
-
-## Best Practices
-
-<Tip>
-**Use Metadata Effectively**: Include relevant customer information in the `metadata` field. Your agent can access this data during the conversation for personalization.
+## Read the result
 
 ```json
-"metadata": {
-  "customer_name": "John Doe",
-  "customer_id": "CUST-12345",
-  "order_id": "ORD-67890",
-  "appointment_date": "2025-12-15"
+{
+  "status": "success",
+  "message": "Outbound calls initiated: 2 successful, 1 failed",
+  "successful_calls": 2,
+  "failed_calls": 1,
+  "failures": [{"mobile_number": "+12025550123", "error": "Failed to initiate call"}]
 }
 ```
 
-</Tip>
+A successful response counts calls that were initiated. A mixed batch also includes `failed_calls` and `failures`. Inspect those entries before retrying a batch so that a recipient whose call started does not receive a second call.
 
-<Tip>
-  **Batch Processing**: For bulk calls, process in batches of 50-100 numbers to
-  manage rate limits and monitor results effectively.
-</Tip>
+To follow the outcome, [list conversations](/api-reference/public/list-conversations) using the agent ID, time range, and outbound calling type. Use the `conversation_id` from a matching conversation to [retrieve its transcript](/api-reference/public/get-conversation).
 
-<Tip>
-  **Error Handling**: Always check individual `status` in the results array, as
-  some calls may succeed while others fail.
-</Tip>
+## Example
 
-<Tip>
-  **Track Conversation IDs**: Store the returned `conversation_id` for each call
-  to later retrieve transcripts and analysis using the [Get
-  Conversation](/api-reference/public/get-conversation) endpoint.
-</Tip>
+Use a configured outbound agent, one of its assigned numbers, and a recipient you intend to call. The example assumes you have set `EIGI_API_KEY` in your environment. Replace the agent ID and example number before sending.
 
-## Webhooks for Call Events
-
-Configure webhooks to receive real-time notifications about call events:
-
-- `conversation.started` - Call initiated
-- `conversation.answered` - Call answered by recipient
-- `conversation.completed` - Call completed successfully
-- `conversation.failed` - Call failed
-- `conversation.disconnected` - Call disconnected
-
-Learn more in the [Webhook Documentation](/api-reference/endpoint/webhook).
-
-## Limitations
-
-- **Rate Limits**: API key tier determines maximum calls per minute
-- **Daily Quota**: Check your plan's daily outbound call limit
-- **Agent Configuration**: Agent must have valid telephony settings (Plivo/Twilio credentials, phone number)
-- **Phone Number Validation**: Invalid phone numbers will fail individually without blocking other calls
-
-## Notes
-
-- Each call creates a unique `conversation_id` for tracking
-- Calls are initiated asynchronously; use webhooks or polling for status updates
-- Failed calls don't count against your quota
-- Metadata is optional but highly recommended for personalized conversations
-- Call recording and transcription are automatic (if enabled in agent settings)
-- Default telephony provider is Plivo; specify `TWILIO` if using Twilio
+```bash
+curl 'https://api.eigi.ai/v1/public/calls/outbound' \
+  -H "X-API-Key: $EIGI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"agent_id":"YOUR_AGENT_ID","params":[{"mobile_number":"+12025550123","metadata":{"topic":"appointment confirmation"}}]}'
+```

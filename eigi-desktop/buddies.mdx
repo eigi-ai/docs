@@ -1,0 +1,35 @@
+---
+title: "Create and connect a Buddy"
+description: "Give a Buddy a job, test its access, route a chat to it, and bring it into a Room."
+---
+
+**Main** is the agent you talk to in your main chat. A **Buddy** is a teammate with a name, instructions, memory, and its own chat. For example, a Research Buddy can turn meeting notes into questions while Main continues helping you with other work.
+
+## Create your first Buddy
+
+1. In Desktop, open **Settings → Buddies and Rooms → New Buddy**.
+2. Name it **Research**. Describe its job in a sentence, such as “Turn my meeting notes into three questions to investigate.” Choose a model or keep **Same as Main**, then select **Create Buddy**.
+3. Open Research’s chat and send “We’re choosing a new meeting time across three time zones. What should I find out first?” Its reply appears in the Buddy’s chat.
+4. Open **Buddy settings → Tasks from Main** to decide when Main may delegate. Choose **Always ask me** to review each handoff. In a main chat, ask “Have Research suggest three questions about our meeting schedule” and review the request.
+
+## Give the Buddy the right access
+
+Open the Buddy’s settings and choose **Skills** or **Connectors**. **Only the ones I pick** lets you select individual items. **Same as Main** uses the items available for sharing from Main. Sign in to the service under **Settings → Plugins → Connectors** if it needs an account. Test the connection in the Buddy’s own chat with a read, such as “List the titles of my next two calendar events.”
+
+Under **Memory**, choose **Separate memory for each person** for individual conversations, or **One shared memory** if everyone talking to this Buddy should draw on the same notes. The Buddy keeps its own memory apart from Main’s.
+
+## Send a channel chat to this Buddy
+
+1. [Connect a messaging account](/eigi-desktop/messaging) and send its bot a first message.
+2. In **Buddy settings → Channels**, select **Add a person or group** and pick the conversation. For an entire account’s private messages, use the account switch and confirm who should answer. Groups have their own routes.
+3. Send a second message from that conversation. In the Buddy’s **Channels** settings, find the conversation under **Goes to Research now** and open its chat when available.
+
+If the person is missing, have them message the bot once and check the channel’s access rules. If the route says it runs on another computer, edit it on the computer running the bot. To hand the conversation back, remove its explicit route and check the account default.
+
+## Work together in a Room
+
+With at least two active Buddies, choose **New Room** in **Buddies and Rooms**. Give it a name and a purpose, add members, and choose the lead. Try “Research, list two options. Have the lead summarize the tradeoffs.” Reopen the Room to continue its shared conversation.
+
+For recurring work, open the Buddy’s **Routines**. **Proactive help** lets you choose which updates warrant a notification, how often the Buddy checks, and its quiet hours. Its source list shows what it can read and which connections need sign-in. **Pause** in Buddy settings stops new work and keeps the Buddy’s profile, chats, and memory.
+
+Looking for someone else’s Buddy or a voice agent’s API ID? [Find and share agents in Studio](/eigi-agent/registry).

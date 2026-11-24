@@ -1,6 +1,6 @@
 ---
 title: "Delete Agent"
-openapi: "DELETE /v1/public/agents/{agent_id}"
+openapi: "/api-reference/openapi.json DELETE /v1/public/agents/{agent_id}"
 description: "Permanently delete an agent and its associated internal prompt"
 ---
 
@@ -14,9 +14,7 @@ Permanently delete an agent. This also deletes the agent's internal prompt (if o
 
 ## Authentication
 
-<ParamField header="X-API-Key" type="string" required>
-  Your eigi.ai API key. Must be prefixed with `vk_`.
-</ParamField>
+Send a platform API key in `X-API-Key` or an OAuth access token in the Bearer header. [Authentication](/api-reference/introduction).
 
 ## Path Parameters
 

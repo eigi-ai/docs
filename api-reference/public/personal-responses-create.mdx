@@ -1,0 +1,7 @@
+---
+title: "Create an agent response"
+openapi: "/api-reference/openapi.json POST /v1/eigi-agent/openai/responses"
+description: "Run a text turn and optionally continue a stored response."
+---
+
+Send a text `input`. To continue, send the next input with the earlier response’s `id` as `previous_response_id`. With `stream: true`, read text deltas until the `response.completed` event. A new non-streaming call returns the completed response with its `id`, `output`, `output_text`, and `usage`. [Try a first request](/eigi-agent/developer-api).

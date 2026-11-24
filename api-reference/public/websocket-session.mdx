@@ -1,0 +1,36 @@
+---
+title: "Create a WebSocket voice session"
+openapi: "/api-reference/openapi.json POST /v1/public/websocket"
+description: "Get a short-lived connection for a device that speaks the Pipecat WebSocket protocol."
+---
+
+For a server integration, supply an `agent_id` owned by the API key or OAuth account. A [paired Eigi board](/eigi-gadgets/device-api) can instead present its device token and use its own agent without supplying an ID. A key-bound board must also send a fresh DPoP proof.
+
+```bash
+curl 'https://api.eigi.ai/v1/public/websocket' \
+  -H "X-API-Key: $EIGI_API_KEY" -H 'Content-Type: application/json' \
+  -d '{"agent_id":"YOUR_AGENT_ID","client_tools":[]}'
+```
+
+Connect a Pipecat WebSocket client to the exact `ws_url` returned, including its query string. Send the returned `token` as a Bearer credential during the WebSocket handshake. It is single-use. Use `expires_in` (seconds) to decide whether to request a fresh session. The socket exchanges protobuf frames for audio and RTVI messages.
+
+## Offer tools the device can run
+
+Omit `client_tools` to offer the agent’s enabled client tools. Send `[]` to offer none, or send up to 32 names or definitions. A device-declared definition uses a name, description, and a JSON Schema object for its parameters. A definition with the same name as an agent client tool overrides it for this session.
+
+```json
+{
+  "agent_id": "YOUR_AGENT_ID",
+  "client_tools": [{
+    "name": "show_caption",
+    "description": "Display a short caption on this device.",
+    "parameters": {
+      "type": "object",
+      "properties": {"text": {"type": "string"}},
+      "required": ["text"]
+    }
+  }]
+}
+```
+
+Check `client_tools`, `declared_client_tools`, and `unknown_client_tools` in the response to see which handlers were registered. Keep secrets out of `conversation_metadata`. It is limited to 4 KB and travels in the connection URL.

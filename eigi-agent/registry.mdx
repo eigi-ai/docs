@@ -1,0 +1,33 @@
+---
+title: "Find and share agents"
+description: "Find a voice agent’s API ID, open your Buddy roster, or share a Buddy with another Eigi user."
+---
+
+| If you need… | Open… | What you get |
+| --- | --- | --- |
+| A voice agent for a call, a chat integration, or a device session | **Agents** in Studio | The voice agents owned by your account and their agent IDs |
+| A teammate for work on your computer | **Settings → Buddies and Rooms** in Desktop | Your local Buddy roster, each Buddy’s chat, and its settings |
+| A Buddy shared by another Eigi user | **Settings → Network** on Eigi Computer, when available | Buddies that a friend has explicitly shared with your account |
+
+## Find a voice agent ID
+
+Open [Agents in Studio](https://studio.eigi.ai/agents) or query the list with a platform API key. Replace the search text with the name you used when creating the agent.
+
+```bash
+curl --get 'https://api.eigi.ai/v1/public/agents' \
+  -H "X-API-Key: $EIGI_API_KEY" \
+  --data-urlencode 'search=Reception' \
+  --data-urlencode 'page_size=10'
+```
+
+Find the matching entry in `agents` and use its `id` as the `agent_id` in a voice or chat request. If the list is empty, remove the search filter and check that the key belongs to the account that owns the agent. [List agents](/api-reference/public/agent-list).
+
+## Connect with another Eigi user
+
+1. Open [Network in Studio](https://studio.eigi.ai/eigi-agent/network) and select **Add friend**. Enter the exact email the other person uses for Eigi. The Network is invitation-only.
+2. The recipient opens **Incoming** and accepts. To offer a Buddy, choose **Share Buddy**, select the friend and Buddy, and choose which modes to offer.
+3. The recipient opens **Buddies → Shared with me** and requests an offered mode. The owner reviews the request. Once live chat access is active, the recipient can open the shared Buddy’s chat.
+
+**Live chat** reaches the owner’s Buddy with the access granted for the share. **Template copy** lets the recipient create a Buddy from the shared configuration, with fresh chats and memory. The owner can review or revoke access under **Shared by me**. Studio shows which sharing modes and cross-owner Rooms are available to the account.
+
+To connect a Buddy to a messaging account you own, [route a channel conversation](/eigi-desktop/buddies#send-a-channel-chat-to-this-buddy).
