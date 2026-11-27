@@ -1,0 +1,84 @@
+---
+title: "Use Eigi in your Chrome"
+description: "Add the Eigi extension so Eigi can work in the Chrome you already use, on websites you allow."
+---
+
+The Eigi extension lets Eigi open pages, read them and fill them in, in your own Chrome, where you are already signed in. Eigi asks before it uses each new website, works in a tab group of its own, and you can take control or stop it at any time.
+
+You need Google Chrome 125 or later on a computer, and Eigi Desktop signed in to your Eigi account. Incognito windows are not supported.
+
+## Add the extension
+
+1. Open [Eigi in the Chrome Web Store](https://chromewebstore.google.com/detail/eigi/fkddjdeohepbcdhapflholpobpbnohfg) and choose **Add to Chrome**. You can also get there from Eigi Desktop: open **Settings → Browser and extension** and, under **Your Chrome**, choose **Open the Chrome Web Store**.
+2. Pin the extension so its icon stays in the toolbar: open Chrome's extensions menu and pin **Eigi**.
+3. Click the Eigi icon to open the side panel and choose **Sign in**. In the window that opens, choose **Connect**. Use the same account as Eigi Desktop.
+
+## Let Eigi use your Chrome
+
+Signing in alone doesn't let Eigi use your Chrome. You turn that on in the app.
+
+1. In Eigi Desktop, open **Settings → Browser and extension**.
+2. Under **Your Chrome**, turn on **Let Eigi use my Chrome**. The line under the switch changes to "On. When a chat asks to use your Chrome, Eigi works in its own tab group and asks before each new website."
+
+Keep Eigi Desktop open while you want it to use Chrome. The extension talks to the app on this computer, so both must be signed in to the same account.
+
+## Ask Eigi to use a website
+
+In a Desktop chat, say what you want done in your Chrome:
+
+> Open python.org in my Chrome and tell me the newest Python release.
+
+Eigi opens the page in a tab group named after the chat. The group shows ⌛ while Eigi is working.
+
+### Allow a website
+
+The first time Eigi wants to use a website, it asks **Let Eigi use python.org in this Chrome?** and offers three answers:
+
+- **Yes, allow it once**
+- **Yes, always allow this website**
+- **No, don’t allow it**
+
+The question appears where you sent the message. A message sent from Eigi Desktop is asked in that chat, and the Chrome side panel only says "Waiting for your answer in the Eigi app." A message sent from the side panel is asked in the side panel, and the Eigi icon shows how many websites are waiting.
+
+A question waits for five minutes. After that it ends, the chat shows **Question expired**, and you ask Eigi again when you are ready.
+
+Each website is asked about once: `www.python.org` and `python.org` count as the same site, while other subdomains are asked about separately. Local and IP addresses are never allowed.
+
+### See or remove allowed websites
+
+In the side panel, open the **⋯** menu and choose **Allowed sites**. Choose **Remove** beside a website to take it off the list. Leave **Allow all websites** off unless you are sure every task should reach any site.
+
+## Watch, take control and stop
+
+While Eigi works in a tab, the page shows **Eigi is working** with a **Stop** button, and Chrome shows its own notice bar at the top of the window.
+
+- To do a step yourself, choose **Take control** in the side panel. The tab group shows ✋ while you have control. Choose **Hand back** when you are done.
+- To stop, choose **Stop** on the page, stop the chat in Eigi Desktop, or press Stop in the side panel's message box.
+- Choosing **Cancel** on Chrome's notice bar ends Eigi's access to that tab.
+
+## Chat from the side panel
+
+The side panel lists your recent Eigi Desktop chats, so you can carry on a conversation from Chrome or start a new one. The same chat appears in the app.
+
+Turn on **This tab** to hand Eigi the page you are looking at. When you send your next message, the tab in front joins the chat and its website is allowed. **This tab** is off by default.
+
+## Pause, sign out or remove
+
+- **Pause:** in the side panel, open **⋯** and choose **Pause My Chrome**. Eigi doesn't use this Chrome until you choose **Resume My Chrome**.
+- **Turn it off:** switch off **Let Eigi use my Chrome** in **Settings → Browser and extension**. Access ends at once.
+- **Sign out:** open **⋯** and choose **Sign out**. Your allowed websites are kept for the next time you sign in with the same account.
+- **Remove:** remove Eigi from Chrome's extensions page. Chrome deletes the extension and its data.
+
+## Fix common problems
+
+| What you see | What to do |
+| --- | --- |
+| "Eigi on this Mac is closed." (or "this PC", "this computer") | Open Eigi Desktop and try again. |
+| "Chrome isn’t linked to Eigi on this Mac right now." | Check that **Let Eigi use my Chrome** is on and that Chrome and the app use the same account, then choose **Check again**. |
+| "Sign in again to continue." | Choose **Sign in** in the side panel. |
+| A number on the Eigi icon | A website question is waiting in the side panel. Open it and answer. |
+| **Question expired** in the chat | The question waited more than five minutes. Ask Eigi again and answer when it asks. |
+| Nothing happens in an Incognito window | Incognito isn't supported. Use a normal window. |
+| Eigi uses a different Chrome profile | Each Chrome profile signs in on its own. When several are connected, Eigi uses the one that connected most recently. |
+
+To learn what the extension can see and send, read the [Eigi Browser Extension section of the privacy policy](https://eigi.ai/privacy-policy).

@@ -84,6 +84,7 @@
               "eigi-desktop/workspace",
               "eigi-desktop/projects",
               "eigi-desktop/apps",
+              "eigi-desktop/chrome-extension",
               "eigi-desktop/buddies",
               "eigi-desktop/messaging"
             ]
